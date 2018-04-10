@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xc.dao.BookMapper">
+
+	<sql id="user_Where">						
+		<!-- where标签作用:
+				会自动向sql语句中添加where关键字
+				会去掉第一个条件的and关键字
+			 -->
+		<where>
+			<if test="user.username != null and user.username != ''">
+				and username like '%${user.username}%'
+			</if>
+			<if test="user.name != null and user.name != ''">
+				and name like '%${user.name}%'
+			</if>
+			<if test="user.sex != null and user.sex != ''">
+				and sex=#{user.sex}
+			</if>
+			<if test="number1 != null and number1 != ''">								
+				and age>${number1}
+			</if>
+			<if test="number2 != null and number2 != ''">								
+				and ${number2}>age
+			</if>
+		</where>
+	</sql>
+
+	
+	<!--添加新图书  -->
+	<insert id="bookInsert" parameterType="BOOK" >
+		<selectKey keyProperty="category_id" order="AFTER" resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into book (book_name,category_id,book_isbn,book_autor,book_pubhouse,book_page,book_state,book_inDate,book_borrownum,others) values(#{book_name},#{category_id},#{book_isbn},#{book_autor},#{book_pubhouse},#{book_page},#{book_state},#{book_inDate},#{book_borrownum},#{others})
+	</insert>
+	<!--删除图书  -->
+	<delete id="bookDelete" parameterType="int" >
+		delete from book where book_id=#{book_id}
+	</delete>	
+	<!--更新图书信息  -->
+	<update id="bookUpdate" parameterType="BOOK" >
+		update book set book_name=#{book_name},category_id=#{category_id},book_isbn=#{book_isbn},book_autor=#{book_autor},book_pubhouse=#{book_pubhouse},book_page=#{book_page},others=#{others} where book_id=#{book_id}		
+	</update>
+	
+	
+	<!--根据图书名book_name查询数据  -->
+	<select id="FindName" parameterType="string" resultType="BOOK">
+		select DISTINCT book_name from book where book_name like "%"#{name}"%"
+	</select>
+	<!--根据ISBN查询数据  -->
+	<select id="findByISBN" parameterType="string" resultType="BOOK">
+		select * from book where book_isbn=#{book_isbn}
+	</select>	
+	<!--分类查找所有  -->
+	<resultMap type="com.xc.domain.Book" id="BookBean">
+		<id column="book_id" property="book_id"/>
+		<result column="book_name" property="book_name"/>
+		<result column="category_id" property="category_id"/>
+		<result column="book_isbn" property="book_isbn"/>
+		<result column="book_autor" property="book_autor"/>
+		<result column="book_pubhouse" property="book_pubhouse"/>
+		<result column="book_page" property="book_page"/>
+		<result column="book_state" property="book_state"/>
+		<result column="book_inDate" property="book_inDate"/>
+		<result column="book_borrownum" property="book_borrownum"/>
+		<result column="others" property="others"/>
+		<!-- 多对一的关系 -->
+		<!--column:指外键值， property: 指的是属性的值, javaType：指的是属性的类型-->
+		<association property="category" javaType="com.xc.domain.Category">
+			<id column="category_id" property="category_id"/>
+			<result column="category_name" property="category_name"/>
+			<result column="category_case" property="category_case"/>
+		</association>
+	</resultMap>
+	<select id="bookFindAll" parameterType="QueryVo" resultMap="BookBean">
+		select a.*,b.category_name from book a,category b where a.category_id = b.category_id limit ${currentPage*number},${number}
+		<!-- <include refid="user_Where"></include>
+		<if test="type != null and type != ''">
+				order by ${type} asc 
+		</if> -->
+	</select>
+	<!--根据图书名book_name查询数据  -->
+	<select id="findByBookName" parameterType="QueryVo" resultMap="BookBean">
+		select a.*,b.category_name from book a,category b where a.category_id = b.category_id and book_name like "%"#{book_name}"%" limit ${currentPage*number},${number}
+	</select> 
+	<!--根据图书名book_name查询数据  -->
+	<select id="bookFindByName" parameterType="string" resultType="BOOK">
+		select * from book where book_name like "%"#{name}"%"
+	</select> 
+	<!--根据id查询图书  -->
+	<select id="bookFindById" parameterType="int" resultMap="BookBean">
+		select a.*,b.category_name from book a,category b where a.category_id = b.category_id and a.book_id=#{book_id}
+	</select>
+	<!--查询总条数  -->
+	<select id="findCount" resultType="int">
+		select count(*) from book 
+	</select>
+	<!--查询总条数  -->
+	<select id="findCount2" parameterType="QueryVo" resultType="int">
+		select count(*) from book where book_name like "%"#{book_name}"%"
+	</select>
+</mapper>

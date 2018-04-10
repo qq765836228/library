@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xc.dao.UserMapper">
+
+	<sql id="user_Where">						
+		<!-- where标签作用:
+				会自动向sql语句中添加where关键字
+				会去掉第一个条件的and关键字
+			 -->
+		<where>
+			<if test="user.username != null and user.username != ''">
+				and username like '%${user.username}%'
+			</if>
+			<if test="user.name != null and user.name != ''">
+				and name like '%${user.name}%'
+			</if>
+			<if test="user.sex != null and user.sex != ''">
+				and sex=#{user.sex}
+			</if>
+			<if test="number1 != null and number1 != ''">								
+				and age>${number1}
+			</if>
+			<if test="number2 != null and number2 != ''">								
+				and ${number2}>age
+			</if>
+		</where>
+	</sql>
+
+
+	<!--登陆验证用户是否存在  -->
+	<select id="loginCheck" parameterType="USER" resultType="USER">
+		select * from user where username=#{username} and password=#{password}
+	</select>
+	<!--根据id查询数据  -->
+	<select id="findUserById" parameterType="int" resultType="USER">
+		select * from user where id=#{id}
+	</select>
+	<!--添加新用户  -->
+	<insert id="insertUser" parameterType="USER" >
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into user (username,password,name,sex,age,inDate,birthday,phone) values(#{username},#{password},#{name},#{sex},#{age},#{inDate},#{birthday},#{phone})
+	</insert>
+	<!--删除用户  -->
+	<insert id="deleteUser" parameterType="int" >
+		delete from user where id=#{id}
+	</insert>
+	<!--更新用户信息  -->
+	<insert id="updateUser" parameterType="USER" >
+		update user set username=#{username},password=#{password},name=#{name},sex=#{sex},age=#{age},inDate=#{inDate},birthday=#{birthday},phone=#{phone} where id=#{id}		
+	</insert>
+	<!--根据用户名username查询数据  -->
+	<select id="findUserByUserName" parameterType="string" resultType="USER">
+		select * from user where username=#{username}
+	</select>
+	<!--查找所有  -->
+	<select id="findAll"  resultType="USER">
+		select * from user
+	</select>
+	<!--分类查找所有  -->
+	<select id="findAll2" parameterType="QueryVo" resultType="USER">
+		select * from user
+		<include refid="user_Where"></include>
+		<if test="type != null and type != ''">
+				order by ${type} asc 
+		</if>
+	</select>
+	
+	
+	
+	<!--根据用户名username查询数据  -->
+	<select id="findByIdcard" parameterType="string" resultType="USER">
+		select * from user where user_idcard=#{user_idcard}
+	</select>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xc.dao.AdminMapper">
+	<!--登陆验证用户是否存在  -->
+	<select id="admin_login" parameterType="ADMIN" resultType="ADMIN">
+		select * from admin where admin_card=#{admin_card} and admin_password=#{admin_password}
+	</select>
+	
+	<!--根据id查询用户  -->
+	<select id="findAdminById" parameterType="int" resultType="ADMIN">
+		select * from admin where admin_id=#{id}
+	</select>
+</mapper>
