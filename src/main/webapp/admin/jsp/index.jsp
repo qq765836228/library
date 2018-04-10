@@ -98,7 +98,7 @@
 								<i class="icon-tag"></i><span class="menu-text"> 借 书 订 单 管 理 </span><b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/order.jsp"><i class="icon-double-angle-right"></i>显 示 所 有 订 单</a></li>
+								<li><a href="${pageContext.request.contextPath }/Order/findAll/1"><i class="icon-double-angle-right"></i>显 示 所 有 订 单</a></li>
 								<li><a href="${pageContext.request.contextPath }/admin/jsp/orderIn.jsp"><i class="icon-double-angle-right"></i>执 行 中 订 单</a></li>
 								<li><a href="${pageContext.request.contextPath }/admin/jsp/orderOut.jsp"><i class="icon-double-angle-right"></i>违 规 订 单</a></li>
 							</ul>

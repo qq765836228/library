@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" isELIgnored="false"
     pageEncoding="utf-8"%>
+     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
@@ -156,112 +158,89 @@
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-														<th class="center">
-															<!-- <label>
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label> -->
-															id
-														</th>
-														<th>名 称</th>
-														<th>类 型</th>
-														<th>ISBN码</th>
-														<th>作 者</th>
-														<th>出 版 社</th>
-														<th>总 数 量</th>
-														<th>页 码</th>
-														<th>被借次数</th>
-														<th>
-															<i class="icon-time bigger-110 hidden-480"></i>
-															入馆时间
-														</th>
-														<th class="hidden-480">状态</th>
-
+													   <th></th>
+														<th class="center">订单id</th>
+														<th>用户名</th>
+														<th>用户账号</th>
+														<th>联系方式</th>
+														<th>图书名称</th>
+														<th>图书ISBN码</th>
+														<th>借出时间</th>
+														<th>应还时间</th>
+														<th>实际归还时间</th>
+														<th>是否归还</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 
 												<tbody>
+												<c:forEach items="${OrderVO.list }" var="c"  varStatus="status">											
 													<tr>
-														<td class="center">
-															<!-- <label>
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label> -->
-															1
-														</td>
+														<td>${status.count+(OrderVO.currentPage*10) }</td>
 
+														<td>${c.order_id }</td>
+														<td>${c.user.user_name }</td>
+														<td>${c.user_idcard }</td>
+														<td>${c.user.user_telphone }</td>
+														<td>${c.book.book_name }</td>
+														<td>${c.book_isbn }</td>	
+																													
+														<td><fmt:formatDate value="${c.borrow_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>														
+														<td><fmt:formatDate value="${c.return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+														<td><fmt:formatDate value="${c.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 														<td>
-															<a href="#">app.com</a>
-														</td>
-														<td>$45</td>
-														<td class="hidden-480">3,330</td>
-														<td>Feb 12</td>
-														<td>Feb 12</td>	
-														<td>Feb 12</td>	
-														<td>Feb 12</td>	
-														<td>Feb 12</td>	
-														<td>Feb 12</td>	
-														<td class="hidden-480">
-															<span class="label label-sm label-warning">Expiring</span>
-														</td>
-
+															<c:if test="${c.isreturn ==0 }">
+																<font color="green">否</font>
+															</c:if>
+															<c:if test="${c.isreturn ==1 }">
+																<font color="blue">是</font>
+															</c:if>
+														</td>	
 														<td>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-																<a class="blue" href="#">
-																	<i class="icon-zoom-in bigger-130"></i>
+																<a class="blue" id="more">
+																	<i class="icon-zoom-in bigger-130" onclick="findother()"></i>
 																</a>
 
-																<a class="green" href="#">
+																<a class="green" href="${pageContext.request.contextPath }/Book/editUI/${c.order_id }/${OrderVO.currentPage+1 }">
 																	<i class="icon-pencil bigger-130"></i>
 																</a>
 
-																<a class="red" href="#">
+																<a class="red" href="${pageContext.request.contextPath }/Book/delete/${c.order_id }/${OrderVO.totalNumber }/${OrderVO.currentPage+1 }" onClick="return confirm('确定删除?');">
 																	<i class="icon-trash bigger-130"></i>
 																</a>
-															</div>
-
-															<div class="visible-xs visible-sm hidden-md hidden-lg">
-																<div class="inline position-relative">
-																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-																		<i class="icon-caret-down icon-only bigger-120"></i>
-																	</button>
-
-																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-																		<li>
-																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																				<span class="blue">
-																					<i class="icon-zoom-in bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																				<span class="green">
-																					<i class="icon-edit bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																				<span class="red">
-																					<i class="icon-trash bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
+																<a class="blue" href="${pageContext.request.contextPath }/Book/addTwo/${c.order_id }">
+																	复制
+																</a>
 															</div>
 														</td>
 													</tr>
-
-													
-
-
+													</c:forEach>
 												</tbody>
 											</table>
+											<div class="col-md-3">
+												总页数：${OrderVO.totalPage }\当前页：${OrderVO.currentPage+1 }
+											</div>
+											<div  style="float: right;">
+													<c:if test="${OrderVO.totalPage != 1 }">
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/1">首页</a>
+														<c:if test="${OrderVO.currentPage == 0 }">
+															<a class="btn btn-info">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${OrderVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${OrderVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" >下一页</a>
+														</c:if>
+														<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${OrderVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${OrderVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${OrderVO.totalPage}">尾页</a>	
+														
+													</c:if>
+											</div>	
+											
 										</div>
 									</div>
 								</div>					

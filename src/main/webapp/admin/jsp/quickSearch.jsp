@@ -166,12 +166,12 @@
 							<div class="col-md-2">
 							 	 <button onclick="sub()"  type="submit" >&nbsp;&nbsp;搜 索&nbsp;&nbsp;</button>	
 							</div>  
-							<div id="more"  class="col-md-5 col-md-offset-3" style="padding-top:20px">
+							<div id="more"  class="col-md-5 col-md-offset-3" style="padding-top:20px;z-index:99">
 							
 							</div>	  						
 						</div><!-- /.row -->
 						<c:if test="${BVO!=null }">
-						<div class="table-responsive" >
+						<div class="table-responsive"  style="position:absolute;width:98%;top:250px;">
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
@@ -251,7 +251,8 @@
 												总页数：${BVO.totalPage }\当前页：${BVO.currentPage+1 }
 											</div>
 											<div  style="float: right;">
-												<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findByBookName/${name}/1">首页</a>
+													<c:if test="${BVO.totalPage!=1 }">
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findByBookName/${name}/1">首页</a>
 														<c:if test="${BVO.currentPage == 0 }">
 															<a class="btn btn-info">上一页</a>
 													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findByBookName/${name}/${BVO.currentPage+2 }">下一页</a>
@@ -265,7 +266,7 @@
 													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findByBookName/${name}/${BVO.currentPage+2 }">下一页</a>
 														</c:if>
 														<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findByBookName/${name}/${BVO.totalPage}">尾页</a>
-													
+													</c:if>
 											</div>
 										</div>
 										</c:if>

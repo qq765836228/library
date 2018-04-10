@@ -312,8 +312,8 @@
 											'</div>'+
 											'<div class="sure" style="width:400px;height:96px">'+
 												'<div align="center">'+
-													'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/Book/bookAddUI" style="color: white;text-decoration:none;">继续添加</a></div>'+
-													'<div  class="btn btn-primary "  ><a href="${pageContext.request.contextPath }/Book/findAll/1" style="color: white;text-decoration:none;">显示所有</a></div>'+
+													'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/borrow.jsp" style="color: white;text-decoration:none;">继续添加</a></div>'+
+													'<div  class="btn btn-primary "  ><a href="${pageContext.request.contextPath }/Order/findAll/1" style="color: white;text-decoration:none;">显示所有</a></div>'+
 												'</div>'+
 											'</div>'+
 										'</form>'+

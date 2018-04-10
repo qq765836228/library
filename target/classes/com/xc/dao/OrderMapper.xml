@@ -7,6 +7,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		<selectKey keyProperty="order_id" order="AFTER" resultType="java.lang.Integer">
 			select LAST_INSERT_ID()
 		</selectKey>
-		insert into order (order_id,user_idcard,book_isbn,borrow_time,return_time,isreturn) values (#{order_id},#{user_idcard},#{book_isbn},#{borrow_time},#{return_time},#{isreturn})
+		insert into `order`(order_id,user_idcard,book_isbn,borrow_time,return_time,isreturn) values (#{order_id},#{user_idcard},#{book_isbn},#{borrow_time},#{return_time},#{isreturn})
    </insert>
+   
+   <resultMap type="com.xc.domain.Order" id="OBean">
+		<id column="order_id" property="order_id"/>
+		<result column="user_idcard" property="user_idcard"/>
+		<result column="book_isbn" property="book_isbn"/>
+		<result column="borrow_time" property="borrow_time"/>
+		<result column="return_time" property="return_time"/>
+		<result column="isreturn" property="isreturn"/>
+		<result column="is_return_time" property="is_return_time"/>
+		<association property="user" javaType="com.xc.domain.User">
+			<id column="user_idcard" property="user_idcard"/>
+			<result column="user_id" property="user_id"/>
+			<result column="user_password" property="user_password"/>
+			<result column="user_cardtype" property="user_cardtype"/>
+			<result column="user_name" property="user_name"/>
+			<result column="user_sex" property="user_sex"/>
+			<result column="user_telphone" property="user_telphone"/>
+			<result column="user_inDate" property="user_inDate"/>
+			<result column="user_error" property="user_error"/>
+			<result column="user_state" property="user_state"/>
+		</association>
+		<association property="book" javaType="com.xc.domain.Book">
+			<id column="book_isbn" property="book_isbn"/>
+			<result column="book_id" property="book_id"/>
+			<result column="book_name" property="book_name"/>
+			<result column="category_id" property="category_id"/>
+			<result column="book_pubhouse" property="book_pubhouse"/>
+			<result column="book_autor" property="book_autor"/>
+			<result column="book_page" property="book_page"/>
+			<result column="book_state" property="book_state"/>
+			<result column="book_inDate" property="book_inDate"/>
+			<result column="book_borrownum" property="book_borrownum"/>
+			<result column="others" property="others"/>
+			<association property="category" javaType="com.xc.domain.Category">
+				<id column="category_id" property="category_id"/>
+				<result column="category_name" property="category_name"/>
+				<result column="category_case" property="category_case"/>
+			</association>
+		</association>
+	</resultMap>
+	<select id="orderFindAll" parameterType="QueryVo" resultMap="OBean">
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn limit ${currentPage*number},${number}
+		
+	</select>
+	<!--查询总条数  -->
+	<select id="findCount" resultType="int">
+		select count(*) from `order` 
+	</select>
 </mapper>

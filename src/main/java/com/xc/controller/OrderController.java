@@ -1,16 +1,19 @@
 package com.xc.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xc.domain.Order;
 import com.xc.service.OrderService;
+import com.xc.vo.QueryVo;
 @RequestMapping("/Order")
 @Controller
 public class OrderController {
@@ -47,5 +50,21 @@ public class OrderController {
     	
     	orderService.insertOrder(order);
         return "0";
+    }
+    
+    
+    /**
+	 * 查询所有图书
+	 * @return
+	 */
+    @RequestMapping("/findAll/{currentPage}")
+    public String findAll(@PathVariable("currentPage")Integer currentPage,HttpSession session){
+
+    	QueryVo<Order> vo=new QueryVo<>();
+    	vo.setCurrentPage(currentPage-1);
+    	vo.setNumber(10);
+    	QueryVo<Order> OrderVO = orderService.orderFindAll(vo);
+    	session.setAttribute("OrderVO", OrderVO);
+    	return "order";
     }
 }
