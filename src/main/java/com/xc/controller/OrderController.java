@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,7 +55,7 @@ public class OrderController {
     
     
     /**
-	 * 查询所有图书
+	 * 查询所有借书订单
 	 * @return
 	 */
     @RequestMapping("/findAll/{currentPage}")
@@ -66,5 +67,31 @@ public class OrderController {
     	QueryVo<Order> OrderVO = orderService.orderFindAll(vo);
     	session.setAttribute("OrderVO", OrderVO);
     	return "order";
+    }
+    /**
+     * 跳转到图书归还页面
+     * @param category
+     * @return
+     */
+    @RequestMapping("/returnUI/{id}/{page}")
+    public String returnUI(@PathVariable("id")Integer order_id,Model model,@PathVariable("page")Integer page){
+    	Order order=orderService.orderFindById(order_id);
+    	order.setIs_return_time(new Date());
+    	model.addAttribute("order", order);
+    	model.addAttribute("page", page);
+    	return "return";
+    }
+    /**
+     * 跳转到图书归还页面
+     * @param category
+     * @return
+     */
+    @RequestMapping("/returns/{id}/{page}")
+    public String returns(@PathVariable("id")Integer order_id,Model model,@PathVariable("page")Integer page){
+    	Order order=orderService.orderFindById(order_id);
+    	order.setIsreturn(2);
+    	orderService.updateIsreturn(order);
+    	
+    	return "redirect:/Order/findAll/"+page;
     }
 }

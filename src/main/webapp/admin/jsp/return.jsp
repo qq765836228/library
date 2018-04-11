@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" isELIgnored="false"
     pageEncoding="utf-8"%>
-     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>交理图书馆后台管理系统</title>
-		<meta name="keywords" content="交理图书馆后台管理系统" />
-		<meta name="description" content="交理图书馆后台管理系统" />
+		<title>图书添加--交理图书馆后台管理系统</title>
+		<meta name="keywords" content="图书添加--交理图书馆后台管理系统" />
+		<meta name="description" content="图书添加--交理图书馆后台管理系统" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- basic styles -->
 		<link href="${pageContext.request.contextPath }/admin/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -21,15 +21,16 @@
 
 		<!-- ace settings handler -->
 
-		<script src="${pageContext.request.contextPath }/admin/assets/js/ace-extra.min.js"></script>
+		<script src="${pageContext.request.contextPath }/admin/assets/js/ace-extra.min.js"></script>	
+		<script src="${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js"></script>
 	</head>
-
-	<body>
+	
+	<body id="bod">
 		<!--头部  -->
-		<div class="navbar navbar-default" id="navbar">
+		<div class="navbar navbar-default" id="navbar" >
 			<div class="navbar-container" id="navbar-container">
 				<div class="navbar-header pull-left">
-					<a href="#" class="navbar-brand">
+					<a href="#" class="navbar-brand" >
 						<small>
 							<i class="icon-leaf"></i>
 							交理图书馆后台管理系统
@@ -63,7 +64,7 @@
 				<!--导航栏  -->
 				<div class="sidebar" id="sidebar">
 					<ul class="nav nav-list">
-						<li>
+						<li >
 							<a href="${pageContext.request.contextPath }/admin/jsp/index.jsp">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text"> 首  页 </span>
@@ -76,24 +77,24 @@
 								<span class="menu-text"> 快 速 查 询  </span>
 							</a>
 						</li>
-						<!--图 书 信 息 管 理  -->
-						<li>
+						<!--图 书信息管理  -->
+						<li class="active">
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-tag"></i><span class="menu-text">图 书  信 息 管 理 </span><b class="arrow icon-angle-down"></b>
+								<i class="icon-tag"></i><span class="menu-text">用 户 信 息 管 理 </span><b class="arrow icon-angle-down"></b>
 							</a>
-							<ul class="submenu">
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/bookAdd.jsp" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 添 加 图 书 信 息 </a></li>
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/bookUI" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 显 示 所 有 图 书 </a></li>	
+							<ul class="submenu" >
+								<li class="active"><a href="${pageContext.request.contextPath }/admin/jsp/bookAdd.jsp" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 添 加 图 书 信 息 </a></li>
+								<li><a href="${pageContext.request.contextPath }/admin/jsp/Books.jsp" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 显 示 所 有 图 书 </a></li>	
 							</ul>
 						</li>
 						
 						<!--订单管理  -->
-						<li  class="active">
+						<li>
 							<a href="#" class="dropdown-toggle">
 								<i class="icon-tag"></i><span class="menu-text"> 订 单 管 理 </span><b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-								<li  class="active"><a href="${pageContext.request.contextPath }/admin/jsp/order.jsp"><i class="icon-double-angle-right"></i>显 示 所 有 订 单</a></li>
+								<li><a href="${pageContext.request.contextPath }/admin/jsp/orderUI.jsp"><i class="icon-double-angle-right"></i>显 示 所 有 订 单</a></li>
 								<li><a href="${pageContext.request.contextPath }/admin/jsp/orderIn.jsp"><i class="icon-double-angle-right"></i>执 行 中 订 单</a></li>
 								<li><a href="${pageContext.request.contextPath }/admin/jsp/orderOut.jsp"><i class="icon-double-angle-right"></i>违 规 订 单</a></li>
 							</ul>
@@ -134,131 +135,136 @@
 				</div>
 				<!--主内容  -->
 				<div class="main-content">
-					<div class="breadcrumbs" id="breadcrumbs">
-						<script type="text/javascript">
-							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-						</script>
-
+					<div class="breadcrumbs" id="breadcrumbs" >
 						<ul class="breadcrumb" style="line-height:41px;">
 							<li>
 								<i class="icon-home home-icon"></i>
-								<a href="#">首页</a>
+								<a href="#">首 页</a>
 							</li>
+							<li class="active">修 改 图 书</li>
 						</ul><!-- .breadcrumb -->
 					</div>
+
+					
 					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								归 还 处 理
+							</h1>
+						</div><!-- /.page-header -->
+
 						<div class="row">
-								<div class="col-xs-12">
-										<h3 class="header smaller lighter blue">借还书处理</h3>
-										<div class="table-header">
-											借 书 订 单 基 本 信 息
-										</div>
+							<div class="col-xs-12">							
+							<form class="form-horizontal">
+									<div class="form-group">
+										<input type="hidden" id="page"  class="col-xs-10 col-sm-5"   name="page"  value="${page }"/>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 借 书 订 单 号 </label>
 
-										<div class="table-responsive">
-											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
-												<thead>
-													<tr>
-													   <th></th>
-														<th class="center">订单id</th>
-														<th>用户名</th>
-														<th>用户账号</th>
-														<th>联系方式</th>
-														<th>图书名称</th>
-														<th>图书ISBN码</th>
-														<th>借出时间</th>
-														<th>应还时间</th>
-														<th>实际归还时间</th>
-														<th>是否归还</th>
-														<th>操作</th>
-													</tr>
-												</thead>
-
-												<tbody>
-												<c:forEach items="${OrderVO.list }" var="c"  varStatus="status">											
-													<tr>
-														<td>${status.count+(OrderVO.currentPage*10) }</td>
-
-														<td>${c.order_id }</td>
-														<td>${c.user.user_name }</td>
-														<td>${c.user_idcard }</td>
-														<td>${c.user.user_telphone }</td>
-														<td>${c.book.book_name }</td>
-														<td>${c.book_isbn }</td>	
-																													
-														<td><fmt:formatDate value="${c.borrow_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>														
-														<td><fmt:formatDate value="${c.return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-														<td><fmt:formatDate value="${c.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-														<td>
-															<c:if test="${c.isreturn ==0 }">
-																<font color="green">正在借书中</font>
-															</c:if>
-															<c:if test="${c.isreturn ==1 }">
-																<font color="red">借书已超时</font>
-															</c:if>
-															<c:if test="${c.isreturn ==2 }">
-																<font color="red">已完成</font>
-															</c:if>
-														</td>	
-														<td>
-															
-																<c:if test="${c.isreturn ==0 || c.isreturn ==1 }">
-																	<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-																		<a class="blue" href="${pageContext.request.contextPath }/Order/returnUI/${c.order_id }/${OrderVO.currentPage+1 }">
-																			归 还
-																		</a>
-		
-																		<a class="green" href="${pageContext.request.contextPath }/Book/editUI/${c.order_id }/${OrderVO.currentPage+1 }">
-																			续 借
-																		</a>
-																	</div>
-																</c:if>
-																
-
-															
-														</td>
-													</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-											<div class="col-md-3">
-												总页数：${OrderVO.totalPage }\当前页：${OrderVO.currentPage+1 }
-											</div>
-											<div  style="float: right;">
-													<c:if test="${OrderVO.totalPage != 1 }">
-														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/1">首页</a>
-														<c:if test="${OrderVO.currentPage == 0 }">
-															<a class="btn btn-info">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage+2 }">下一页</a>
-														</c:if>
-														<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage }">上一页</a>
-													 		<a class="btn btn-info" >下一页</a>
-														</c:if>
-														<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage }">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage+2 }">下一页</a>
-														</c:if>
-														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.totalPage}">尾页</a>	
-														
-													</c:if>
-											</div>	
-											
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="order_id"  value="${order.order_id }" readonly="readonly"/>
 										</div>
 									</div>
-								</div>					
-					
-					</div><!-- PAGE CONTENT ENDS -->
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 读者姓名 </label>
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="user_name"  value="${order.user.user_name }" readonly="readonly"/>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 读者账号 </label>
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="user_idcard"  value="${order.user_idcard }" readonly="readonly"/>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 图书名称 </label>
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="book_name"  value="${order.book.book_name }" readonly="readonly"/>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 图书ISBN码 </label>
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="book_isbn"  value="${order.book_isbn }" readonly="readonly"/>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 借书时间</label>
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="borrow_time"  value="<fmt:formatDate value="${order.borrow_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 应还时间 </label>
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="return_time"  value="<fmt:formatDate value="${order.return_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 实际归还时间 </label>
+										<div class="col-sm-9">
+											<input type="text" class="ccol-xs-6 col-sm-3"   name="is_return_time"  value="<fmt:formatDate value="${order.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
+											<span class="help-inline col-xs-12 col-sm-7">
+												<span class="middle">*默认为当前时间，无法更改</span>
+											</span>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button id="returns" class="btn btn-info">
+												<i class="icon-ok bigger-110"></i>
+												确 认 归 还
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button id="re" class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												取消
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div><!-- /.main-content -->
 				
 			</div><!-- /.main-container-inner -->
 		</div><!-- /.main-container -->
+    
 
 		<!-- basic scripts -->
 		<script type="text/javascript">window.jQuery || document.write("<script src='${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");</script>
 		<script type="text/javascript">if("ontouchend" in document) document.write("<script src='${pageContext.request.contextPath }/admin/assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");</script>
 		<script src="${pageContext.request.contextPath }/admin/assets/js/bootstrap.min.js"></script>	
 		<script src="${pageContext.request.contextPath }/admin/assets/js/ace.min.js"></script>
-
+		<script type="text/javascript">
+			$("#re").click(function(){
+				javascript:history.back(-1);
+			})
+			$("#returns").click(function(){
+				var order_id=$("#order_id").val();
+				var page=$("#page").val();
+				window.location.href="${pageContext.request.contextPath }/Order/returns/"+order_id+"/"+page;
+			})
+		</script>
 		
 </body>
 </html>

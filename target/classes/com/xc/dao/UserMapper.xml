@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!--根据id查询数据  -->
 	<select id="findUserById" parameterType="int" resultType="USER">
-		select * from user where id=#{id}
+		select * from user where user_id=#{user_id}
 	</select>
 	<!--添加新用户  -->
 	<insert id="insertUser" parameterType="USER" >
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<!--更新用户信息  -->
 	<insert id="updateUser" parameterType="USER" >
-		update user set username=#{username},password=#{password},name=#{name},sex=#{sex},age=#{age},inDate=#{inDate},birthday=#{birthday},phone=#{phone} where id=#{id}		
+		update user set username=#{username},password=#{password},name=#{name},sex=#{sex},age=#{age},inDate=#{inDate},birthday=#{birthday},phone=#{phone} where user_id=#{user_id}		
 	</insert>
 	<!--根据用户名username查询数据  -->
 	<select id="findUserByUserName" parameterType="string" resultType="USER">
@@ -75,4 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findByIdcard" parameterType="string" resultType="USER">
 		select * from user where user_idcard=#{user_idcard}
 	</select>
+	<update id="updateUser_error" parameterType="User">
+			update user set user_error = #{user_error} where user_id=#{user_id}
+	</update>
 </mapper>

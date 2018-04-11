@@ -12,4 +12,8 @@ public interface OrderService {
 
 	public QueryVo<Order> orderFindAll(QueryVo<Order> vo);
 
+	public Order orderFindById(Integer order_id);
+
+	public void updateIsreturn(Order order);
+
 }

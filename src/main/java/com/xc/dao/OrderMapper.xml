@@ -53,8 +53,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn limit ${currentPage*number},${number}
 		
 	</select>
+	
+	<select id="orderFindById" parameterType="int" resultMap="OBean">
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.order_id = #{order_id}
+		
+	</select>
 	<!--查询总条数  -->
 	<select id="findCount" resultType="int">
 		select count(*) from `order` 
 	</select>
+	
+	<update id="updateIsreturn" parameterType="ORDER">
+		update `order` set isreturn = #{isreturn} where order_id = #{order_id}
+	</update>
 </mapper>

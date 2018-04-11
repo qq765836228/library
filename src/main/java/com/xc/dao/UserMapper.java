@@ -26,4 +26,6 @@ public interface UserMapper {
 		//后期
 		//根据Idcard查询用户
 		public User findByIdcard(String user_idcard);
+		//根据Idcard查询用户
+		public void updateUser_error(User user);
 }
