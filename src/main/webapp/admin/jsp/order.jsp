@@ -190,10 +190,13 @@
 														<td><fmt:formatDate value="${c.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 														<td>
 															<c:if test="${c.isreturn ==0 }">
-																<font color="green">否</font>
+																<font color="green">正在借书中</font>
 															</c:if>
 															<c:if test="${c.isreturn ==1 }">
-																<font color="blue">是</font>
+																<font color="red">借书已超时</font>
+															</c:if>
+															<c:if test="${c.isreturn ==2 }">
+																<font color="red">已完成</font>
 															</c:if>
 														</td>	
 														<td>

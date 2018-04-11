@@ -28,6 +28,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public QueryVo<Order> orderFindAll(QueryVo<Order> vo) {
 		List<Order> list = orderMapper.orderFindAll(vo);
+		for(Order s: list) {
+			  if(s.getIsreturn()==1){
+				  
+			}
+		}
 		Integer count = orderMapper.findCount();
 		vo.setList(list);
 		vo.setTotalNumber(count);	
