@@ -16,4 +16,8 @@ public interface OrderService {
 
 	public void updateIsreturn(Order order);
 
+	public void update(Order order);
+
+	public QueryVo<Order> orderfindAllByIsreturn(QueryVo<Order> vo);
+
 }

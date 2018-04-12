@@ -16,4 +16,8 @@ public interface OrderMapper {
 	public void updateIsreturn(Order order);
 	//根据id查询所有
 	public Order orderFindById(Integer order_id);
+	//更新订单状态和时间
+	public void update(Order order);
+	public List<Order> orderfindAllByIsreturn(QueryVo<Order> vo);
+	public Integer findCountByIsreturn();
 }

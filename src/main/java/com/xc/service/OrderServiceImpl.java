@@ -73,4 +73,40 @@ public class OrderServiceImpl implements OrderService {
 		orderMapper.updateIsreturn(order);
 	}
 
+
+	@Override
+	public void update(Order order) {
+		orderMapper.update(order);
+	}
+
+
+	@Override
+	public QueryVo<Order> orderfindAllByIsreturn(QueryVo<Order> vo) {
+		List<Order> list1 = orderMapper.orderFindAll(vo);
+		for(Order s: list1) {
+			  if(s.getIsreturn()==0){
+				Date date=new Date();
+				Date return_time = s.getReturn_time();
+				if(date.after(return_time)){
+					s.setIsreturn(1);
+					orderMapper.updateIsreturn(s);
+					User user = userMapper.findByIdcard(s.user_idcard);
+					user.setUser_error(user.getUser_error()+1);				
+					userMapper.updateUser_error(user);
+				}
+			}
+		}
+		List<Order> list = orderMapper.orderfindAllByIsreturn(vo);		
+		Integer count = orderMapper.findCountByIsreturn();
+		vo.setList(list);
+		vo.setTotalNumber(count);	
+		Integer n = vo.getNumber();
+		if(count%n==0){
+			vo.setTotalPage(count/n);
+		}else{
+			vo.setTotalPage(count/n+1);
+		}
+		return vo;
+	}
+
 }

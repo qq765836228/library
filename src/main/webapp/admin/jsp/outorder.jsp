@@ -149,101 +149,111 @@
 					<div class="page-content">
 						<div class="row">
 								<div class="col-xs-12">
+									
 										<h3 class="header smaller lighter blue">借还书处理</h3>
-										<div class="table-header">
-											借 书 订 单 基 本 信 息
-										</div>
-
-										<div class="table-responsive">
-											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
-												<thead>
-													<tr>
-													   <th></th>
-														<th class="center">订单id</th>
-														<th>用户名</th>
-														<th>用户账号</th>
-														<th>联系方式</th>
-														<th>图书名称</th>
-														<th>图书ISBN码</th>
-														<th>借出时间</th>
-														<th>应还时间</th>
-														<th>实际归还时间</th>
-														<th>是否归还</th>
-														<th>操作</th>
-													</tr>
-												</thead>
-
-												<tbody>
-												<c:forEach items="${OrderVO.list }" var="c"  varStatus="status">											
-													<tr>
-														<td>${status.count+(OrderVO.currentPage*10) }</td>
-
-														<td>${c.order_id }</td>
-														<td>${c.user.user_name }</td>
-														<td>${c.user_idcard }</td>
-														<td>${c.user.user_telphone }</td>
-														<td>${c.book.book_name }</td>
-														<td>${c.book_isbn }</td>	
-																													
-														<td><fmt:formatDate value="${c.borrow_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>														
-														<td><fmt:formatDate value="${c.return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-														<td><fmt:formatDate value="${c.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-														<td>
-															<c:if test="${c.isreturn ==0 }">
-																<font color="green">正在借书中</font>
-															</c:if>
-															<c:if test="${c.isreturn ==1 }">
-																<font color="red">借书已超时</font>
-															</c:if>
-															<c:if test="${c.isreturn ==2 }">
-																<font color="red">已完成</font>
-															</c:if>
-														</td>	
-														<td>
-															
-																<c:if test="${c.isreturn ==0 || c.isreturn ==1 }">
-																	<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-																		<a class="blue" href="${pageContext.request.contextPath }/Order/returnUI/${c.order_id }/${OrderVO.currentPage+1 }/3">
-																			归 还
-																		</a>
-		
-																		<a class="green" href="${pageContext.request.contextPath }/Order/renewUI/${c.order_id }/${OrderVO.currentPage+1 }/${c.isreturn}/3">
-																			续 借
-																		</a>
-																	</div>
-																</c:if>
-																
-
-															
-														</td>
-													</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-											<div class="col-md-3">
-												总页数：${OrderVO.totalPage }\当前页：${OrderVO.currentPage+1 }
+										<c:if	test="${OrderVO.totalPage > 0 }">
+											<div class="table-header">
+												借 书 订 单 基 本 信 息
 											</div>
-											<div  style="float: right;">
-													<c:if test="${OrderVO.totalPage != 1 }">
-														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/1">首页</a>
-														<c:if test="${OrderVO.currentPage == 0 }">
-															<a class="btn btn-info">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage+2 }">下一页</a>
-														</c:if>
-														<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage }">上一页</a>
-													 		<a class="btn btn-info" >下一页</a>
-														</c:if>
-														<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage }">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage+2 }">下一页</a>
-														</c:if>
-														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.totalPage}">尾页</a>	
+										
+											<div class="table-responsive">
+												<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+														   <th></th>
+															<th class="center">订单id</th>
+															<th>用户名</th>
+															<th>用户账号</th>
+															<th>联系方式</th>
+															<th>图书名称</th>
+															<th>图书ISBN码</th>
+															<th>借出时间</th>
+															<th>应还时间</th>
+															<th>实际归还时间</th>
+															<th>是否归还</th>
+															<c:if test="${OrderVO.isreturn !=2 }">
+																<th>操作</th>
+															</c:if>	
+															
+														</tr>
+													</thead>
+	
+													<tbody>
+													<c:forEach items="${OrderVO.list }" var="c"  varStatus="status">											
+														<tr>
+															<td>${status.count+(OrderVO.currentPage*10) }</td>
+	
+															<td>${c.order_id }</td>
+															<td>${c.user.user_name }</td>
+															<td>${c.user_idcard }</td>
+															<td>${c.user.user_telphone }</td>
+															<td>${c.book.book_name }</td>
+															<td>${c.book_isbn }</td>	
+																														
+															<td><fmt:formatDate value="${c.borrow_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>														
+															<td><fmt:formatDate value="${c.return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+															<td><fmt:formatDate value="${c.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+															<td>
+																<c:if test="${c.isreturn ==0 }">
+																	<font color="green">正在借书中</font>
+																</c:if>
+																<c:if test="${c.isreturn ==1 }">
+																	<font color="red">借书已超时</font>
+																</c:if>
+																<c:if test="${c.isreturn ==2 }">
+																	<font color="red">已完成</font>
+																</c:if>	
+																<c:if test="${c.isreturn != 2 }">
+																	<td>
 														
-													</c:if>
-											</div>	
-											
-										</div>
+																		<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+																			<a class="blue" href="${pageContext.request.contextPath }/Order/returnUI/${c.order_id }/${OrderVO.currentPage+1 }/3">
+																				归 还
+																			</a>
+			
+																			<a class="green" href="${pageContext.request.contextPath }/Order/renewUI/${c.order_id }/${OrderVO.currentPage+1 }/${c.isreturn}/3">
+																				续 借
+																			</a>
+																		</div>
+																	</td>
+																</c:if>
+																	
+	
+																
+															
+														</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+												<div class="col-md-3">
+													总页数：${OrderVO.totalPage }\当前页：${OrderVO.currentPage+1 }
+												</div>
+												<div  style="float: right;">
+														<c:if test="${OrderVO.totalPage != 1 }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAllByIsreturn/${OrderVO.isreturn }/1">首页</a>
+															<c:if test="${OrderVO.currentPage == 0 }">
+																<a class="btn btn-info">上一页</a>
+														 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAllByIsreturn/${OrderVO.isreturn }/${OrderVO.currentPage+2 }">下一页</a>
+															</c:if>
+															<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
+																<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAllByIsreturn/${OrderVO.isreturn }/${OrderVO.currentPage }">上一页</a>
+														 		<a class="btn btn-info" >下一页</a>
+															</c:if>
+															<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
+																<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAllByIsreturn/${OrderVO.isreturn }/${OrderVO.currentPage }">上一页</a>
+														 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAllByIsreturn/${OrderVO.isreturn }/${OrderVO.currentPage+2 }">下一页</a>
+															</c:if>
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAllByIsreturn/${OrderVO.isreturn }/${OrderVO.totalPage}">尾页</a>	
+															
+														</c:if>
+												</div>	
+												
+											</div>
+										
+										</c:if>
+										<c:if test="${OrderVO.totalPage==0 }">
+										<h1>暂无超时借书订单</h1>
+										</c:if>
 									</div>
 								</div>					
 					

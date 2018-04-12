@@ -1,6 +1,7 @@
 package com.xc.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xc.domain.Admin;
+import com.xc.domain.Notice;
 import com.xc.service.AdminService;
 
 @Controller
@@ -51,6 +53,30 @@ public class AdminController {
 			return "0"; 
 		}
 		/**
+		 * 更改密码
+		 * @param request
+		 * @param response
+		 * @return
+		 * @throws IOException
+		 */
+		@RequestMapping("/editAdmin")
+		@ResponseBody
+			public  String editAdmin(String admin_card,String old_password,String new_password,HttpSession session)throws IOException{
+			 	//封装到Admin对象中
+			 	Admin admin=new Admin();
+			 	admin.setAdmin_card(admin_card);
+			 	admin.setAdmin_password(old_password);
+			 	//调用admin_login方法
+			 	Admin uu= adminService.admin_login(admin);			    
+				if(uu!=null){ 
+					uu.setAdmin_password(new_password);
+					adminService.update(uu);
+					session.removeAttribute("ADMIN");
+					return "1";
+				} 
+				return "0"; 
+			}
+		/**
 		 * 进入主页
 		 * @param id
 		 * @param session
@@ -59,11 +85,23 @@ public class AdminController {
 		 */
 		@RequestMapping("/indexUI/{id}")
 		public  String indexUI(@PathVariable("id")Integer id,HttpSession session)throws IOException{			 
-			Admin admin= adminService.findAdminById(id);	
+			Admin admin= adminService.findAdminById(id);
+			List<Notice> notice=adminService.findAllNotice();
 			session.setAttribute("ADMIN", admin);
+			session.setAttribute("NOTICE", notice);
 			return "index"; 
 		}
-		
+		/**
+		 * 更改密码
+		 * @param id
+		 * @param session
+		 * @return
+		 * @throws IOException
+		 */
+		@RequestMapping("/editPasswordUI")
+		public  String editPasswordUI(HttpSession session)throws IOException{			 		
+			return "editAdmin"; 
+		}
 		/**
 		 * 注销
 		 * @param session
@@ -72,6 +110,7 @@ public class AdminController {
 		@RequestMapping("/loginOut")
 		public String loginOut(HttpSession session){
 		    session.removeAttribute("ADMIN");
+		    session.removeAttribute("NOTICE");
 			return "login";
 		}
 		

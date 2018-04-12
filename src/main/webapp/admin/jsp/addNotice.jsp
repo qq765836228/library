@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" isELIgnored="false"
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
@@ -25,58 +24,84 @@
 		<script src="${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js"></script>
 	</head>
 	<script type="text/javascript">
-	$(function(){		
+	$(function(){	
 		$("#add").click(function(){
+			var oDiv = document.createElement('div');
+			oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
+								'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
+									'<form style="border:1px solid red;width:400px;height:200px">'+
+										'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
+											'<h4 style="line-height:100px;"> 密码修改成功 ,点击返回登陆界面</h4>'+
+										'</div>'+
+										'<div class="sure" style="width:400px;height:96px">'+
+											'<div align="center">'+
+												'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/login.jsp" style="color: white;text-decoration:none;">返回登陆</a></div>'+												
+											'</div>'+
+										'</div>'+
+									'</form>'+
+								'</div>'+
+							'</div>';
 			
-			var order_id=$("#order_id").val();
-			var page=$("#page").val();
+			
+			var admin_card=$("#admin_card").val();
+			var old_password=$("#old_password").val();
+			var new_password=$("#new_password").val();
+			var new_password2=$("#new_password2").val();
+			if(old_password==null || old_password== ""){
+				err("原始密码不能为空");
+				return false;
+			}
+			else if(new_password==null || new_password== ""){
+				err("现在密码不能为空");
+				return false;
+			}
+			else if(new_password2==null || new_password2== ""){
+				err("确认密码不能为空");
+				return false;
+			}
+			else if(new_password != new_password2){
+				err("确认密码输入有误");
+				return false;
+			}
+			else{
+				
 				$.ajax({
-					url:"${pageContext.request.contextPath }/Order/returnBook",
-					data:{"order_id":order_id,"page":page},
+					url:"${pageContext.request.contextPath }/Admin/editAdmin",
+					data:{"admin_card":admin_card,"old_password":old_password,"new_password":new_password},
 					type:"post",
 					dataType:"json",
-					//async:false,
 					success:function(data){	
-						var uid=$("#uid").val();
-						var path;
-						if(uid==3){
-							path="findAll";
+						if(data=="0"){		
+							err("原始密码输入有误");
 						}
-						if(uid==0){
-							path="findAllByIsreturn/"+uid;
-						}
-						if(uid==1){
-							path="findAllByIsreturn/"+uid;
-						}
-						if(uid==2){
-							path="findAllByIsreturn/"+uid;
-						}
-						var oDiv = document.createElement('div');
-						oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
-											'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
-												'<form style="border:1px solid red;width:400px;height:200px">'+
-													'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
-														'<h4 style="line-height:100px;"> 归还成功</h4>'+
-													'</div>'+
-													'<div class="sure" style="width:400px;height:96px">'+
-														'<div align="center">'+
-															'<div  class="btn btn-primary "  ><a href="${pageContext.request.contextPath }/Order/'+path+'/'+data+'" style="color: white;text-decoration:none;">返回列表页面</a></div>'+
-														'</div>'+
-													'</div>'+
-												'</form>'+
-											'</div>'+
-										'</div>';
-						document.body.appendChild(oDiv); 
+						if(data=="1"){		
+							document.body.appendChild(oDiv); 
+						}	
 					}					
 				})
-				return false;
+				return false
+			}
+			
 		})
-		
-		$("#re").click(function(){
-			javascript:history.back(-1);
-		})
-	})
-		
+	});
+		function err(msg){
+			var oDiv1 = document.createElement('div');
+			oDiv1.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
+								'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
+									'<form style="border:1px solid red;width:400px;height:200px">'+
+										'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
+											'<h4 style="line-height:100px;">'+msg+'</h4>'+
+										'</div>'+
+										'<div class="sure" style="width:400px;height:96px">'+
+											'<div align="center">'+
+												'<div  class="btn btn-primary " style="right:20px;"><a href="" style="color: white;text-decoration:none;">确认</a></div>'+												
+											'</div>'+
+										'</div>'+
+									'</form>'+
+								'</div>'+
+							'</div>';
+			document.body.appendChild(oDiv1);
+	}
 	
 	</script>
 	<body id="bod">
@@ -195,14 +220,15 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">首 页</a>
 							</li>
-							<li class="active">修 改 图 书</li>
+							<li class="active">添 加 图 书</li>
 						</ul><!-- .breadcrumb -->
 					</div>
 
+					
 					<div class="page-content">
 						<div class="page-header">
 							<h1>
-								归 还 处 理
+								图 书 详 细 信 息
 							</h1>
 						</div><!-- /.page-header -->
 
@@ -210,78 +236,51 @@
 							<div class="col-xs-12">							
 							<form class="form-horizontal">
 									<div class="form-group">
-										<input type="hidden" id="page" value="${page }"/>
-										<input type="hidden" id="uid" value="${uid }"/>
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 借 书 订 单 号 </label>
+										<label class="col-sm-3 control-label no-padding-right" > 公告内容</label>
 
 										<div class="col-sm-9">
-											<input type="text" id="order_id" class="ccol-xs-6 col-sm-3"  value="${order.order_id }" readonly="readonly"/>
+											<input type="text"   class="col-xs-6 col-sm-3" id="admin_name" value="${ADMIN.admin_name }" readonly="readonly"/>
 										</div>
 									</div>
 
 									<div class="space-4"></div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 读者姓名 </label>
+										<label class="col-sm-3 control-label no-padding-right" > 管理员账号</label>
+
 										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3"   value="${order.user.user_name }" readonly="readonly"/>
+											<input type="text"   class="col-xs-6 col-sm-3" id="admin_card" value="${ADMIN.admin_card }" readonly="readonly"/>
 										</div>
 									</div>
 
 									<div class="space-4"></div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 读者账号 </label>
+										<label class="col-sm-3 control-label no-padding-right" > 原始密码</label>
+
 										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3"   value="${order.user_idcard }" readonly="readonly"/>
+											<input type="password"   class="col-xs-6 col-sm-3" id="old_password"  />
 										</div>
 									</div>
 
 									<div class="space-4"></div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 图书名称 </label>
+										<label class="col-sm-3 control-label no-padding-right" > 现在密码</label>
+
 										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3"  value="${order.book.book_name }" readonly="readonly"/>
+											<input type="password"   class="col-xs-6 col-sm-3" id="new_password"  />
 										</div>
 									</div>
 
+									
 									<div class="space-4"></div>
+
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 图书ISBN码 </label>
+										<label class="col-sm-3 control-label no-padding-right" > 确认密码</label>
+
 										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3"  value="${order.book_isbn }" readonly="readonly"/>
+											<input type="password"   class="col-xs-6 col-sm-3" id="new_password2"  />
 										</div>
 									</div>
 
-									<div class="space-4"></div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 借书时间</label>
-										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3"   value="<fmt:formatDate value="${order.borrow_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
-										</div>
-									</div>
-
-									<div class="space-4"></div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 应还时间 </label>
-										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3"   value="<fmt:formatDate value="${order.return_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
-										</div>
-									</div>
-
-									<div class="space-4"></div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 实际归还时间 </label>
-										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3" value="<fmt:formatDate value="${order.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
-											<span class="help-inline col-xs-12 col-sm-7">
-												<span class="middle">*默认为当前时间，无法更改</span>
-											</span>
-										</div>
-									</div>
-
-									<div class="space-4"></div>
-					
-											
-							
 									<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
 											<button id="add" class="btn btn-info" type="submit">
@@ -290,9 +289,9 @@
 											</button>
 
 											&nbsp; &nbsp; &nbsp;
-											<button id="re" class="btn" type="reset">
+											<button class="btn" type="reset">
 												<i class="icon-undo bigger-110"></i>
-												取消
+												重 置
 											</button>
 										</div>
 									</div>

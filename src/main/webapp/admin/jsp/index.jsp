@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" isELIgnored="false"
     pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
@@ -99,8 +101,9 @@
 							</a>
 							<ul class="submenu">
 								<li><a href="${pageContext.request.contextPath }/Order/findAll/1"><i class="icon-double-angle-right"></i>显 示 所 有 订 单</a></li>
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/orderIn.jsp"><i class="icon-double-angle-right"></i>执 行 中 订 单</a></li>
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/orderOut.jsp"><i class="icon-double-angle-right"></i>违 规 订 单</a></li>
+								<li><a href="${pageContext.request.contextPath }/Order/findAllByIsreturn/0/1"><i class="icon-double-angle-right"></i>执 行 中 订 单</a></li>
+								<li><a href="${pageContext.request.contextPath }/Order/findAllByIsreturn/1/1"><i class="icon-double-angle-right"></i>超 时 订 单</a></li>
+								<li><a href="${pageContext.request.contextPath }/Order/findAllByIsreturn/2/1"><i class="icon-double-angle-right"></i>已 完 成 订 单</a></li>
 							</ul>
 						</li>
 						<!--用 户 信 息 管 理  -->
@@ -126,13 +129,12 @@
 						<!--系 统 设 置  -->
 						<li>
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-tag"></i><span class="menu-text">系 统 设 置<span class="badge badge-primary ">5</span></span><b class="arrow icon-angle-down"></b>
+								<i class="icon-tag"></i><span class="menu-text">系 统 设 置</span><b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/system.jsp"><i class="icon-double-angle-right"></i>帮助</a></li>
-								<li><a href="error-404.html"><i class="icon-double-angle-right"></i>404错误页面</a></li>
-								<li><a href="error-500.html"><i class="icon-double-angle-right"></i>500错误页面</a></li>
-                                <li><a href="grid.html"><i class="icon-double-angle-right"></i>网格</a></li>
+								<li><a href="${pageContext.request.contextPath }/admin/jsp/system.jsp"><i class="icon-double-angle-right"></i>更改服务时间</a></li>
+								<li><a href="${pageContext.request.contextPath }/admin/jsp/addNotice.jsp"><i class="icon-double-angle-right"></i>发布公告</a></li>
+								<li><a href="${pageContext.request.contextPath }/Admin/editPasswordUI"><i class="icon-double-angle-right"></i>修改密码</a></li>
 							</ul>
 						</li>
 					</ul><!-- /.nav-list -->
@@ -218,16 +220,10 @@
 					        	<div class="alert alert-danger">
 						         	<h2><img alt="通知" src="${pageContext.request.contextPath }/assets/img/通知.png">&nbsp;&nbsp;&nbsp;通 知 公 告</h2>
 						         	<hr>
-					                <a>关 于 3 月 份 深 图 活 动 “ 捕 捉 光 影 ， 发 现 美 好 ” 地 点 变 更 的 通 知</a><br>
-									2 0 1 8 - 3 - 8<br>
-									<a>关 于 “ 经 典 诵 读 ” 之 “ 声 律 启 蒙 ” 活 动 的 复 课 通 知</a><br>		
-									2 0 1 8 - 3 - 5<br>
-									<a>深 圳 图 书 馆 2 0 1 8 年 春 节 开 放 时 间 和 服 务 范 围 公 告</a>	<br>							
-									2 0 1 8 - 2 - 6<br>
-									<a>关 于 “ 全 国 青 少 年 S c r a t c h 创 意 编 程 大 赛 颁 奖 仪 式 暨 A I 时 代 下 的 生 存 之 道 主 题 峰 会 ” 取消 的 通 知</a><br>						
-									2 0 1 8 - 1 - 1 6 <br>
-									<a>关 于 深 图 活 动 “ 创 客 活 动 ： 硬 币 分 拣 机 ” 举 办 时 间 调 整 的 通 知 </a><br>			
-									2 0 1 8 - 1 - 2<br>					
+						         	<c:forEach items="${NOTICE }" var="c">
+						         		<a>${c.notice_text }</a><br>
+										<fmt:formatDate value="${c.notice_date }" pattern="yyyy-MM-dd"></fmt:formatDate><br>
+						         	</c:forEach>			
 								</div><br>
 			                </div>
 	       				</div>

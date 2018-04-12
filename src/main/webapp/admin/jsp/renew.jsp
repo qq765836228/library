@@ -30,45 +30,56 @@
 			
 			var order_id=$("#order_id").val();
 			var page=$("#page").val();
-				$.ajax({
-					url:"${pageContext.request.contextPath }/Order/returnBook",
-					data:{"order_id":order_id,"page":page},
-					type:"post",
-					dataType:"json",
-					//async:false,
-					success:function(data){	
-						var uid=$("#uid").val();
-						var path;
-						if(uid==3){
-							path="findAll";
-						}
-						if(uid==0){
-							path="findAllByIsreturn/"+uid;
-						}
-						if(uid==1){
-							path="findAllByIsreturn/"+uid;
-						}
-						if(uid==2){
-							path="findAllByIsreturn/"+uid;
-						}
-						var oDiv = document.createElement('div');
-						oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
-											'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
-												'<form style="border:1px solid red;width:400px;height:200px">'+
-													'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
-														'<h4 style="line-height:100px;"> 归还成功</h4>'+
+			var isreturn=$("#isreturn").val();
+			var day=$("#day").val();
+			var reday=$("#reday").val();
+			
+			if(isreturn==1){
+				if(Number(day) >= Number(reday)){
+					$("#error").css({color:"red"});
+					return false;
+				}	
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath }/Order/renewBook",
+				data:{"order_id":order_id,"reday":reday,"page":page},
+				type:"post",
+				dataType:"json",
+				//async:false,
+				success:function(data){		
+					var uid=$("#uid").val();
+					var path;
+					if(uid==3){
+						path="findAll";
+					}
+					if(uid==0){
+						path="findAllByIsreturn/"+uid;
+					}
+					if(uid==1){
+						path="findAllByIsreturn/"+uid;
+					}
+					if(uid==2){
+						path="findAllByIsreturn/"+uid;
+					}
+					var oDiv = document.createElement('div');
+					oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
+										'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
+											'<form style="border:1px solid red;width:400px;height:200px">'+
+												'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
+													'<h4 style="line-height:100px;"> 归还成功</h4>'+
+												'</div>'+
+												'<div class="sure" style="width:400px;height:96px">'+
+													'<div align="center">'+
+														'<div  class="btn btn-primary "  ><a href="${pageContext.request.contextPath }/Order/'+path+'/'+data+'" style="color: white;text-decoration:none;">返回列表页面</a></div>'+
 													'</div>'+
-													'<div class="sure" style="width:400px;height:96px">'+
-														'<div align="center">'+
-															'<div  class="btn btn-primary "  ><a href="${pageContext.request.contextPath }/Order/'+path+'/'+data+'" style="color: white;text-decoration:none;">返回列表页面</a></div>'+
-														'</div>'+
-													'</div>'+
-												'</form>'+
-											'</div>'+
-										'</div>';
-						document.body.appendChild(oDiv); 
-					}					
-				})
+												'</div>'+
+											'</form>'+
+										'</div>'+
+									'</div>';
+					document.body.appendChild(oDiv); 
+				}					
+			})
+			
 				return false;
 		})
 		
@@ -210,8 +221,10 @@
 							<div class="col-xs-12">							
 							<form class="form-horizontal">
 									<div class="form-group">
-										<input type="hidden" id="page" value="${page }"/>
-										<input type="hidden" id="uid" value="${uid }"/>
+										<input type="hidden" id="page"  value="${page }"/>
+										<input type="hidden" id="isreturn"  value="${order.isreturn }"/>
+										<input type="hidden" id="day" value="${day}"/>
+										<input type="hidden" id="uid" value="${uid}"/>
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 借 书 订 单 号 </label>
 
 										<div class="col-sm-9">
@@ -264,17 +277,25 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 应还时间 </label>
 										<div class="col-sm-9">
 											<input type="text" class="ccol-xs-6 col-sm-3"   value="<fmt:formatDate value="${order.return_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
+											<c:if test="${order.isreturn==1 && day>0 }">
+												<span class="help-inline col-xs-12 col-sm-7">
+													<span class="middle" style="color: red">*您已超时${day }天</span>
+												</span>
+											</c:if>
+											
 										</div>
 									</div>
 
 									<div class="space-4"></div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 实际归还时间 </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 续 借 天 数 </label>
 										<div class="col-sm-9">
-											<input type="text" class="ccol-xs-6 col-sm-3" value="<fmt:formatDate value="${order.is_return_time }" pattern="yyyy-MM-dd"></fmt:formatDate>" readonly="readonly"/>
-											<span class="help-inline col-xs-12 col-sm-7">
-												<span class="middle">*默认为当前时间，无法更改</span>
-											</span>
+											<input type="text" id="reday" class="ccol-xs-2 col-sm-1" value="" />
+											<c:if test="${order.isreturn==1 }">
+												<span class="help-inline col-xs-6 col-sm-3">
+													<span id="error" class="middle" style="color: green">*请续借至少${day+1 }天</span>
+												</span>
+											</c:if>
 										</div>
 									</div>
 

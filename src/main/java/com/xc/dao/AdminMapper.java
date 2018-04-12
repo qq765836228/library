@@ -7,4 +7,6 @@ public interface AdminMapper {
 	public Admin admin_login(Admin admin);
 	//根据id查询
 	public Admin findAdminById(Integer id);
+	//修改密码
+	public void update(Admin admin);
 }
