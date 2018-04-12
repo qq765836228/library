@@ -25,7 +25,7 @@
 
     <div class="container" >
       <form class="form-login" align="center" >
-        <img class="mb-4" src="../../assets/img/2.png" alt="" width="120px" height="120px"/>
+        <img class="mb-4" src="${pageContext.request.contextPath }/assets/img/2.png" alt="" width="120px" height="120px"/>
         <h2 class="form-login-head">登陆</h2>
         <input type="text" id="username" class="form-control" name="admin_card"  placeholder="账号"required autofocus>
         <input type="password" id="password" class="form-control" name="admin_password"  placeholder="密码"required>

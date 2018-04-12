@@ -8,12 +8,21 @@ public class QueryVo<T> {
 	private Integer number;//每页条数
 	private Integer totalNumber;//总条数
 	private Integer totalPage;//总页数
+	private Integer isreturn;
 	private String book_name;
 
 	private List<T> list;
 
 	
 	
+	public Integer getIsreturn() {
+		return isreturn;
+	}
+
+	public void setIsreturn(Integer isreturn) {
+		this.isreturn = isreturn;
+	}
+
 	public String getBook_name() {
 		return book_name;
 	}

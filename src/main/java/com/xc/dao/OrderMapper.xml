@@ -53,6 +53,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn limit ${currentPage*number},${number}
 		
 	</select>
+	<select id="orderfindAllByIsreturn" parameterType="QueryVo" resultMap="OBean">
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.isreturn = ${isreturn} limit ${currentPage*number},${number}
+		
+	</select>
 	
 	<select id="orderFindById" parameterType="int" resultMap="OBean">
 		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.order_id = #{order_id}
@@ -62,8 +66,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findCount" resultType="int">
 		select count(*) from `order` 
 	</select>
-	
+	<!--查询违规总条数  -->
+	<select id="findCountByIsreturn" resultType="int">
+		select count(*) from `order` where isreturn = 1
+	</select>
 	<update id="updateIsreturn" parameterType="ORDER">
 		update `order` set isreturn = #{isreturn} where order_id = #{order_id}
+	</update>
+	
+	<update id="update" parameterType="ORDER">
+		update `order` set isreturn = #{isreturn},return_time = #{return_time},is_return_time = #{is_return_time} where order_id = #{order_id}
 	</update>
 </mapper>
