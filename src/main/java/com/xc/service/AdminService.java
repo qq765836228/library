@@ -16,4 +16,12 @@ public interface AdminService{
 
 	public List<Notice> findAllNotice();
 
+	public Notice findNoticeById(int i);
+
+	public void updateNotice(Notice notice);
+
+	public void insertNotice(Notice notice);
+
+	public void deleteNotice(Integer notice_id);
+
 }
