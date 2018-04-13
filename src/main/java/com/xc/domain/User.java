@@ -21,7 +21,7 @@ public class User {
 	private Date user_inDate;//注册日期
 	private Integer user_error;//违规次数
 	
-	private Integer user_state=1;//账号状态    0：未激活   1：已激活
+	private Integer user_state;//账号状态    0：未激活   1：已激活
 
 	public Integer getUser_id() {
 		return user_id;

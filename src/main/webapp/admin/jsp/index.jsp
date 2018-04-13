@@ -113,7 +113,7 @@
 							</a>
 							<ul class="submenu">
 								<li><a href="${pageContext.request.contextPath }/admin/jsp/userAdd.jsp"><i class="icon-double-angle-right"></i> 用 户 信 息 添 加</a></li>
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/userUI.jsp"><i class="icon-double-angle-right"></i> 显 示 所 有 用 户</a></li>		
+								<li><a href="${pageContext.request.contextPath }/User/findAll/1"><i class="icon-double-angle-right"></i> 显 示 所 有 用 户</a></li>		
 							</ul>
 						</li>
 						<!--图 书 分 类 管 理   -->
