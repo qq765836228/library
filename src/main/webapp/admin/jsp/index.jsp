@@ -132,7 +132,7 @@
 								<i class="icon-tag"></i><span class="menu-text">系 统 设 置</span><b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/system.jsp"><i class="icon-double-angle-right"></i>更改服务时间</a></li>
+								<li><a href="${pageContext.request.contextPath }/Admin/editNoticeUI/1"><i class="icon-double-angle-right"></i>更改服务时间</a></li>
 								<li><a href="${pageContext.request.contextPath }/admin/jsp/addNotice.jsp"><i class="icon-double-angle-right"></i>发布公告</a></li>
 								<li><a href="${pageContext.request.contextPath }/Admin/editPasswordUI"><i class="icon-double-angle-right"></i>修改密码</a></li>
 							</ul>
@@ -164,55 +164,42 @@
 				                    <div class="panel-heading">
 				                       		 <h4><img alt="服务中心" src="${pageContext.request.contextPath }/assets/img/服务中心.png">&nbsp;&nbsp;&nbsp;服 务 时 间</h4>
 				                    </div>
-				                    <div class="panel-body">
-				                    	<a> 网上图书馆、自助图书馆全天候服务：（0:00至24:00）</a><br>
-							            <a> 周二至周日主馆舍开放时间：</a><br>
-							            <a> 一楼至四楼：9:00-21:00</a><br>
-							            <a> 五楼至六楼：9:00-17:00</a><br>
-							            <a> 少儿服务区：周二至周五12:00(周末10：00)-18:00</a><br>
-							            <a> 逢周一内务整理，主馆舍不开放。</a><br>
-							            <a> 了解详情</a><br> 
-				                     </div>
+				                    <div class="panel-body" style="font-size: 15px;">
+				                    	${Notice.notice_text }
+				                    </div>
 				              </div>
 				             	<div class="panel panel-primary">
 				                 <div class="panel-heading">
 				                       		 <h4>服 务 推 介</h4>
 				                    </div>
 				                    <div class="panel-body">
-				                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				                     	 实行“全面开放、免证进馆、分层管理、
-				                     	 一卡通行”方式，全面推行自助服务。 
-				                     	 “图书馆之城”统一服务、自助图书馆
-				                     	 网提供了便利的服务，“深圳文献港”
-				                     	 及其移动门户打造了数字资源共享平台。
+					                    
+					                    <p style="font-size: 15px;"> 
+					                    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					                    	实行“全面开放、免证进馆、分层管理、
+					                     	 一卡通行”方式，全面推行自助服务。 
+					                     	 “图书馆之城”统一服务、自助图书馆
+					                     	 网提供了便利的服务，“深圳文献港”
+					                     	 及其移动门户打造了数字资源共享平台。
+					                     </p>
+				                     	
 				                     </div>
 				              </div>
 				        	</div>
 				        	<div class="col-md-5">
 					        	<div class="panel panel-success">
 	                        	<div class="panel-heading">
-	                          		<h4><img alt="资源中心" src="${pageContext.request.contextPath }/assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;常 用 资 源</h4>
+	                          		<h4><img alt="资源中心" src="${pageContext.request.contextPath }/assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;简介</h4>
 	                       		</div>
 	                        	<div class="panel-body">
-	                            	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本馆2016年累计馆藏资源近900万册、件，
-	                            	其中纸质文献480万册，中外文报刊6000种，
-	                            	音像资料14万件，引进电子数据库30余个，
-	                            	提供港台、时装和深圳地方文献等特色文献服务。</p>
-		                        	<h4><a>数字资源更多>></a></h4>
-									<a>1.“深圳记忆”专题数据库</a><br>
-									<a>2.自建专题资源</a><br>
-									<a>3.CNKI中国知网</a><br>
-									<a>4.维普考试资源系统</a><br>
-									<a>5.台湾学术在线</a><br>
-									<a>6.超星“书世界”</a><br>
-									<a>7.新东方多媒体学习库</a><br>
-									<a>8.网上报告厅</a><br>
-									<a>9.龙源电子期刊</a><br>
-									<a>10.EBSCOHost数据库</a><br>
-									<a>11.广东省地方特色资源</a><br>							
+	                            	<p style="font-size: 18px;">　华东交通大学是一所以工为主，经、管、文、理、法、教育、艺术等多学科协调发展，以交通为特色、轨道为核心的教学研究型大学，江西省属重点大学。学校是国家“中西部高校基础能力建设工程”重点建设大学、中国铁路总公司与江西省人民政府共建高校、教育部“卓越工程师教育培养计划”高校、江西省“2011计划”依托高校、原南京军区（现东部战区）招收和选拔培养后备军官（国防生）签约高校，为全国毕业生就业典型经验高校，首批全国高校创新创业50强和国家级知识产权培训基地，“中俄交通大学联盟”成员高校，“中国—东盟轨道交通教育培训联盟”成员高校。<br>
+
+　　1971年，国家决定将上海交通大学机车车辆系以及同济大学铁道工程专业并入上海铁道学院，更名为华东交通大学，迁往江西；1978年，中央同意原上海铁道学院不再搬迁，华东交通大学继续在南昌建校，由原铁道部和江西省双重领导，以原铁道部为主；2000年，学校转制为“中央与地方共建，以地方管理为主”。<br>
+
+　　截至2016年10月，学校占地面积近3000亩，建筑面积70余万平方米，教学科研仪器设备总值近3.5亿元；图书馆收藏纸质图书203万册，电子文献233万册，为中国学术期刊文献检索一级咨询站；学校有1个博士后科研工作站，1个博士后科研流动站，1个院士工作站，2个一级学科博士点，17个一级学科硕士点[4]；有在校学生23000余人，其中研究生2800余人[5]；有教职工1700余人，其中正副教授530余人；学校设有18个学院：其中17个直属二级学院、1个独立设置学院（理工学院），校本部共60个本科专业。						
 	                       		 </div>
 	                        <div class="panel-footer">
-	                            Panel Footer
+	                            @ 交 大 理 工
 	                        </div>
                    			</div>
 				        </div>
@@ -220,9 +207,13 @@
 					        	<div class="alert alert-danger">
 						         	<h2><img alt="通知" src="${pageContext.request.contextPath }/assets/img/通知.png">&nbsp;&nbsp;&nbsp;通 知 公 告</h2>
 						         	<hr>
-						         	<c:forEach items="${NOTICE }" var="c">
-						         		<a>${c.notice_text }</a><br>
-										<fmt:formatDate value="${c.notice_date }" pattern="yyyy-MM-dd"></fmt:formatDate><br>
+						         	<c:forEach items="${List }" var="c">
+						         		<a style="font-size: 20px;text-decoration: none;">${c.notice_text }</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						         		<a class="red" href="${pageContext.request.contextPath }/Admin/deleteNotice/${c.notice_id }" onClick="return confirm('确定删除?');">
+												<i class="icon-trash bigger-130"></i>
+										</a><br>
+										<a style="font-size: 15px;text-decoration: none;color: blue"><fmt:formatDate value="${c.notice_date }" pattern="yyyy-MM-dd"></fmt:formatDate></a><br>
+										
 						         	</c:forEach>			
 								</div><br>
 			                </div>

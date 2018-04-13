@@ -31,11 +31,11 @@
 								'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
 									'<form style="border:1px solid red;width:400px;height:200px">'+
 										'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
-											'<h4 style="line-height:100px;"> 公告已发布</h4>'+
+											'<h4 style="line-height:100px;"> 公告修改成功 ,点击返回主页</h4>'+
 										'</div>'+
 										'<div class="sure" style="width:400px;height:96px">'+
 											'<div align="center">'+
-												'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/index.jsp" style="color: white;text-decoration:none;">返回首页</a></div>'+												
+												'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/index.jsp" style="color: white;text-decoration:none;">返回主页</a></div>'+												
 											'</div>'+
 										'</div>'+
 									'</form>'+
@@ -43,6 +43,7 @@
 							'</div>';
 			
 			
+			var notice_id=$("#notice_id").val();
 			var notice_text=$("#notice_text").val();
 			if(notice_text==null || notice_text== ""){
 				err("公告内容不能为空");
@@ -51,11 +52,11 @@
 			else{
 				
 				$.ajax({
-					url:"${pageContext.request.contextPath }/Admin/addNotice",
-					data:{"notice_text":notice_text},
+					url:"${pageContext.request.contextPath }/Admin/editNotice",
+					data:{"notice_id":notice_id,"notice_text":notice_text},
 					type:"post",
 					dataType:"json",
-					success:function(data){	
+					success:function(data){							
 						if(data=="0"){		
 							document.body.appendChild(oDiv); 
 						}	
@@ -209,34 +210,38 @@
 					
 					<div class="page-content">
 						<div class="page-header">
-							<h1>
-								发 布 新 公 告 
-							</h1>
+							<c:if test="${NOTICE.notice_id ==1 }">
+								<h1>
+									服务时间修改
+								</h1>
+								<font color="red">警告：（只修改a标签里面的内容或删除整个a标签）</font>
+							</c:if>
+							<c:if test="${NOTICE.notice_id !=1 }">
+								<h1>
+									公告内容修改
+								</h1>
+							</c:if>
+							
 						</div><!-- /.page-header -->
 
 						<div class="row">
 							<div class="col-xs-12" align="center">							
 							<form class="form-horizontal">
 									<div class="form-group">
+										
+										<input type="hidden"  id="notice_id" value="${NOTICE.notice_id }"/>
 										<div class="col-sm-9">
-											<textarea rows="8" cols="60" id="notice_text"   ></textarea>
+											<textarea rows="8" cols="60" id="notice_text"   >${NOTICE.notice_text }</textarea>
 										</div>
 									</div>
-									<div class="space-4"></div>
-									
 
+									<div class="space-4"></div>
 									
 									<div class="clearfix form-actions">
 										<div class="col-md-9">
 											<button id="add" class="btn btn-info" type="submit">
 												<i class="icon-ok bigger-110"></i>
-												提 交
-											</button>
-
-											&nbsp; &nbsp; &nbsp;
-											<button class="btn" type="reset">
-												<i class="icon-undo bigger-110"></i>
-												重 置
+												修改
 											</button>
 										</div>
 									</div>

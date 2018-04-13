@@ -13,8 +13,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="findAll" resultType="NOTICE">
  		select * from notice order by notice_date desc  limit 0,5
  	</select>
+	 <select id="findById" parameterType="int" resultType="NOTICE">
+ 		select * from notice where notice_id=#{notice_id}
+ 	</select>
  
 	<delete id="delete" parameterType="int">
-		delete * from notice where notice_id=#{notice_id}
+		delete from notice where notice_id=#{notice_id}
 	</delete>
+	
+	<update id="updateNotice" parameterType="NOTICE">
+		update notice set notice_text=#{notice_text} where notice_id=#{notice_id}
+	</update>
 </mapper>

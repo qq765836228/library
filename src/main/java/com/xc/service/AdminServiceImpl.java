@@ -46,5 +46,21 @@ public class AdminServiceImpl implements AdminService {
 	public List<Notice> findAllNotice() {		
 		return noticeMapper.findAll();
 	}
+	@Override
+	public Notice findNoticeById(int i) {	
+		return noticeMapper.findById(i);
+	}
+	@Override
+	public void updateNotice(Notice notice) {
+		noticeMapper.updateNotice(notice);
+	}
+	@Override
+	public void insertNotice(Notice notice) {
+		noticeMapper.insertNotice(notice);
+	}
+	@Override
+	public void deleteNotice(Integer notice_id) {
+		noticeMapper.delete(notice_id);
+	}
 	
 }

@@ -1,6 +1,7 @@
 package com.xc.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -86,9 +88,11 @@ public class AdminController {
 		@RequestMapping("/indexUI/{id}")
 		public  String indexUI(@PathVariable("id")Integer id,HttpSession session)throws IOException{			 
 			Admin admin= adminService.findAdminById(id);
-			List<Notice> notice=adminService.findAllNotice();
+			List<Notice> list=adminService.findAllNotice();
+			Notice notice=adminService.findNoticeById(1);
 			session.setAttribute("ADMIN", admin);
-			session.setAttribute("NOTICE", notice);
+			session.setAttribute("List", list);
+			session.setAttribute("Notice", notice);
 			return "index"; 
 		}
 		/**
@@ -110,10 +114,62 @@ public class AdminController {
 		@RequestMapping("/loginOut")
 		public String loginOut(HttpSession session){
 		    session.removeAttribute("ADMIN");
-		    session.removeAttribute("NOTICE");
+		    session.removeAttribute("List");
+		    session.removeAttribute("Notice");
 			return "login";
 		}
-		
-		
+		/**
+		 * 注销
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping("/editNoticeUI/{id}")
+		public String editNoticeUI(@PathVariable("id")Integer id,Model model){
+			Notice notice=adminService.findNoticeById(id);
+			model.addAttribute("NOTICE", notice);
+			return "editNotice";
+		}
+		/**
+		 * 修改服务时间
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping("/editNotice")
+		@ResponseBody
+		public String editNotice(String notice_text,Integer notice_id,HttpSession session){
+			Notice notice=adminService.findNoticeById(notice_id);
+			notice.setNotice_text(notice_text);
+			adminService.updateNotice(notice);
+			session.setAttribute("Notice", notice);
+			return "0";
+		}
+		/**
+		 * 新增公告
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping("/addNotice")
+		@ResponseBody
+		public String addNotice(String notice_text,HttpSession session){
+			Notice notice=new Notice();
+			notice.setNotice_text(notice_text);
+			notice.setNotice_date(new Date());
+			adminService.insertNotice(notice);
+			List<Notice> list=adminService.findAllNotice();
+			session.setAttribute("List", list);
+			return "0";
+		}
+		/**
+		 * 修改服务时间
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping("/deleteNotice/{id}")
+		public String deleteNotice(@PathVariable("id")Integer notice_id,HttpSession session){
+			adminService.deleteNotice(notice_id);
+			List<Notice> list=adminService.findAllNotice();
+			session.setAttribute("List", list);
+			return "index";
+		}
 }
 	
