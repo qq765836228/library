@@ -25,17 +25,46 @@
 	</head>
 	<script type="text/javascript">
 	$(function(){	
+		$("#user_idcard").blur(function(){			
+			var user_idcard=$("#user_idcard").val();
+			if(user_idcard != null && user_idcard != ""){
+				$.ajax({
+					url:"${pageContext.request.contextPath }/User/findByIdcard",
+					data:"user_idcard="+user_idcard,
+					type:"post",
+					dataType:"json",
+					success:function(data){	
+						if(data=="0"){
+							$(".error").html("");
+							$(".error").html("<font>*必填</font>");
+							$("#add").removeAttr("disabled");
+							
+						}
+						if(data=="1"){
+							$(".error").html("");
+							$(".error").html("<font color='red'>此账号已经存在！</font>");
+							$("#add").attr("disabled","true");
+						}
+						return false;
+					}
+				})
+			}
+			$(".error").html("");
+			$(".error").html("<font>*必填</font>");
+		})
+		
 		$("#add").click(function(){
 			var oDiv = document.createElement('div');
 			oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
 								'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
 									'<form style="border:1px solid red;width:400px;height:200px">'+
 										'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
-											'<h4 style="line-height:100px;"> 公告修改成功 ,点击返回主页</h4>'+
+											'<h4 style="line-height:100px;"> 添加成功</h4>'+
 										'</div>'+
 										'<div class="sure" style="width:400px;height:96px">'+
 											'<div align="center">'+
-												'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/index.jsp" style="color: white;text-decoration:none;">返回主页</a></div>'+												
+												'<div  class="btn btn-primary " style="right:20px;"><a href="" style="color: white;text-decoration:none;">继续添加</a></div>'+
+												'<div  class="btn btn-primary "  ><a href="${pageContext.request.contextPath }/User/findAll/1" style="color: white;text-decoration:none;">查看所有学生</a></div>'+
 											'</div>'+
 										'</div>'+
 									'</form>'+
@@ -43,20 +72,30 @@
 							'</div>';
 			
 			
-			var notice_id=$("#notice_id").val();
-			var notice_text=$("#notice_text").val();
-			if(notice_text==null || notice_text== ""){
-				err("公告内容不能为空");
+			var user_idcard=$("#user_idcard").val();
+			var user_name=$("#user_name").val();
+			var user_sex=$("#user_sex").val();
+			var user_telphone=$("#user_telphone").val();
+			if(user_idcard==null || user_idcard== ""){
+				err("账号不能为空");
 				return false;
-			}			
+			}
+			else if(user_name==null || user_name== ""){
+				err("姓名不能为空");
+				return false;
+			}
+			else if(user_telphone==null || user_telphone== ""){
+				err("联系方式不能为空");
+				return false;
+			}
 			else{
 				
 				$.ajax({
-					url:"${pageContext.request.contextPath }/Admin/editNotice",
-					data:{"notice_id":notice_id,"notice_text":notice_text},
+					url:"${pageContext.request.contextPath }/User/addUser",
+					data:{"user_idcard":user_idcard,"user_password":user_idcard,"user_name":user_name,"user_telphone":user_telphone,"user_sex":user_sex},
 					type:"post",
 					dataType:"json",
-					success:function(data){							
+					success:function(data){	
 						if(data=="0"){		
 							document.body.appendChild(oDiv); 
 						}	
@@ -66,7 +105,7 @@
 			}
 			
 		})
-	});
+	})
 		function err(msg){
 			var oDiv1 = document.createElement('div');
 			oDiv1.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
@@ -203,45 +242,72 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">首 页</a>
 							</li>
-							<li class="active">添 加 图 书</li>
+							<li class="active">添 加 学 生</li>
 						</ul><!-- .breadcrumb -->
 					</div>
 
 					
 					<div class="page-content">
 						<div class="page-header">
-							<c:if test="${NOTICE.notice_id ==1 }">
-								<h1>
-									服务时间修改
-								</h1>
-								<font color="red">提示：（请使用br标签进行换行处理）</font>
-							</c:if>
-							<c:if test="${NOTICE.notice_id !=1 }">
-								<h1>
-									公告内容修改
-								</h1>
-							</c:if>
-							
+							<h1>
+								学 生 详 细 信 息
+							</h1>
 						</div><!-- /.page-header -->
 
 						<div class="row">
-							<div class="col-xs-12" align="center">							
+							<div class="col-xs-12">							
 							<form class="form-horizontal">
 									<div class="form-group">
-										
-										<input type="hidden"  id="notice_id" value="${NOTICE.notice_id }"/>
+										<label class="col-sm-3 control-label no-padding-right" >姓 名</label>
 										<div class="col-sm-9">
-											<textarea rows="8" cols="60" id="notice_text"   >${NOTICE.notice_text }</textarea>
+											<input  type="text" class="col-xs-6 col-sm-3" id="user_name" />
+											<span class="help-inline col-xs-12 col-sm-7">
+												<label class="middle">
+													<span>*必填</span>
+												</label>
+											</span>										
 										</div>
 									</div>
-
-									<div class="space-4"></div>
-									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >学 号 </label>
+										<div class="col-sm-9">
+											<input  type="text" class="col-xs-6 col-sm-3" id="user_idcard" />
+											<span class="help-inline col-xs-12 col-sm-7">
+												<label class="middle">
+													<span class="error">*必填</span>
+												</label>
+											</span>										
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >性别</label>
+										<div class="col-sm-9">
+										    <input  type="radio" id="user_sex" name="user_sex" value="男" checked="checked"/>男
+											<input  type="radio" id="user_sex" name="user_sex" value="女"/>女									
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >联系方式</label>
+										<div class="col-sm-9">
+										    <input  type="text" class="col-xs-6 col-sm-3" id="user_telphone"/>
+										    <span class="help-inline col-xs-12 col-sm-7">
+												<label class="middle">
+													<span>*必填</span>
+												</label>
+											</span>										
+										</div>
+									</div>
 									<div class="clearfix form-actions">
-										<div class="col-md-9">
+										<div class="col-md-offset-3 col-md-9">
 											<button id="add" class="btn btn-info" type="submit">
 												<i class="icon-ok bigger-110"></i>
-												修改
+												提 交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												重 置
 											</button>
 										</div>
 									</div>

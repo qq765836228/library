@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xc.domain.User;
 import com.xc.service.UserService;
+import com.xc.vo.QueryVo;
 
 @Controller
 @RequestMapping("/User")
@@ -107,11 +107,14 @@ public class UserController {
 	 * 查找所有信息
 	 * @return
 	 */
-	@RequestMapping("/findAll")
-	public String findAll(Model model){
-		List<User> list=userService.findAll();
-		model.addAttribute("list", list);
-		return "forward:/jsp/list.jsp";
+	@RequestMapping("/findAll/{currentPage}")
+	public String findAll(Model model,@PathVariable("currentPage")Integer currentPage){
+		QueryVo<User> vo=new QueryVo<>();
+    	vo.setCurrentPage(currentPage-1);
+    	vo.setNumber(10);
+		 vo=userService.findAll(vo);
+		model.addAttribute("UVO", vo);
+		return "user";
 	}
 	/**
 	 * 删除信息
@@ -164,57 +167,34 @@ public class UserController {
 		httpSession.removeAttribute("user");
 		return "redirect:/jsp/login.jsp";
 	}
-	/*
-	@RequestMapping("/findAll2")
-	public String findAll2(Model model,String username,String name,String sex,String type,String age1,String age2){
-		QueryVo vo=new QueryVo();
-		User user=new User();
-		if(username != null && !username.isEmpty()){
-			user.setUser_idcard(username);
-			model.addAttribute("username", username);
-		}
-		if(name != null && !name.isEmpty()){
-			user.setUser_name(name);
-			model.addAttribute("name", name);
-		}
-		if(sex != null && !sex.isEmpty()){
-			user.setUser_sex(sex);
-			model.addAttribute("sex", sex);
-		}
-		if(user!=null){
-			vo.setUser(user);
-		}
-		if(type != null && !type.isEmpty()){
-			vo.setType(type);
-			model.addAttribute("type", type);
-		}
-		if(age1 != null && !age1.isEmpty()){
-			vo.setNumber1(Integer.parseInt(age1));
-			model.addAttribute("age1", age1);
-		}
-		if(age2 != null && !age2.isEmpty()){
-			vo.setNumber2(Integer.parseInt(age2));
-			model.addAttribute("age2", age2);
-		}
-		
-		List<User> list=userService.findAll2(vo);
-		model.addAttribute("list", list);
-		return "forward:/jsp/list.jsp";
-	}*/
 	/**
-     * 跳转到添加图书页面
+     * 判断用户
      * @param model
      * @return
      */
     @RequestMapping("/findByIdcard")
     @ResponseBody
-    public String findByISBN(String user_idcard){
+    public String findByIdcard(String user_idcard){
     	User user=userService.findByIdcard(user_idcard);
         if(user != null){
         	return "1";
         }
     	return "0";
     }
-    
+    /**
+     * 判断用户
+     * @param model
+     * @return
+     */
+    @RequestMapping("/addUser")
+    @ResponseBody
+    public String addUser(User user){
+    	user.setUser_inDate(new Date());
+    	user.setUser_error(0);
+    	user.setUser_state(1);//1表示已激活，0表示未激活
+    	user.setUser_cardtype("学生证");
+    	userService.insertUser(user);
+    	return "0";
+    }
 }
 	

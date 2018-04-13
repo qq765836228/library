@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" isELIgnored="false"
     pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>图书添加--交理图书馆后台管理系统</title>
-		<meta name="keywords" content="图书添加--交理图书馆后台管理系统" />
-		<meta name="description" content="图书添加--交理图书馆后台管理系统" />
+		<title>图书信息--交理图书馆后台管理系统</title>
+		<meta name="keywords" content="图书信息--交理图书馆后台管理系统" />
+		<meta name="description" content="图书信息--交理图书馆后台管理系统" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- basic styles -->
 		<link href="${pageContext.request.contextPath }/admin/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -20,79 +21,44 @@
 
 		<!-- ace settings handler -->
 
-		<script src="${pageContext.request.contextPath }/admin/assets/js/ace-extra.min.js"></script>	
+		<script src="${pageContext.request.contextPath }/admin/assets/js/ace-extra.min.js"></script>
 		<script src="${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js"></script>
 	</head>
-	<script type="text/javascript">
-	$(function(){	
-		$("#add").click(function(){
-			var oDiv = document.createElement('div');
-			oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
-								'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
-									'<form style="border:1px solid red;width:400px;height:200px">'+
-										'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
-											'<h4 style="line-height:100px;"> 公告修改成功 ,点击返回主页</h4>'+
+<script type="text/javascript">
+	
+		function findother(){
+		var others=$("#others").val();
+		var oDiv = document.createElement('div');
+		oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
+							'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 500px;height: 300px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
+								'<form style="border:1px solid #AEEEEE;width:500px;height:300px">'+
+									'<div class="fitting-header" style="width:500px;height:30px;">'+
+										'<h4> 图书描述</h4>'+
+									'</div>'+
+									'<hr/>'+
+									'<div class="fitting-header" style="width:500px;height:120px;" >'+
+										'<h4> '+others+
+										'</h4>'+
+									'</div>'+
+									'<hr/>'+
+									'<div class="sure" style="width:500px;height:96px">'+
+										'<div align="center">'+
+											'<div  class="btn btn-primary "  ><a href="javascript:void(0)" onclick="location.reload()" style="color: white;text-decoration:none;">返回</a></div>'+
 										'</div>'+
-										'<div class="sure" style="width:400px;height:96px">'+
-											'<div align="center">'+
-												'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/index.jsp" style="color: white;text-decoration:none;">返回主页</a></div>'+												
-											'</div>'+
-										'</div>'+
-									'</form>'+
-								'</div>'+
-							'</div>';
-			
-			
-			var notice_id=$("#notice_id").val();
-			var notice_text=$("#notice_text").val();
-			if(notice_text==null || notice_text== ""){
-				err("公告内容不能为空");
-				return false;
-			}			
-			else{
-				
-				$.ajax({
-					url:"${pageContext.request.contextPath }/Admin/editNotice",
-					data:{"notice_id":notice_id,"notice_text":notice_text},
-					type:"post",
-					dataType:"json",
-					success:function(data){							
-						if(data=="0"){		
-							document.body.appendChild(oDiv); 
-						}	
-					}					
-				})
-				return false
-			}
-			
-		})
-	});
-		function err(msg){
-			var oDiv1 = document.createElement('div');
-			oDiv1.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
-								'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
-									'<form style="border:1px solid red;width:400px;height:200px">'+
-										'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
-											'<h4 style="line-height:100px;">'+msg+'</h4>'+
-										'</div>'+
-										'<div class="sure" style="width:400px;height:96px">'+
-											'<div align="center">'+
-												'<div  class="btn btn-primary " style="right:20px;"><a href="" style="color: white;text-decoration:none;">确认</a></div>'+												
-											'</div>'+
-										'</div>'+
-									'</form>'+
-								'</div>'+
-							'</div>';
-			document.body.appendChild(oDiv1);
+									'</div>'+
+								'</form>'+
+							'</div>'+
+						'</div>';
+		document.body.appendChild(oDiv); 
 	}
 	
 	</script>
-	<body id="bod">
+	<body>
 		<!--头部  -->
-		<div class="navbar navbar-default" id="navbar" >
+		<div class="navbar navbar-default" id="navbar">
 			<div class="navbar-container" id="navbar-container">
 				<div class="navbar-header pull-left">
-					<a href="#" class="navbar-brand" >
+					<a href="#" class="navbar-brand">
 						<small>
 							<i class="icon-leaf"></i>
 							交理图书馆后台管理系统
@@ -142,11 +108,11 @@
 						<!--图 书信息管理  -->
 						<li class="active">
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-tag"></i><span class="menu-text">用 户 信 息 管 理 </span><b class="arrow icon-angle-down"></b>
+								<i class="icon-tag"></i><span class="menu-text">图 书 信 息 管 理 </span><b class="arrow icon-angle-down"></b>
 							</a>
-							<ul class="submenu" >
-								<li class="active"><a href="${pageContext.request.contextPath }/admin/jsp/bookAdd.jsp" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 添 加 图 书 信 息 </a></li>
-								<li><a href="${pageContext.request.contextPath }/admin/jsp/Books.jsp" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 显 示 所 有 图 书 </a></li>	
+							<ul class="submenu">
+								<li><a href="${pageContext.request.contextPath }/admin/jsp/bookAdd.jsp" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 添 加 图 书 信 息 </a></li>
+								<li class="active"><a href="${pageContext.request.contextPath }/admin/jsp/bookUI" class="dropdown-toggle"><i class="icon-double-angle-right"></i> 显 示 所 有 图 书 </a></li>	
 							</ul>
 						</li>
 						
@@ -197,63 +163,126 @@
 				</div>
 				<!--主内容  -->
 				<div class="main-content">
-					<div class="breadcrumbs" id="breadcrumbs" >
+					<div class="breadcrumbs" id="breadcrumbs" >						
 						<ul class="breadcrumb" style="line-height:41px;">
 							<li>
 								<i class="icon-home home-icon"></i>
 								<a href="#">首 页</a>
 							</li>
-							<li class="active">添 加 图 书</li>
+							<li class="active">显 示 所 有</li>
 						</ul><!-- .breadcrumb -->
 					</div>
-
-					
 					<div class="page-content">
-						<div class="page-header">
-							<c:if test="${NOTICE.notice_id ==1 }">
-								<h1>
-									服务时间修改
-								</h1>
-								<font color="red">提示：（请使用br标签进行换行处理）</font>
-							</c:if>
-							<c:if test="${NOTICE.notice_id !=1 }">
-								<h1>
-									公告内容修改
-								</h1>
-							</c:if>
-							
-						</div><!-- /.page-header -->
-
 						<div class="row">
-							<div class="col-xs-12" align="center">							
-							<form class="form-horizontal">
-									<div class="form-group">
-										
-										<input type="hidden"  id="notice_id" value="${NOTICE.notice_id }"/>
-										<div class="col-sm-9">
-											<textarea rows="8" cols="60" id="notice_text"   >${NOTICE.notice_text }</textarea>
+								<div class="col-xs-12">
+										<h3 class="header smaller lighter blue">图书</h3>
+										<div class="table-header">
+											图 书 基 本 信 息
 										</div>
-									</div>
 
-									<div class="space-4"></div>
-									
-									<div class="clearfix form-actions">
-										<div class="col-md-9">
-											<button id="add" class="btn btn-info" type="submit">
-												<i class="icon-ok bigger-110"></i>
-												修改
-											</button>
+										<div class="table-responsive">
+											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+													   <th></th>
+														<th class="center">
+															<!-- <label>
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label> -->
+															读者id
+														</th>
+														<th>读者姓名</th>
+														<th>账号类型</th>
+														<th>账号</th>
+														<th>注册日期</th>
+														<th>性别</th>
+														<th>联系方式</th>
+														<th>违规次数</th>
+														<th>状态</th>
+
+														<th>操作</th>
+													</tr>
+												</thead>
+
+												<tbody>
+												<c:forEach items="${UVO.list }" var="c"  varStatus="status">											
+													<tr>
+														<td>${status.count+(UVO.currentPage*10) }</td>
+
+														<td>${c.user_id }</td>
+														<td>${c.user_name }</td>
+														<td>${c.user_cardtype }</td>
+														<td>${c.user_idcard }</td>
+														<td><fmt:formatDate value="${c.user_inDate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>	
+														<td>${c.user_sex }</td>	
+														<td>${c.user_telphone }</td>	
+														<td style="color:blue">${c.user_error }</td>	
+														<td>
+															<c:if test="${c.user_state==1 }">
+																<font color="green">正常</font>
+															</c:if>
+															<c:if test="${c.user_state==0 }">
+																<font color="red">停用</font>
+															</c:if>
+														</td>	
+														<td>
+															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+																<a class="blue" id="more">
+																	<i class="icon-zoom-in bigger-130" onclick="findother()"></i>
+																</a>
+
+																<a class="green" href="${pageContext.request.contextPath }/Book/editUI/${c.user_id }/${UVO.currentPage+1 }">
+																	<i class="icon-pencil bigger-130"></i>
+																</a>
+
+																<a class="red" href="${pageContext.request.contextPath }/Book/delete" onClick="return confirm('确定删除?');">
+																	停用
+																</a>
+																<a class="blue" href="${pageContext.request.contextPath }/Book/addTwo/${c.user_id }">
+																	恢复
+																</a>
+																<c:if test="${ADMIN.admin_card=='admin' && ADMIN.admin_password=='admin' }">
+																	<a class="red" href="${pageContext.request.contextPath }/Book/addTwo/${c.user_id }">
+																	       删除
+																	</a>
+																</c:if>
+															</div>
+														</td>
+													</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+											<div class="col-md-3">
+												总页数：${UVO.totalPage }\当前页：${UVO.currentPage+1 }
+											</div>
+											<c:if test="${UVO.totalPage !=1  }">
+											<div  style="float: right;">
+												<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/1">首页</a>
+														<c:if test="${UVO.currentPage == 0 }">
+															<a class="btn btn-info">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<c:if test="${UVO.currentPage+1 == UVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" >下一页</a>
+														</c:if>
+														<c:if test="${1 < UVO.currentPage+1 && UVO.currentPage+1 < UVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.totalPage}">尾页</a>
+													
+											</div>	
+											</c:if>
 										</div>
 									</div>
-								</form>
-							</div>
-						</div>
+								</div>
 					</div>
 				</div><!-- /.main-content -->
 				
 			</div><!-- /.main-container-inner -->
 		</div><!-- /.main-container -->
-    
 
 		<!-- basic scripts -->
 		<script type="text/javascript">window.jQuery || document.write("<script src='${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");</script>
