@@ -38,14 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user where user_id=#{user_id}
 	</select>
 	
-	<!--删除用户  -->
-	<insert id="deleteUser" parameterType="int" >
-		delete from user where id=#{id}
-	</insert>
-	<!--更新用户信息  -->
-	<insert id="updateUser" parameterType="USER" >
-		update user set username=#{username},password=#{password},name=#{name},sex=#{sex},age=#{age},inDate=#{inDate},birthday=#{birthday},phone=#{phone} where user_id=#{user_id}		
-	</insert>
+	
 	<!--根据用户名username查询数据  -->
 	<select id="findUserByUserName" parameterType="string" resultType="USER">
 		select * from user where username=#{username}
@@ -84,4 +77,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findAll"  resultType="USER">
 		select * from user limit ${currentPage*number},${number}
 	</select>
+	<!--更新用户信息  -->
+	<update id="updateUser" parameterType="USER" >
+		update user set user_idcard=#{user_idcard},user_cardtype=#{user_cardtype},user_sex=#{user_sex},user_telphone=#{user_telphone},user_name=#{user_name},user_state=#{user_state} where user_id=#{user_id}		
+	</update>
+	<!--删除用户  -->
+	<insert id="deleteUser" parameterType="int" >
+		delete from user where user_id=#{user_id}
+	</insert>
 </mapper>

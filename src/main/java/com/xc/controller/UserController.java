@@ -69,40 +69,7 @@ public class UserController {
 			} 
 			return "0"; 
 		}
-	/**
-	 * 跳转到主页
-	 * @return
-	 */
-	@RequestMapping("/indexUI/{id}")
-	public String indexUI(@PathVariable("id")String id,Model model,HttpSession session){	
-		Integer ids=Integer.parseInt(id);
-		User user = userService.findUserById(ids);
-		session.setAttribute("user", user);
-		return "jsp/index";
-	}
-	/**
-	 * 跳转到用户添加页面
-	 * @return
-	 */
-	@RequestMapping("/addUI")
-	public String loginCheck(){		
-		return "jsp/add";
-	}
-	/**
-	 * 保存用户信息
-	 * @param user
-	 * @return
-	 * @throws ParseException 
-	 */
-	@RequestMapping("/save")
-	public String save(User user,Model model,HttpSession session) throws ParseException{
-		/*Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birth);
-		user.setBirthday(date);	*/
-		user.setUser_inDate(new Date());
-		userService.insertUser(user);
-		session.setAttribute("user", user);
-		return "jsp/index";
-	}
+
 	/**
 	 * 查找所有信息
 	 * @return
@@ -116,22 +83,7 @@ public class UserController {
 		model.addAttribute("UVO", vo);
 		return "user";
 	}
-	/**
-	 * 删除信息
-	 * @return
-	 */
-	@RequestMapping("/delete/{id}")
-	public String delete(@PathVariable("id")Integer id,Model model,HttpSession session){
-		User user = (User) session.getAttribute("user");
-		Integer id1 = user.getUser_id();
-		if(id == id1){
-			userService.deleteUser(id);
-			return "redirect:/login/logout";
-		}else{
-			userService.deleteUser(id);
-		}
-		return "redirect:/login/findAll";
-	}
+
 	/**
 	 * 跳转到修改页面
 	 * @return
@@ -176,7 +128,7 @@ public class UserController {
     @ResponseBody
     public String findByIdcard(String user_idcard){
     	User user=userService.findByIdcard(user_idcard);
-        if(user != null){
+        if(user != null && user.getUser_state()==1){
         	return "1";
         }
     	return "0";
@@ -195,6 +147,69 @@ public class UserController {
     	user.setUser_cardtype("学生证");
     	userService.insertUser(user);
     	return "0";
+    }
+    /**
+     * 跳转到读者修改页面
+     * @param category
+     * @return
+     */
+    @RequestMapping("/editUI/{id}/{page}")
+    public String editUI(@PathVariable("id")Integer id,Model model,@PathVariable("page")Integer page){
+    	User user=userService.findUserById(id);
+    	model.addAttribute("user", user);
+    	model.addAttribute("page", page);
+    	return "useredit";
+    }
+    /**
+     * 修改读者
+     * @param category
+     * @return
+     */
+    @RequestMapping("/editUser/{page}")
+    @ResponseBody
+    public String editUser(User user,@PathVariable("page")Integer page){  	
+    	User user1=userService.findUserById(user.getUser_id());
+    	user1.setUser_cardtype(user.getUser_cardtype());
+    	user1.setUser_name(user.getUser_name());
+    	user1.setUser_telphone(user.getUser_telphone());
+    	user1.setUser_sex(user.getUser_sex()); 	
+    	userService.updateUser(user1);
+    	return ""+page;
+    }
+    /**
+     * 停用读者
+     * @param category
+     * @return
+     */
+    @RequestMapping("/stop/{id}/{page}")
+    public String stop(@PathVariable("id")Integer user_id,@PathVariable("page")Integer page){  	
+    	User user=userService.findUserById(user_id);
+    	user.setUser_state(0);
+    	userService.updateUser(user);
+    	return "redirect:/User/findAll/"+page;
+    }
+    /**
+     * 恢复读者
+     * @param category
+     * @return
+     */
+    @RequestMapping("/start/{id}/{page}")
+    public String start(@PathVariable("id")Integer user_id,@PathVariable("page")Integer page){  	
+    	User user=userService.findUserById(user_id);
+    	user.setUser_state(1);
+    	userService.updateUser(user);
+    	return "redirect:/User/findAll/"+page;
+    }
+    /**
+     * 删除读者
+     * @param category
+     * @return
+     */
+    @RequestMapping("/delete/{id}/{page}")
+    public String delete(@PathVariable("id")Integer user_id,@PathVariable("page")Integer page){ 
+    	User user=userService.findUserById(user_id);
+    	userService.deleteUser(user);
+    	return "redirect:/User/findAll/"+page;
     }
 }
 	

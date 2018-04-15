@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xc.dao.OrderMapper;
 import com.xc.dao.UserMapper;
+import com.xc.domain.Order;
 import com.xc.domain.User;
 import com.xc.vo.QueryVo;
 
@@ -14,7 +16,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper userMapper;
-
+	@Autowired
+	private OrderMapper orderMapper;
 	
 	/**
 	 * 登陆验证
@@ -58,8 +61,13 @@ public class UserServiceImpl implements UserService {
 	 * 删除信息
 	 */
 	@Override
-	public void deleteUser(Integer id) {
-		userMapper.deleteUser(id);
+	public void deleteUser(User user) {
+		List<Order> order=orderMapper.orderFindByIdcard(user.getUser_idcard());
+		if(order.get(0)!=null){
+			orderMapper.deleteUser(user.getUser_idcard());
+			userMapper.deleteUser(user.getUser_id());
+		}
+		userMapper.deleteUser(user.getUser_id());
 	}
 	/**
 	 * 根据id查找
