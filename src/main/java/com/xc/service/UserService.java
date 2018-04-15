@@ -12,7 +12,7 @@ public interface UserService{
 
 	public void insertUser(User user);
 
-	public List<User> findAll();
+	public QueryVo<User> findAll(QueryVo<User> vo);
 
 	public void deleteUser(Integer id);
 

@@ -19,8 +19,7 @@ public interface UserMapper {
 		public void updateUser(User user);
 		//根据username查询数据 
 		public User findUserByUserName(String username);
-		//查询所有用户
-		public List<User> findAll();
+		
 		//分类所有用户
 		public List<User> findAll2(QueryVo<User> vo);
 		//后期
@@ -28,4 +27,8 @@ public interface UserMapper {
 		public User findByIdcard(String user_idcard);
 		//根据Idcard查询用户
 		public void updateUser_error(User user);
+		//查询总用户条数
+		public Integer findCount();
+		//查询所有用户
+		public List<User> findAll(QueryVo<User> vo);
 }

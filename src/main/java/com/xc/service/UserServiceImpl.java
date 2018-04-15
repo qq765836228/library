@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.xc.dao.UserMapper;
 import com.xc.domain.User;
@@ -34,8 +33,26 @@ public class UserServiceImpl implements UserService {
 	 * 查找所有信息
 	 */
 	@Override
-	public List<User> findAll() {
-		return (List<User>)userMapper.findAll();
+	public QueryVo<User> findAll(QueryVo<User> vo) {
+		List<User> list = userMapper.findAll(vo);
+		for(User s:list){
+			if(s.getUser_error()>10){
+				s.setUser_state(0);
+				userMapper.updateUser_error(s);
+			}
+		}
+		if(vo.getNumber()!=null){
+			Integer count = userMapper.findCount();			
+			vo.setTotalNumber(count);	
+			Integer n = vo.getNumber();
+			if(count%n==0){
+				vo.setTotalPage(count/n);
+			}else{
+				vo.setTotalPage(count/n+1);
+			}
+		}	
+		vo.setList(list);
+		return vo;
 	}
 	/**
 	 * 删除信息
@@ -62,7 +79,7 @@ public class UserServiceImpl implements UserService {
 	 * 按条件查询
 	 */
 	@Override
-	public List<User> findAll2(QueryVo vo) {
+	public List<User> findAll2(QueryVo<User> vo) {
 		return userMapper.findAll2(vo);
 	}
 	/**
