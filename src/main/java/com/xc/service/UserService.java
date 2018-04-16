@@ -14,7 +14,7 @@ public interface UserService{
 
 	public QueryVo<User> findAll(QueryVo<User> vo);
 
-	public void deleteUser(Integer id);
+	public void deleteUser(User user);
 
 	public User findUserById(Integer id);
 

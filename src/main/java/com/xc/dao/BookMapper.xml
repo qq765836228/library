@@ -4,31 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xc.dao.BookMapper">
 
-	<sql id="user_Where">						
-		<!-- where标签作用:
-				会自动向sql语句中添加where关键字
-				会去掉第一个条件的and关键字
-			 -->
-		<where>
-			<if test="user.username != null and user.username != ''">
-				and username like '%${user.username}%'
-			</if>
-			<if test="user.name != null and user.name != ''">
-				and name like '%${user.name}%'
-			</if>
-			<if test="user.sex != null and user.sex != ''">
-				and sex=#{user.sex}
-			</if>
-			<if test="number1 != null and number1 != ''">								
-				and age>${number1}
-			</if>
-			<if test="number2 != null and number2 != ''">								
-				and ${number2}>age
-			</if>
-		</where>
-	</sql>
-
-	
 	<!--添加新图书  -->
 	<insert id="bookInsert" parameterType="BOOK" >
 		<selectKey keyProperty="category_id" order="AFTER" resultType="java.lang.Integer">
@@ -42,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>	
 	<!--更新图书信息  -->
 	<update id="bookUpdate" parameterType="BOOK" >
-		update book set book_name=#{book_name},category_id=#{category_id},book_isbn=#{book_isbn},book_autor=#{book_autor},book_pubhouse=#{book_pubhouse},book_page=#{book_page},others=#{others} where book_id=#{book_id}		
+		update book set book_name=#{book_name},category_id=#{category_id},book_isbn=#{book_isbn},book_autor=#{book_autor},book_pubhouse=#{book_pubhouse},book_page=#{book_page},book_state=#{book_state},others=#{others},book_borrownum=#{book_borrownum} where book_id=#{book_id}		
 	</update>
 	
 	

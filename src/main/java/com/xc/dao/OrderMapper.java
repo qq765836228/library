@@ -20,4 +20,6 @@ public interface OrderMapper {
 	public void update(Order order);
 	public List<Order> orderfindAllByIsreturn(QueryVo<Order> vo);
 	public Integer findCountByIsreturn();
+	public List<Order> orderFindByIdcard(String user_idcard);
+	public void deleteUser(String user_idcard);
 }

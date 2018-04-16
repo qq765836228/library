@@ -38,13 +38,13 @@ public class BookController {
 	 * @return
 	 */
     @RequestMapping("/findAll/{currentPage}")
-    public String bookUI(@PathVariable("currentPage")Integer currentPage,HttpSession session){
+    public String bookUI(@PathVariable("currentPage")Integer currentPage,Model model){
 
     	QueryVo<Book> vo=new QueryVo<>();
     	vo.setCurrentPage(currentPage-1);
     	vo.setNumber(10);
     	QueryVo<Book> Bvo = bookService.bookFindAll(vo);
-    	session.setAttribute("BVO", Bvo);
+    	model.addAttribute("BVO", Bvo);
     	return "book";
     }
     /**
@@ -68,7 +68,7 @@ public class BookController {
     @ResponseBody
     public String findByISBN(String book_isbn){
         Book book=bookService.findByISBN(book_isbn);
-        if(book != null){
+        if(book != null && book.getBook_state()==0){
         	return "1";
         }
     	return "0";
@@ -117,14 +117,18 @@ public class BookController {
     	return "bookedit";
     }
     /**
-     * 修改分类
+     * 修改图书
      * @param category
      * @return
      */
     @RequestMapping("/editBook/{page}")
     @ResponseBody
-    public String editCategory(Book book,@PathVariable("page")Integer page){  	
+    public String editBook(Book book,@PathVariable("page")Integer page){
+    	Book book1=bookService.findByISBN(book.getBook_isbn());
+    	book.setBook_state(book1.getBook_state());
+    	book.setBook_borrownum(book1.getBook_borrownum());
     	bookService.bookUpdate(book);
+    	
     	return ""+page;
     }
     /**

@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xc.dao.BookMapper;
 import com.xc.dao.OrderMapper;
 import com.xc.dao.UserMapper;
+import com.xc.domain.Book;
 import com.xc.domain.Order;
 import com.xc.domain.User;
 import com.xc.vo.QueryVo;
@@ -20,6 +22,9 @@ public class OrderServiceImpl implements OrderService {
 	public void setOrderMapper(OrderMapper orderMapper) {
 		this.orderMapper = orderMapper;
 	}
+	@Autowired
+	public BookMapper bookMapper;
+	
 	public UserMapper userMapper;
 	@Autowired
 	public void setUserMapper(UserMapper userMapper) {
@@ -29,6 +34,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void insertOrder(Order order) {
+		Book book = bookMapper.findByISBN(order.getBook_isbn());
+		book.setBook_state(1);
+		book.setBook_borrownum(book.getBook_borrownum()+1);
+		bookMapper.bookUpdate(book);		
 		orderMapper.insertOrder(order);	
 	}
 
@@ -76,6 +85,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void update(Order order) {
+		Book book = bookMapper.findByISBN(order.getBook_isbn());
+		book.setBook_state(0);
+		bookMapper.bookUpdate(book);		
 		orderMapper.update(order);
 	}
 

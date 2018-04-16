@@ -58,7 +58,7 @@ public class BookServiceImpl implements BookService{
 	public List<Book> bookFindByName(String name) {
 		List<Book> list=bookMapper.bookFindByName(name);
 		list=new ArrayList<Book>(new HashSet<Book>(list));
-		return bookMapper.bookFindByName(name);
+		return list;
 	}
 	@Override
 	public List<Book> FindName(String name) {
