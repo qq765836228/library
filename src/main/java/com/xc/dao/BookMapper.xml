@@ -52,11 +52,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<select id="bookFindAll" parameterType="QueryVo" resultMap="BookBean">
 		select a.*,b.category_name from book a,category b where a.category_id = b.category_id limit ${currentPage*number},${number}
-		<!-- <include refid="user_Where"></include>
+		<include refid="Book_Where"></include>
 		<if test="type != null and type != ''">
 				order by ${type} asc 
 		</if> -->
 	</select>
+	
+	<sql id="Book_Where">						
+		<!-- where标签作用:
+				会自动向sql语句中添加where关键字
+				会去掉第一个条件的and关键字
+			 -->
+		<where>
+			<if test="book.book_name != null and book.book_name != ''">
+				and book_name like '%${book.book_name}%'
+			</if>
+			<if test="book.book_isbn != null and book.book_isbn != ''">
+				and book_isbn like '%${book.book_isbn}%'
+			</if>
+			<if test="book.book_autor != null and book.book_name != ''">
+				and book_isbn like '%${book.book_isbn}%'
+			</if>
+		</where>
+	</sql>
+	
 	<!--根据图书名book_name查询数据  -->
 	<select id="findByBookName" parameterType="QueryVo" resultMap="BookBean">
 		select a.*,b.category_name from book a,category b where a.category_id = b.category_id and book_name like "%"#{book_name}"%" limit ${currentPage*number},${number}

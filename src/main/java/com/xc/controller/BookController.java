@@ -38,13 +38,17 @@ public class BookController {
 	 * @return
 	 */
     @RequestMapping("/findAll/{currentPage}")
-    public String bookUI(@PathVariable("currentPage")Integer currentPage,Model model){
+    public String bookUI(@PathVariable("currentPage")Integer currentPage,Model model,Book book){
 
     	QueryVo<Book> vo=new QueryVo<>();
     	vo.setCurrentPage(currentPage-1);
     	vo.setNumber(10);
+    	vo.setBook(book);
     	QueryVo<Book> Bvo = bookService.bookFindAll(vo);
     	model.addAttribute("BVO", Bvo);
+    	QueryVo<Category> qvo=new QueryVo<Category>();
+    	QueryVo<Category> Cvo = categoryService.findCategoryAll(qvo);
+    	model.addAttribute("CVO", Cvo);
     	return "book";
     }
     /**

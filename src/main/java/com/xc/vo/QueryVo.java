@@ -2,6 +2,8 @@ package com.xc.vo;
 
 import java.util.List;
 
+import com.xc.domain.Book;
+
 public class QueryVo<T> {
 	
 	private Integer currentPage;//当前页
@@ -11,10 +13,20 @@ public class QueryVo<T> {
 	private Integer isreturn;
 	private String book_name;
 
+	private Book book;
+	
 	private List<T> list;
 
 	
 	
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
 	public Integer getIsreturn() {
 		return isreturn;
 	}

@@ -182,37 +182,64 @@
 					<div class="page-content">
 						<div class="row">
 								<div class="col-xs-12">
-										<h3 class="header smaller lighter blue">图书</h3>
 										<div class="table-header">
 											图 书 基 本 信 息
 										</div>
 
 										<div class="table-responsive">
+										<form action="${pageContext.request.contextPath }/Book/findAll/1" method="post">
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+													  
+														<th>
+															名 称：<input type="text" name="Book.book_name" value=""/>
+														</th>
+														<th>
+															类 型:<select name="Book.category_id">
+															 		<option value="">-请选择-</option>
+															 		<c:forEach items="${CVO.list }" var="c">
+															 			<option value="${c.category_id }">${c.category_name }</option>
+															 		</c:forEach>
+																</select>
+														</th>
+														<th>ISBN码：<input name="Book.book_isbn" type="text"/></th>
+														<th>作 者：<input name="Book.book_autor" type="text"/></th>
+														
+														<th>
+															状态:<select name="Book.book_state">
+															 		<option value="">-请选择-</option>
+															 		<option value="0" style="color:green">-正常-</option>
+															 		<option value="1" style="color:blue">-被借中-</option>
+															 		<option value="2" style="color:red">-遗失-</option>
+																</select>
+														</th>
+
+														<th><input type="submit" value="搜索" ></th>
+													</tr>
+												</thead>
+											</table>
+											<table id="sample-table-2" class="table table-striped table-bordered table-hover">											
 												<thead>
 													<tr>
 													   <th></th>
 														<th class="center">
-															<!-- <label>
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label> -->
 															id
 														</th>
-														<th>名 称</th>
-														<th>类 型</th>
-														<th>ISBN码</th>
-														<th>作 者</th>
-														<th>出 版 社</th>
-														<th>页 码</th>
-														<th>被借次数</th>
-														<th>
+														<th class="center">名 称</th>
+														<th class="center">类 型</th>
+														<th class="center">ISBN码</th>
+														<th class="center">作 者</th>
+														<th class="center">出 版 社</th>
+														<th class="center">页 码</th>
+														<th class="center">被借次数</th>
+														<th class="center">
 															<i class="icon-time bigger-110 hidden-480"></i>
 															入馆时间
 														</th>
-														<th class="hidden-480">状态</th>
+														<th class="center">状态</th>
 
-														<th>操作</th>
+														<th class="center">操作</th>
 													</tr>
 												</thead>
 
@@ -263,6 +290,7 @@
 													</c:forEach>
 												</tbody>
 											</table>
+											</form>
 											<div class="col-md-3">
 												总页数：${BVO.totalPage }\当前页：${BVO.currentPage+1 }
 											</div>
