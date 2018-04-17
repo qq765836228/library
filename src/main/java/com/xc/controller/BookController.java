@@ -44,7 +44,12 @@ public class BookController {
     	vo.setCurrentPage(currentPage-1);
     	vo.setNumber(10);
     	vo.setBook(book);
-    	QueryVo<Book> Bvo = bookService.bookFindAll(vo);
+    	if(book.getCategory_id()!=null){
+    		Category c=categoryService.getById(book.getCategory_id());
+        	book.setCategory(c);
+    	}  	
+    	model.addAttribute("boo", book);
+    	QueryVo<Book> Bvo = bookService.bookFindAll(vo);  	
     	model.addAttribute("BVO", Bvo);
     	QueryVo<Category> qvo=new QueryVo<Category>();
     	QueryVo<Category> Cvo = categoryService.findCategoryAll(qvo);

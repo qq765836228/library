@@ -58,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 		}
+		System.out.println(list.size());
 		Integer count = orderMapper.findCount();
 		vo.setList(list);
 		vo.setTotalNumber(count);	

@@ -162,7 +162,28 @@
 											借 书 订 单 基 本 信 息
 										</div>
 
-										<div class="table-responsive">
+										<form id="form11" action="${pageContext.request.contextPath }/Order/findAll/1" method="post">
+											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+													  
+														<th>
+															用户名：<input type="text" name="User.user_name" value="${ord.user.user_name}"/>
+														</th>
+														<th>
+															用户账号：<input type="text" name="user_idcard" value="${ord.user_idcard }"/>
+														</th>
+														<th>联系方式：<input name="User.user_telphone" type="text" value="${ord.user.user_telphone }"/></th>
+														<th>图书名称：<input name="Book.book_name" type="text" value="${ord.book.book_name }"/></th>
+														
+														<th>
+															图书ISBN:<input name="book_isbn" type="text" value="${boo.book_autor}"/>
+														</th>
+
+														<th><input type="submit" value="搜索" ></th>
+													</tr>
+												</thead>
+											</table>
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
@@ -250,7 +271,7 @@
 														
 													</c:if>
 											</div>	
-											
+											</form>
 										</div>
 									</div>
 								</div>					

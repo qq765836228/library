@@ -50,9 +50,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 	<select id="orderFindAll" parameterType="QueryVo" resultMap="OBean">
-		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn limit ${currentPage*number},${number}
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn 
+		
+		<include refid="ORDER_Where"></include>
+		
+		limit ${currentPage*number},${number}
 		
 	</select>
+	
+	<sql id="ORDER_Where">						
+		<!-- where标签作用:
+				会自动向sql语句中添加where关键字
+				会去掉第一个条件的and关键字
+			 -->
+			<if test="order.book.book_name != null and order.book.book_name != ''">
+				and b.book_name like '%${order.book.book_name}%'
+			</if>
+			<if test="order.book_isbn != null and order.book_isbn != ''">
+				and a.book_isbn like '%${order.book_isbn}%'
+			</if>
+			<if test="order.user.user_name != null and order.user.user_name!= ''">
+				and c.book_autor like '%${order.user.user_name}%'
+			</if>
+			<if test="order.user_idcard != null and order.user_idcard != ''">
+				and a.user_idcard = ${order.user_idcard}
+			</if>
+			<if test="order.user_telphone!= null and order.user_telphone != ''">
+				and c.user_telphone = ${order.user_telphone}
+			</if>
+	</sql>
+	
+	
+	
+	
 	<select id="orderfindAllByIsreturn" parameterType="QueryVo" resultMap="OBean">
 		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.isreturn = ${isreturn} limit ${currentPage*number},${number}
 		
@@ -71,6 +101,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--查询总条数  -->
 	<select id="findCount" resultType="int">
 		select count(*) from `order` 
+		
+		<!-- <where>
+			<if test="order.book.book_name != null and order.book.book_name != ''">
+				and book_name like '%${order.book.book_name}%'
+			</if>
+			<if test="order.book_isbn != null and order.book_isbn != ''">
+				and book_isbn like '%${order.book_isbn}%'
+			</if>
+			<if test="order.user.user_name != null and order.user.user_name!= ''">
+				and book_autor like '%${order.user.user_name}%'
+			</if>
+			<if test="order.user_idcard != null and order.user_idcard != ''">
+				and user_idcard = ${order.user_idcard}
+			</if>
+			<if test="order.user_telphone!= null and order.user_telphone != ''">
+				and user_telphone = ${order.user_telphone}
+			</if>
+		
+		</where> -->
 	</select>
 	<!--查询违规总条数  -->
 	<select id="findCountByIsreturn" resultType="int">

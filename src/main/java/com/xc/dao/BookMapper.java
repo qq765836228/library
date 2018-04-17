@@ -15,7 +15,7 @@ public interface BookMapper{
 	//查询所有
 	public List<Book> bookFindAll(QueryVo<Book> vo);
 	//查询总条数
-	public Integer findCount();
+	public Integer findCount(QueryVo<Book> vo);
 	//根据id查询
 	public Book bookFindById(Integer book_id);
 	//根据名称查询

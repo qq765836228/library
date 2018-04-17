@@ -37,7 +37,7 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public QueryVo<Book> bookFindAll(QueryVo<Book> vo) {
 		List<Book> list = bookMapper.bookFindAll(vo);
-		Integer count = bookMapper.findCount();
+		Integer count = bookMapper.findCount(vo);
 		vo.setList(list);
 		vo.setTotalNumber(count);	
 		Integer n = vo.getNumber();
