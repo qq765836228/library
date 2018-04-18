@@ -122,4 +122,10 @@ public class OrderServiceImpl implements OrderService {
 		return vo;
 	}
 
+
+	@Override
+	public List<Order> orderFindByIdCard(String id_card) {		
+		return orderMapper.orderFindByIdcard(id_card);
+	}
+
 }

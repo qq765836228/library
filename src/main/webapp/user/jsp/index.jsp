@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" isELIgnored="false"
     pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html >
 <head>
@@ -13,29 +14,59 @@
     <link href="${pageContext.request.contextPath }/assets/css/font-awesome.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath }/assets/css/style.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath }/assets/css/button.css" rel="stylesheet" />
-   
+  	 <script src="${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js"></script>
+  	 <script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
    	<script type="text/javascript">
    	$(function(){
    		$.ajax({
+   			url:"${pageContext.request.contextPath }/Admin/findNotice",
+			type:"post",
+			dataType:"json",
+			success:function(data){	
+				$("#notice_text").html(data.notice_text);
+			}
    			
+   		});
+   		$.ajax({
+   			url:"${pageContext.request.contextPath }/Admin/findAllNotice",
+			type:"post",
+			dataType:"json",
+			success:function(data){	
+				for(var i=0;i<data.length;i++){
+					var notice_id = data[i].notice_id;
+					var notice_text =data[i].notice_text;
+					var notice_date=data[i].notice_date;
+					var da=new Date( notice_date )
+					Da= da.toLocaleString();
+					var arr=Da.split(" ");
+					$("#Allnotice").append(
+							"<a style='font-size: 16px;text-decoration: none;'>"+notice_text+"</a>&nbsp;&nbsp;&nbsp;&nbsp;<br>"+
+							"<a style='font-size: 15px;text-decoration: none;color: blue'>"+arr[0]+"</a><br>"						
+					);
+					
+				}
+			}
    			
    		})
    	})
    	</script>
 </head>
 <body>
+	
 	<header>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                   <a href="login.jsp" class="button button-action button-pill">登陆</a>				
-                   &nbsp;&nbsp;
-                   <a href="register.jsp" class="button button-raised button-pill button-inverse">注册</a>
-                </div>
-
+	            <c:if test="${USER==null }">
+	                <div class="col-md-12">
+	                   <a href="${pageContext.request.contextPath }/user/jsp/login.jsp" class="button button-action button-pill">登陆</a>				
+	                   &nbsp;&nbsp;
+	                   <a href="${pageContext.request.contextPath }/user/jsp/register.jsp" class="button button-raised button-pill button-inverse">注册</a>
+	                </div>
+	 			</c:if>
             </div>
         </div>
     </header>
+   
     <!-- HEADER END-->
     <div class="navbar navbar-inverse set-radius-zero">
         <div class="container">
@@ -47,7 +78,7 @@
                 </button>
                 <a class="navbar-brand" href="index.html">
 
-                    <img src="../../assets/img/logo.png" />
+                    <img src="${pageContext.request.contextPath }/assets/img/logo.png" />
                 </a>
 
             </div>
@@ -58,28 +89,30 @@
 
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                                <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>
+                                <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>                             
                             </a>
+                            
                             <div class="dropdown-menu dropdown-settings">
                                 <div class="media">
                                     <a class="media-left" href="#">
-                                        <img src="assets/img/64-64.jpg" alt="" class="img-rounded" />
+                                       <span class="glyphicon glyphicon-user" style="font-size: 35px;"></span>
                                     </a>
                                     <div class="media-body">
-                                        <h4 class="media-heading">Jhon Deo Alex </h4>
-                                        <h5>Developer & Designer</h5>
+                                        <h4 class="media-heading">${USER.user_name } </h4>
+                                        <h5>ID:${USER.user_id }</h5>
 
                                     </div>
                                 </div>
                                 <hr />
-                                <h5><strong>Personal Bio : </strong></h5>
-                                Anim pariatur cliche reprehen derit.
+                                <h5><strong>联系方式 : </strong>${USER.user_telphone }</h5>
+                                <h5><strong>违规次数 : </strong>${USER.user_error }</h5>
+                                <h5><strong>注册日期 : </strong><fmt:formatDate value="${USER.user_inDate }" pattern="yyyy-MM-dd"></fmt:formatDate></h5>
                                 <hr />
-                                <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="login.html" class="btn btn-danger btn-sm">Logout</a>
+                                <a href="${pageContext.request.contextPath }/User/loginOut" class="btn btn-danger btn-sm">注销</a>
 
                             </div>
                         </li>
-                        
+                        <li style="font-size: 20px;color:black;"> &nbsp;&nbsp;&nbsp;&nbsp;${USER.user_name }</li>
                         
                     </ul>
                 </div>
@@ -95,10 +128,16 @@
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a class="menu-top-active" href="index.jsp">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;首页 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                            <li><a href="find.jsp">&nbsp;&nbsp;&nbsp;&nbsp; 图书查询 &nbsp;&nbsp; &nbsp;&nbsp;</a></li>
-                            <li><a href="order.jsp"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
-                            <li><a href="user.jsp">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            <li><a class="menu-top-active" href="${pageContext.request.contextPath }/user/jsp/index.jsp">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;首页 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            <li><a href="${pageContext.request.contextPath }/user/jsp/find.jsp">&nbsp;&nbsp;&nbsp;&nbsp; 图书查询 &nbsp;&nbsp; &nbsp;&nbsp;</a></li>
+                            <c:if test="${USER != null }">
+                            	<li><a href="${pageContext.request.contextPath }/User/findOrder/${USER.user_idcard }"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
+                            	<li><a href="user.jsp">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            </c:if>
+                            <c:if test="${USER == null }">
+	                            <li><a href="${pageContext.request.contextPath }/user/jsp/login.jsp" onClick="return confirm('请先登录');"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
+	                            <li><a href="${pageContext.request.contextPath }/user/jsp/login.jsp" onClick="return confirm('请先登录');">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            </c:if>
                              <li><a href="about.jsp">&nbsp;&nbsp;&nbsp;&nbsp;概况&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                            
                         </ul>
@@ -110,22 +149,15 @@
     </section>
     	<div class="content-wrapper">
        			 <div class="container">
-       			 <h3><img alt="新闻" src="../../assets/img/新闻.png">&nbsp;&nbsp;&nbsp;新 闻 中 心</h3>
+       			 <h3><img alt="新闻" src="${pageContext.request.contextPath }/assets/img/新闻.png">&nbsp;&nbsp;&nbsp;新 闻 中 心</h3>
        			 <hr>
           			  <div class="row">       			 	 
 				        <div class="col-md-3">
 				               <div class="panel panel-primary">
 				                    <div class="panel-heading">
-				                       		 <h4><img alt="服务中心" src="../../assets/img/服务中心.png">&nbsp;&nbsp;&nbsp;服 务 时 间</h4>
+				                       		 <h4><img alt="服务中心" src="${pageContext.request.contextPath }/assets/img/服务中心.png">&nbsp;&nbsp;&nbsp;服 务 时 间</h4>
 				                    </div>
 				                    <div id="notice_text" class="panel-body">
-				                    	<a> 网上图书馆、自助图书馆全天候服务：（0:00至24:00）</a><br>
-							            <a> 周二至周日主馆舍开放时间：</a><br>
-							            <a> 一楼至四楼：9:00-21:00</a><br>
-							            <a> 五楼至六楼：9:00-17:00</a><br>
-							            <a> 少儿服务区：周二至周五12:00(周末10：00)-18:00</a><br>
-							            <a> 逢周一内务整理，主馆舍不开放。</a><br>
-							            <a> 了解详情</a><br> 
 				                     </div>
 				              </div>
 				              <div class="panel panel-primary">
@@ -145,7 +177,7 @@
 				        <div class="col-md-5">
 					        <div class="panel panel-success">
 	                        <div class="panel-heading">
-	                          		<h4><img alt="简介" src="../../assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;简介</h4>
+	                          		<h4><img alt="简介" src="${pageContext.request.contextPath }/assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;简介</h4>
 	                        </div>
 	                        <div class="panel-body">
 	                           <p style="font-size: 17px;">　华东交通大学是一所以工为主，经、管、文、理、法、教育、艺术等多学科协调发展，以交通为特色、轨道为核心的教学研究型大学，江西省属重点大学。学校是国家“中西部高校基础能力建设工程”重点建设大学、中国铁路总公司与江西省人民政府共建高校、教育部“卓越工程师教育培养计划”高校、江西省“2011计划”依托高校、原南京军区（现东部战区）招收和选拔培养后备军官（国防生）签约高校，为全国毕业生就业典型经验高校，首批全国高校创新创业50强和国家级知识产权培训基地，“中俄交通大学联盟”成员高校，“中国—东盟轨道交通教育培训联盟”成员高校。<br>					
@@ -157,9 +189,9 @@
 				        </div>
 				        <div  class="col-md-4">
 					         <div class="alert alert-danger">
-					         	<h2><img alt="通知" src="../../assets/img/通知.png">&nbsp;&nbsp;&nbsp;通 知 公 告</h2>
+					         	<h2><img alt="通知" src="${pageContext.request.contextPath }/assets/img/通知.png">&nbsp;&nbsp;&nbsp;通 知 公 告</h2>
 					         	<hr>
-				                <a>关 于 3 月 份 深 图 活 动 “ 捕 捉 光 影 ， 发 现 美 好 ” 地 点 变 更 的 通 知</a><br>
+				                <!-- <a>关 于 3 月 份 深 图 活 动 “ 捕 捉 光 影 ， 发 现 美 好 ” 地 点 变 更 的 通 知</a><br>
 								2 0 1 8 - 3 - 8<br>
 								<a>关 于 “ 经 典 诵 读 ” 之 “ 声 律 启 蒙 ” 活 动 的 复 课 通 知</a><br>		
 								2 0 1 8 - 3 - 5<br>
@@ -168,7 +200,10 @@
 								<a>关 于 “ 全 国 青 少 年 S c r a t c h 创 意 编 程 大 赛 颁 奖 仪 式 暨 A I 时 代 下 的 生 存 之 道 主 题 峰 会 ” 取消 的 通 知</a><br>						
 								2 0 1 8 - 1 - 1 6 <br>
 								<a>关 于 深 图 活 动 “ 创 客 活 动 ： 硬 币 分 拣 机 ” 举 办 时 间 调 整 的 通 知 </a><br>			
-								2 0 1 8 - 1 - 2<br>					
+								2 0 1 8 - 1 - 2<br>	 -->	
+								<div id="Allnotice">
+								
+								</div>			
 								</div><br>
 			                </div>
 	       				</div>
@@ -193,7 +228,7 @@
             <div class="row">
                  <div class="col-md-3 col-sm-3 col-xs-6">
                    	 <div class="dashboard-div-wrapper bk-clr-one">
-                        	<i><img alt="" src="../../assets/img/书1.jpg" width="80%" style="margin-bottom: 10px"></i>
+                        	<i><img alt="" src="${pageContext.request.contextPath }/assets/img/书1.jpg" width="80%" style="margin-bottom: 10px"></i>
                         	<div class="progress progress-striped active">
 					 		 	<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
 						  		</div>
@@ -203,7 +238,7 @@
             	</div>
                  <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="dashboard-div-wrapper bk-clr-two">
-                        <i><img alt="" src="../../assets/img/书2.jpg" width="80%" style="margin-bottom: 10px"></i>
+                        <i><img alt="" src="${pageContext.request.contextPath }/assets/img/书2.jpg" width="80%" style="margin-bottom: 10px"></i>
                         <div class="progress progress-striped active">
 							  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
 							  </div>
@@ -213,7 +248,7 @@
                 </div>
                  <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="dashboard-div-wrapper bk-clr-three">
-                        <i><img alt="" src="../../assets/img/书3.jpg" width="80%" style="margin-bottom: 10px"></i>
+                        <i><img alt="" src="${pageContext.request.contextPath }/assets/img/书3.jpg" width="80%" style="margin-bottom: 10px"></i>
                         <div class="progress progress-striped active">
 							  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
 							  </div>
@@ -223,7 +258,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="dashboard-div-wrapper bk-clr-four">
-                        <i><img alt="" src="../../assets/img/书4.jpg" width="80%" style="margin-bottom: 10px"></i>
+                        <i><img alt="" src="${pageContext.request.contextPath }/assets/img/书4.jpg" width="80%" style="margin-bottom: 10px"></i>
                         <div class="progress progress-striped active">
 							  <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
 							  </div>
@@ -253,8 +288,7 @@
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY SCRIPTS -->
-    <script src="../assets/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="../assets/js/bootstrap.js"></script>
+   
 </body>
 </html>

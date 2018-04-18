@@ -153,6 +153,10 @@
 					<div class="page-content">
 						<div class="row">
 								<div class="col-xs-12">
+										<div class="table-header">
+										借 还 书 订 单
+										</div>
+								
 										<form id="form11" action="${pageContext.request.contextPath }/Order/findAll/1" method="post">
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 												<thead>
