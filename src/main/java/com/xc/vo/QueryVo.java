@@ -3,6 +3,7 @@ package com.xc.vo;
 import java.util.List;
 
 import com.xc.domain.Book;
+import com.xc.domain.Order;
 
 public class QueryVo<T> {
 	
@@ -14,11 +15,20 @@ public class QueryVo<T> {
 	private String book_name;
 
 	private Book book;
+	private Order order;
 	
 	private List<T> list;
 
 	
 	
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	public Book getBook() {
 		return book;
 	}

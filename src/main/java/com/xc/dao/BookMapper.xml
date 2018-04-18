@@ -51,11 +51,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 	<select id="bookFindAll" parameterType="QueryVo" resultMap="BookBean">
-		select a.*,b.category_name from book a,category b where a.category_id = b.category_id limit ${currentPage*number},${number}
+		select a.*,b.category_name from book a,category b where a.category_id = b.category_id 
+		
 		<include refid="Book_Where"></include>
-		<if test="type != null and type != ''">
-				order by ${type} asc 
-		</if> -->
+		
+		limit ${currentPage*number},${number}
+		
 	</select>
 	
 	<sql id="Book_Where">						
@@ -63,17 +64,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				会自动向sql语句中添加where关键字
 				会去掉第一个条件的and关键字
 			 -->
-		<where>
 			<if test="book.book_name != null and book.book_name != ''">
-				and book_name like '%${book.book_name}%'
+				and a.book_name like '%${book.book_name}%'
 			</if>
 			<if test="book.book_isbn != null and book.book_isbn != ''">
-				and book_isbn like '%${book.book_isbn}%'
+				and a.book_isbn like '%${book.book_isbn}%'
 			</if>
-			<if test="book.book_autor != null and book.book_name != ''">
-				and book_isbn like '%${book.book_isbn}%'
+			<if test="book.book_autor != null and book.book_autor != ''">
+				and a.book_autor like '%${book.book_autor}%'
 			</if>
-		</where>
+			<if test="book.category_id != null and book.category_id != ''">
+				and a.category_id = ${book.category_id}
+			</if>
+			<if test="book.book_state != null ">
+				and a.book_state = ${book.book_state}
+			</if>
 	</sql>
 	
 	<!--根据图书名book_name查询数据  -->
@@ -89,8 +94,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select a.*,b.category_name from book a,category b where a.category_id = b.category_id and a.book_id=#{book_id}
 	</select>
 	<!--查询总条数  -->
-	<select id="findCount" resultType="int">
-		select count(*) from book 
+	<select id="findCount" parameterType="QueryVo" resultType="int">
+		select count(*) from book 	
+		<where>
+			<if test="book.book_name != null and book.book_name != ''">
+				and book_name like '%${book.book_name}%'
+			</if>
+			<if test="book.book_isbn != null and book.book_isbn != ''">
+				and book_isbn like '%${book.book_isbn}%'
+			</if>
+			<if test="book.book_autor != null and book.book_autor != ''">
+				and book_autor like '%${book.book_autor}%'
+			</if>
+			<if test="book.category_id != null and book.category_id != ''">
+				and category_id = ${book.category_id}
+			</if>
+			<if test="book.book_state != null">
+				and book_state = ${book.book_state}
+			</if>
+		</where>
 	</select>
 	<!--查询总条数  -->
 	<select id="findCount2" parameterType="QueryVo" resultType="int">

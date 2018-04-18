@@ -187,31 +187,64 @@
 										</div>
 
 										<div class="table-responsive">
-										<form action="${pageContext.request.contextPath }/Book/findAll/1" method="post">
+										<form id="form11" action="${pageContext.request.contextPath }/Book/findAll/1" method="post">
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
 													  
 														<th>
-															名 称：<input type="text" name="Book.book_name" value=""/>
+															名 称：<input type="text" name="book_name" value="${boo.book_name}"/>
 														</th>
 														<th>
-															类 型:<select name="Book.category_id">
-															 		<option value="">-请选择-</option>
+															类 型:<select name="category_id">
+																	<c:choose>
+																		<c:when test="${boo.category_id !=null &&boo.category_id !='' }">
+																			<option value="${boo.category_id}">-${boo.category.category_name}-</option>
+																			<option value="">-请选择-</option>
+																		</c:when>
+																		<c:otherwise>
+																		     <option value="">-请选择-</option>
+																		</c:otherwise>
+																	</c:choose>												 		
 															 		<c:forEach items="${CVO.list }" var="c">
 															 			<option value="${c.category_id }">${c.category_name }</option>
 															 		</c:forEach>
 																</select>
 														</th>
-														<th>ISBN码：<input name="Book.book_isbn" type="text"/></th>
-														<th>作 者：<input name="Book.book_autor" type="text"/></th>
+														<th>ISBN码：<input name="book_isbn" type="text" value="${boo.book_isbn}"/></th>
+														<th>作 者：<input name="book_autor" type="text" value="${boo.book_autor}"/></th>
 														
 														<th>
-															状态:<select name="Book.book_state">
-															 		<option value="">-请选择-</option>
-															 		<option value="0" style="color:green">-正常-</option>
-															 		<option value="1" style="color:blue">-被借中-</option>
-															 		<option value="2" style="color:red">-遗失-</option>
+															状态:<select name="book_state">
+																	<c:choose>
+																		<c:when test="${boo.book_state!=null }">
+																			<c:if test="${boo.book_state == 0 }">
+																				<option value="0" style="color:green">-正常-</option>
+																				<option value="">-请选择-</option>
+																		 		<option value="1" style="color:blue">-被借中-</option>
+																		 		<option value="2" style="color:red">-遗失-</option>
+																			</c:if>	
+																			<c:if test="${boo.book_state == 1 }">
+																				<option value="1" style="color:blue">-被借中-</option>
+																				<option value="">-请选择-</option>
+																				<option value="0" style="color:green">-正常-</option>
+																		 		<option value="2" style="color:red">-遗失-</option>
+																			</c:if>
+																			<c:if test="${boo.book_state == 2 }">
+																				<option value="2" style="color:red">-遗失-</option>
+																				<option value="">-请选择-</option>
+																				<option value="0" style="color:green">-正常-</option>
+																		 		<option value="1" style="color:blue">-被借中-</option>
+																			</c:if>		
+																		</c:when>
+																		<c:otherwise>
+																		     <option value="">-请选择-</option>
+																		     <option value="0" style="color:green">-正常-</option>
+																	 		<option value="1" style="color:blue">-被借中-</option>
+																	 		<option value="2" style="color:red">-遗失-</option>
+																		</c:otherwise>
+																	</c:choose>
+																		
 																</select>
 														</th>
 
@@ -290,28 +323,29 @@
 													</c:forEach>
 												</tbody>
 											</table>
-											</form>
+											
 											<div class="col-md-3">
 												总页数：${BVO.totalPage }\当前页：${BVO.currentPage+1 }
 											</div>
-											<div  style="float: right;">
-												<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/1">首页</a>
-														<c:if test="${BVO.currentPage == 0 }">
-															<a class="btn btn-info">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${BVO.currentPage+2 }">下一页</a>
-														</c:if>
-														<c:if test="${BVO.currentPage+1 == BVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${BVO.currentPage }">上一页</a>
-													 		<a class="btn btn-info" >下一页</a>
-														</c:if>
-														<c:if test="${1 < BVO.currentPage+1 && BVO.currentPage+1 < BVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${BVO.currentPage }">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${BVO.currentPage+2 }">下一页</a>
-														</c:if>
-														<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${BVO.totalPage}">尾页</a>
-													
-											</div>	
-											
+											<c:if test="${BVO.totalPage != 1 }">
+												<div  style="float: right;">
+															<a class="btn btn-info" onclick="first()" >首页</a>
+															<c:if test="${BVO.currentPage == 0 }">
+																<a class="btn btn-info">上一页</a>
+														 		<a class="btn btn-info" onclick="next()">下一页</a>
+															</c:if>
+															<c:if test="${BVO.currentPage+1 == BVO.totalPage }">
+																<a class="btn btn-info" onclick="before()" >上一页</a>
+														 		<a class="btn btn-info" >下一页</a>
+															</c:if>
+															<c:if test="${1 < BVO.currentPage+1 && BVO.currentPage+1 < BVO.totalPage }">
+																<a class="btn btn-info" onclick="before()">上一页</a>
+														 		<a class="btn btn-info" onclick="next()">下一页</a>
+															</c:if>
+															<a class="btn btn-info" onclick="last()">尾页</a>
+												</div>	
+											</c:if>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -327,6 +361,31 @@
 		<script src="${pageContext.request.contextPath }/admin/assets/js/bootstrap.min.js"></script>	
 		<script src="${pageContext.request.contextPath }/admin/assets/js/ace.min.js"></script>
 
+		<script type="text/javascript">
+			function first(){
+				var testform=document.getElementById("form11");
+				testform.action="${pageContext.request.contextPath }/Book/findAll/1";
+				testform.submit();
+			}
+			function next(){
+				var testform=document.getElementById("form11");
+				var Page="${BVO.currentPage+2 }";
+				testform.action="${pageContext.request.contextPath }/Book/findAll/"+Page;
+				testform.submit();
+			}
+			function before(){
+				var testform=document.getElementById("form11");
+				var Page="${BVO.currentPage }";
+				testform.action="${pageContext.request.contextPath }/Book/findAll/"+Page;
+				testform.submit();
+			}
+			function last(){
+				var testform=document.getElementById("form11");
+				var Page="${BVO.totalPage}";		
+				testform.action="${pageContext.request.contextPath }/Book/findAll/"+Page;
+				testform.submit();
+			}
+		</script>
 		
 </body>
 </html>

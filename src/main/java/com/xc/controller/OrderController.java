@@ -61,11 +61,13 @@ public class OrderController {
 	 * @return
 	 */
     @RequestMapping("/findAll/{currentPage}")
-    public String findAll(@PathVariable("currentPage")Integer currentPage,HttpSession session){
+    public String findAll(@PathVariable("currentPage")Integer currentPage,HttpSession session,Model model,Order order){
 
     	QueryVo<Order> vo=new QueryVo<>();
     	vo.setCurrentPage(currentPage-1);
     	vo.setNumber(10);
+    	vo.setOrder(order);
+    	model.addAttribute("ord", order);
     	QueryVo<Order> OrderVO = orderService.orderFindAll(vo);
     	session.setAttribute("OrderVO", OrderVO);
     	return "order";
