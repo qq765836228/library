@@ -142,10 +142,6 @@
 				<!--主内容  -->
 				<div class="main-content">
 					<div class="breadcrumbs" id="breadcrumbs">
-						<script type="text/javascript">
-							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-						</script>
-
 						<ul class="breadcrumb" style="line-height:41px;">
 							<li>
 								<i class="icon-home home-icon"></i>
@@ -157,27 +153,16 @@
 					<div class="page-content">
 						<div class="row">
 								<div class="col-xs-12">
-										<h3 class="header smaller lighter blue">借还书处理</h3>
-										<div class="table-header">
-											借 书 订 单 基 本 信 息
-										</div>
-
 										<form id="form11" action="${pageContext.request.contextPath }/Order/findAll/1" method="post">
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-													  
-														<th>
-															用户名：<input type="text" name="User.user_name" value="${ord.user.user_name}"/>
-														</th>
+													  	<th>借书订单号：<input name="order_id" type="text" value="${ord.order_id }"/></th>
 														<th>
 															用户账号：<input type="text" name="user_idcard" value="${ord.user_idcard }"/>
 														</th>
-														<th>联系方式：<input name="User.user_telphone" type="text" value="${ord.user.user_telphone }"/></th>
-														<th>图书名称：<input name="Book.book_name" type="text" value="${ord.book.book_name }"/></th>
-														
 														<th>
-															图书ISBN:<input name="book_isbn" type="text" value="${boo.book_autor}"/>
+															图书ISBN:<input name="book_isbn" type="text" value="${ord.book_isbn}"/>
 														</th>
 
 														<th><input type="submit" value="搜索" ></th>
@@ -254,20 +239,20 @@
 											</div>
 											<div  style="float: right;">
 													<c:if test="${OrderVO.totalPage != 1 }">
-														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/1">首页</a>
+														<a class="btn btn-info" onclick="first()">首页</a>
 														<c:if test="${OrderVO.currentPage == 0 }">
 															<a class="btn btn-info">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage+2 }">下一页</a>
+													 		<a class="btn btn-info" onclick="next()">下一页</a>
 														</c:if>
 														<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage }">上一页</a>
+															<a class="btn btn-info" onclick="first()">上一页</a>
 													 		<a class="btn btn-info" >下一页</a>
 														</c:if>
 														<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
-															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage }">上一页</a>
-													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.currentPage+2 }">下一页</a>
+															<a class="btn btn-info" onclick="first()">上一页</a>
+													 		<a class="btn btn-info" onclick="next()">下一页</a>
 														</c:if>
-														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findAll/${OrderVO.totalPage}">尾页</a>	
+														<a class="btn btn-info" onclick="first()">尾页</a>	
 														
 													</c:if>
 											</div>	
@@ -288,7 +273,31 @@
 		<script src="${pageContext.request.contextPath }/admin/assets/js/bootstrap.min.js"></script>	
 		<script src="${pageContext.request.contextPath }/admin/assets/js/ace.min.js"></script>
 
-		
+		<script type="text/javascript">
+			function first(){
+				var testform=document.getElementById("form11");
+				testform.action="${pageContext.request.contextPath }/Order/findAll/1";
+				testform.submit();
+			}
+			function next(){
+				var testform=document.getElementById("form11");
+				var Page="${OrderVO.currentPage+2 }";
+				testform.action="${pageContext.request.contextPath }/Order/findAll/"+Page;
+				testform.submit();
+			}
+			function before(){
+				var testform=document.getElementById("form11");
+				var Page="${OrderVO.currentPage }";
+				testform.action="${pageContext.request.contextPath }/Order/findAll/"+Page;
+				testform.submit();
+			}
+			function last(){
+				var testform=document.getElementById("form11");
+				var Page="${OrderVO.totalPage}";		
+				testform.action="${pageContext.request.contextPath }/Order/findAll/"+Page;
+				testform.submit();
+			}
+		</script>
 </body>
 </html>
 

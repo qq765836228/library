@@ -157,6 +157,8 @@ public class OrderController {
     	vo.setCurrentPage(currentPage-1);
     	vo.setNumber(10);
     	vo.setIsreturn(isreturn);
+    	Order order=new Order();
+    	vo.setOrder(order);
     	QueryVo<Order> OrderVO = orderService.orderfindAllByIsreturn(vo);
     	session.setAttribute("OrderVO", OrderVO);
     	return "outorder";

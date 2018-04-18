@@ -11,7 +11,7 @@ public interface OrderMapper {
 	//查询所有借书订单
 	public List<Order> orderFindAll(QueryVo<Order> vo);
 	//查询总条数
-	public Integer findCount();
+	public Integer findCount(QueryVo<Order> vo);
 	//更新订单状态
 	public void updateIsreturn(Order order);
 	//根据id查询所有

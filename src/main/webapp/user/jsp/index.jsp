@@ -13,51 +13,18 @@
     <link href="${pageContext.request.contextPath }/assets/css/font-awesome.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath }/assets/css/style.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath }/assets/css/button.css" rel="stylesheet" />
-  
-  	<style type="text/css">
-  	.d1 {background: #A3D0C3;}
-.d1 input {
-  width: 100%;
-  height: 42px;
-  padding-left: 10px;
-  border: 2px solid #7BA7AB;
-  border-radius: 5px;
-  outline: none;
-  background: #F9F0DA;
-  color: #9E9C9C;
-}
-.d1 button {
-  position: absolute; 
-  top: 68px;
-  right: -5px;
-  width: 42px;
-  height: 42px;
-  border: none;
-  background: #7BA7AB;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-}
-.d1 button:before {
-  content: "\f002";
-  font-family: FontAwesome;
-  font-size: 16px;
-  color: #F9F0DA;
-}       
-
-#sou{
-		width:66%;
-		height: 200px;
-		margin:40px auto;
-		padding-top:30px;
-		background-image: url(../../assets/img/搜索1.jpg);
-		
-		text-align: center;
-}  
-         
-  	</style>
+   
+   	<script type="text/javascript">
+   	$(function(){
+   		$.ajax({
+   			
+   			
+   		})
+   	})
+   	</script>
 </head>
 <body>
-<header>
+	<header>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -141,21 +108,6 @@
             </div>
         </div>
     </section>
-     <%-- <c:import url="header.jsp"></c:import>  --%>
-    <!-- MENU SECTION END-->
-   	<!--  <div id="sou" class="container">
-          <div class="row">
-          		 <div class="col-md-7 col-md-offset-2" >
-          		 	<h1 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜  索</h1>
-		             <form class="d1">
-						 <input type="text" placeholder="搜索从这里开始...">
-						<button type="submit"></button>
-					</form>     
-		         </div>
-		    </div>
-		    
-	</div> -->
-	
     	<div class="content-wrapper">
        			 <div class="container">
        			 <h3><img alt="新闻" src="../../assets/img/新闻.png">&nbsp;&nbsp;&nbsp;新 闻 中 心</h3>
@@ -166,7 +118,7 @@
 				                    <div class="panel-heading">
 				                       		 <h4><img alt="服务中心" src="../../assets/img/服务中心.png">&nbsp;&nbsp;&nbsp;服 务 时 间</h4>
 				                    </div>
-				                    <div class="panel-body">
+				                    <div id="notice_text" class="panel-body">
 				                    	<a> 网上图书馆、自助图书馆全天候服务：（0:00至24:00）</a><br>
 							            <a> 周二至周日主馆舍开放时间：</a><br>
 							            <a> 一楼至四楼：9:00-21:00</a><br>
@@ -193,25 +145,10 @@
 				        <div class="col-md-5">
 					        <div class="panel panel-success">
 	                        <div class="panel-heading">
-	                          		<h4><img alt="资源中心" src="../../assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;常 用 资 源</h4>
+	                          		<h4><img alt="简介" src="../../assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;简介</h4>
 	                        </div>
 	                        <div class="panel-body">
-	                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本馆2016年累计馆藏资源近900万册、件，
-	                            	其中纸质文献480万册，中外文报刊6000种，
-	                            	音像资料14万件，引进电子数据库30余个，
-	                            	提供港台、时装和深圳地方文献等特色文献服务。</p>
-	                        	<h4><a>数字资源更多>></a></h4>
-								<a>1.“深圳记忆”专题数据库</a><br>
-								<a>2.自建专题资源</a><br>
-								<a>3.CNKI中国知网</a><br>
-								<a>4.维普考试资源系统</a><br>
-								<a>5.台湾学术在线</a><br>
-								<a>6.超星“书世界”</a><br>
-								<a>7.新东方多媒体学习库</a><br>
-								<a>8.网上报告厅</a><br>
-								<a>9.龙源电子期刊</a><br>
-								<a>10.EBSCOHost数据库</a><br>
-								<a>11.广东省地方特色资源</a><br>							
+	                           <p style="font-size: 17px;">　华东交通大学是一所以工为主，经、管、文、理、法、教育、艺术等多学科协调发展，以交通为特色、轨道为核心的教学研究型大学，江西省属重点大学。学校是国家“中西部高校基础能力建设工程”重点建设大学、中国铁路总公司与江西省人民政府共建高校、教育部“卓越工程师教育培养计划”高校、江西省“2011计划”依托高校、原南京军区（现东部战区）招收和选拔培养后备军官（国防生）签约高校，为全国毕业生就业典型经验高校，首批全国高校创新创业50强和国家级知识产权培训基地，“中俄交通大学联盟”成员高校，“中国—东盟轨道交通教育培训联盟”成员高校。<br>					
 	                        </div>
 	                        <div class="panel-footer">
 	                            Panel Footer

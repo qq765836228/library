@@ -154,10 +154,6 @@
 						</ul><!-- .breadcrumb -->
 					</div>
 					<div class="page-content">
-						<div class="page-header" align="center">
-							<h1>W E L C O M E&nbsp;&nbsp;&nbsp;&nbsp;T O&nbsp;&nbsp;&nbsp;&nbsp; 华 东 交 通 大 学 理 工 学 院 图 书 馆</h1>
-						</div><!-- /.page-header -->					
-						<div class="hr hr32 hr-dotted"></div>
 				 		<div class="row">       			 	 
 				        	<div class="col-md-3">
 				               <div class="panel panel-primary">
@@ -189,14 +185,12 @@
 				        	<div class="col-md-5">
 					        	<div class="panel panel-success">
 	                        	<div class="panel-heading">
-	                          		<h4><img alt="资源中心" src="${pageContext.request.contextPath }/assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;简介</h4>
+	                          		<h4><img alt="简介" src="${pageContext.request.contextPath }/assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;简介</h4>
 	                       		</div>
 	                        	<div class="panel-body">
-	                            	<p style="font-size: 18px;">　华东交通大学是一所以工为主，经、管、文、理、法、教育、艺术等多学科协调发展，以交通为特色、轨道为核心的教学研究型大学，江西省属重点大学。学校是国家“中西部高校基础能力建设工程”重点建设大学、中国铁路总公司与江西省人民政府共建高校、教育部“卓越工程师教育培养计划”高校、江西省“2011计划”依托高校、原南京军区（现东部战区）招收和选拔培养后备军官（国防生）签约高校，为全国毕业生就业典型经验高校，首批全国高校创新创业50强和国家级知识产权培训基地，“中俄交通大学联盟”成员高校，“中国—东盟轨道交通教育培训联盟”成员高校。<br>
+	                            	<p style="font-size: 17px;">　华东交通大学是一所以工为主，经、管、文、理、法、教育、艺术等多学科协调发展，以交通为特色、轨道为核心的教学研究型大学，江西省属重点大学。学校是国家“中西部高校基础能力建设工程”重点建设大学、中国铁路总公司与江西省人民政府共建高校、教育部“卓越工程师教育培养计划”高校、江西省“2011计划”依托高校、原南京军区（现东部战区）招收和选拔培养后备军官（国防生）签约高校，为全国毕业生就业典型经验高校，首批全国高校创新创业50强和国家级知识产权培训基地，“中俄交通大学联盟”成员高校，“中国—东盟轨道交通教育培训联盟”成员高校。<br>
 
-　　1971年，国家决定将上海交通大学机车车辆系以及同济大学铁道工程专业并入上海铁道学院，更名为华东交通大学，迁往江西；1978年，中央同意原上海铁道学院不再搬迁，华东交通大学继续在南昌建校，由原铁道部和江西省双重领导，以原铁道部为主；2000年，学校转制为“中央与地方共建，以地方管理为主”。<br>
-
-　　截至2016年10月，学校占地面积近3000亩，建筑面积70余万平方米，教学科研仪器设备总值近3.5亿元；图书馆收藏纸质图书203万册，电子文献233万册，为中国学术期刊文献检索一级咨询站；学校有1个博士后科研工作站，1个博士后科研流动站，1个院士工作站，2个一级学科博士点，17个一级学科硕士点[4]；有在校学生23000余人，其中研究生2800余人[5]；有教职工1700余人，其中正副教授530余人；学校设有18个学院：其中17个直属二级学院、1个独立设置学院（理工学院），校本部共60个本科专业。						
+　　					
 	                       		 </div>
 	                        <div class="panel-footer">
 	                            @ 交 大 理 工
@@ -208,7 +202,7 @@
 						         	<h2><img alt="通知" src="${pageContext.request.contextPath }/assets/img/通知.png">&nbsp;&nbsp;&nbsp;通 知 公 告</h2>
 						         	<hr>
 						         	<c:forEach items="${List }" var="c">
-						         		<a style="font-size: 20px;text-decoration: none;">${c.notice_text }</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						         		<a style="font-size: 16px;text-decoration: none;">${c.notice_text }</a>&nbsp;&nbsp;&nbsp;&nbsp;
 						         		<a class="red" href="${pageContext.request.contextPath }/Admin/deleteNotice/${c.notice_id }" onClick="return confirm('确定删除?');">
 												<i class="icon-trash bigger-130"></i>
 										</a><br>
