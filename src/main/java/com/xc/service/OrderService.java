@@ -1,5 +1,7 @@
 package com.xc.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.xc.domain.Order;
@@ -19,5 +21,7 @@ public interface OrderService {
 	public void update(Order order);
 
 	public QueryVo<Order> orderfindAllByIsreturn(QueryVo<Order> vo);
+
+	public List<Order> orderFindByIdCard(String id_card);
 
 }

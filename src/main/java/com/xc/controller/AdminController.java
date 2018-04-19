@@ -171,5 +171,21 @@ public class AdminController {
 			session.setAttribute("List", list);
 			return "index";
 		}
+		@RequestMapping("/findNotice")
+		@ResponseBody
+		public Notice findNotice(){			
+			Notice notice = adminService.findNoticeById(1);
+			return notice;
+		}
+		
+		@RequestMapping("/findAllNotice")
+		@ResponseBody
+		public List<Notice> findAllNotice(){			
+			List<Notice> list = adminService.findAllNotice();
+//			for(Notice o: list){
+//				o.getNotice_date();
+//			}
+			return list;
+		}
 }
 	

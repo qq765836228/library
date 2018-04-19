@@ -4,34 +4,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xc.dao.UserMapper">
 
-	<sql id="user_Where">						
-		<!-- where标签作用:
-				会自动向sql语句中添加where关键字
-				会去掉第一个条件的and关键字
-			 -->
-		<where>
-			<if test="user.username != null and user.username != ''">
-				and username like '%${user.username}%'
-			</if>
-			<if test="user.name != null and user.name != ''">
-				and name like '%${user.name}%'
-			</if>
-			<if test="user.sex != null and user.sex != ''">
-				and sex=#{user.sex}
-			</if>
-			<if test="number1 != null and number1 != ''">								
-				and age>${number1}
-			</if>
-			<if test="number2 != null and number2 != ''">								
-				and ${number2}>age
-			</if>
-		</where>
-	</sql>
-
 
 	<!--登陆验证用户是否存在  -->
 	<select id="loginCheck" parameterType="USER" resultType="USER">
-		select * from user where username=#{username} and password=#{password}
+		select * from user where user_idcard=#{user_idcard} and user_password=#{user_password}
 	</select>
 	<!--根据id查询数据  -->
 	<select id="findUserById" parameterType="int" resultType="USER">
@@ -44,14 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user where username=#{username}
 	</select>
 	
-	<!--分类查找所有  -->
-	<select id="findAll2" parameterType="QueryVo" resultType="USER">
-		select * from user
-		<include refid="user_Where"></include>
-		<if test="type != null and type != ''">
-				order by ${type} asc 
-		</if>
-	</select>
+	
 	
 	
 	

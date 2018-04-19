@@ -8,13 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
     <title>登陆</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="${pageContext.request.contextPath }/assets/css/bootstrap.min.css" rel="stylesheet">
+ 	<script src="${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js"></script>
     <style type="text/css">
     body{
 	  height: 100%;
@@ -69,12 +68,12 @@
 
   <body class="text-center">
     <form class="form-signin">
-    <img class="mb-4" src="../../assets/img/2.png" alt="" width="120px" height="120px">
+    <img class="mb-4" src="${pageContext.request.contextPath }/assets/img/2.png" alt="" width="120px" height="120px">
       <h1 class="h3 mb-3 font-weight-normal">登  陆</h1>
       <label for="username" class="sr-only">username</label>
-      <input type="text" id="username" class="form-control" name="username" placeholder="用户名" required autofocus>
+      <input type="text" id="user_idcard" class="form-control" name="username" placeholder="用户名" required autofocus>
       <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" class="form-control" name="password" placeholder="密码" required>
+      <input type="password" id="user_password" class="form-control" name="password" placeholder="密码" required>
       <div class="checkbox mb-3">
         <label>
           <input type="radio" name="radio" value="1" checked="checked"> 普通用户 
@@ -90,18 +89,18 @@
    <script type="text/javascript">
 		/*验证提交表单  */
 		$("#tj").click(function(){		  
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
+            var user_idcard = document.getElementById("user_idcard").value;
+            var user_password = document.getElementById("user_password").value;
             $.ajax({
-                url: "../login/checks",
+                url: "${pageContext.request.contextPath }/User/checks",
                 dataType: "json",
-                data: {"username":username,"password":password},
+                data: {"user_idcard":user_idcard,"user_password":user_password},
                 type: "POST",
                 success: function(data){
                 	if(data == "0"){
                 		alert("用户名或者密码输入有误，请重新输入！");
                 	}else{
-                		window.location.href='${pageContext.request.contextPath }/login/indexUI/'+data;
+                		window.location.href='${pageContext.request.contextPath }/User/indexUI/'+data;
                 	}
                 	
                 }

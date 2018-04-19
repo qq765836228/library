@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xc.domain.Order;
 import com.xc.domain.User;
+import com.xc.service.OrderService;
 import com.xc.service.UserService;
 import com.xc.vo.QueryVo;
 
@@ -31,6 +33,8 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	@Autowired
+	private OrderService orderService;
 	/**
 	 * 登陆验证
 	 * @param request
@@ -40,12 +44,12 @@ public class UserController {
 	 */
 	@RequestMapping("/checks")
 	@ResponseBody
-		public  String loginCheck(HttpServletRequest request, HttpServletResponse response)throws IOException{
-		 	String username=request.getParameter("username");
-		 	String password=request.getParameter("password");	
+		public  String loginCheck(User user)throws IOException{
+		 	/*String username=request.getParameter("user_name");
+		 	String password=request.getParameter("user_password");	
 		 	User user=new User();
 		   user.setUser_idcard(username);
-		   user.setUser_password(password);
+		   user.setUser_password(password);*/
 			User uu= userService.loginCheck(user);			    
 			if(uu!=null){ 
 				String str = uu.getUser_id().toString();
@@ -53,6 +57,32 @@ public class UserController {
 			} 
 			return "0"; 
 		}
+	/**
+	 * 跳转到主页
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/indexUI/{id}")
+		public  String indexUI(@PathVariable("id")Integer user_id,HttpSession session )throws IOException{
+		    User user = userService.findUserById(user_id);
+			session.setAttribute("USER", user);
+			return "../../user/jsp/index"; 
+		}
+	/**
+	 * 查找用户订单
+	 * @param id_card
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/findOrder/{id_card}")
+	public  String findOrder(@PathVariable("id_card")String id_card,Model model )throws IOException{
+	     List<Order> OVO=orderService.orderFindByIdCard(id_card);
+	     model.addAttribute("OVO", OVO);
+		return "../../user/jsp/index"; 
+	}
 	/**
 	 * 注册验证
 	 * @param request
@@ -113,11 +143,10 @@ public class UserController {
 	 * @param httpSession
 	 * @return
 	 */
-	@RequestMapping("/logout")
-	public String logout(HttpSession httpSession
-			){
-		httpSession.removeAttribute("user");
-		return "redirect:/jsp/login.jsp";
+	@RequestMapping("/loginOut")
+	public String logout(HttpSession session){
+		session.removeAttribute("USER");
+		return "../../user/jsp/index";
 	}
 	/**
      * 判断用户
