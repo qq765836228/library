@@ -56,13 +56,15 @@
 	<header>
         <div class="container">
             <div class="row">
-	            <c:if test="${USER==null }">
+	           
 	                <div class="col-md-12">
+	                 	<c:if test="${USER==null }">
 	                   <a href="${pageContext.request.contextPath }/user/jsp/login.jsp" class="button button-action button-pill">登陆</a>				
 	                   &nbsp;&nbsp;
 	                   <a href="${pageContext.request.contextPath }/user/jsp/register.jsp" class="button button-raised button-pill button-inverse">注册</a>
+	                   </c:if>
 	                </div>
-	 			</c:if>
+	 			
             </div>
         </div>
     </header>
@@ -131,7 +133,7 @@
                             <li><a class="menu-top-active" href="${pageContext.request.contextPath }/user/jsp/index.jsp">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;首页 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             <li><a href="${pageContext.request.contextPath }/user/jsp/find.jsp">&nbsp;&nbsp;&nbsp;&nbsp; 图书查询 &nbsp;&nbsp; &nbsp;&nbsp;</a></li>
                             <c:if test="${USER != null }">
-                            	<li><a href="${pageContext.request.contextPath }/User/findOrder/${USER.user_idcard }"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
+                            	<li><a href="${pageContext.request.contextPath }/user/jsp/order.jsp"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
                             	<li><a href="user.jsp">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             </c:if>
                             <c:if test="${USER == null }">

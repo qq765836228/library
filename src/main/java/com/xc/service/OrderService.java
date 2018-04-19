@@ -24,4 +24,6 @@ public interface OrderService {
 
 	public List<Order> orderFindByIdCard(String id_card);
 
+	public QueryVo<Order> orderFindByIdCard2(QueryVo<Order> vo);
+
 }

@@ -13,7 +13,8 @@ public class QueryVo<T> {
 	private Integer totalPage;//总页数
 	private Integer isreturn;
 	private String book_name;
-
+	private String user_idcard;
+	
 	private Book book;
 	private Order order;
 	
@@ -21,6 +22,16 @@ public class QueryVo<T> {
 
 	
 	
+	
+	
+	public String getUser_idcard() {
+		return user_idcard;
+	}
+
+	public void setUser_idcard(String user_idcard) {
+		this.user_idcard = user_idcard;
+	}
+
 	public Order getOrder() {
 		return order;
 	}

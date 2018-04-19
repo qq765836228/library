@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 	<select id="bookFindAll" parameterType="QueryVo" resultMap="BookBean">
-		select a.*,b.category_name from book a,category b where a.category_id = b.category_id 
+		select a.*,b.* from book a,category b where a.category_id = b.category_id 
 		
 		<include refid="Book_Where"></include>
 		
@@ -83,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--根据图书名book_name查询数据  -->
 	<select id="findByBookName" parameterType="QueryVo" resultMap="BookBean">
-		select a.*,b.category_name from book a,category b where a.category_id = b.category_id and book_name like "%"#{book_name}"%" limit ${currentPage*number},${number}
+		select a.*,b.* from book a,category b where a.category_id = b.category_id and book_name like "%"#{book_name}"%" limit ${currentPage*number},${number}
 	</select> 
 	<!--根据图书名book_name查询数据  -->
 	<select id="bookFindByName" parameterType="string" resultType="BOOK">
@@ -91,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select> 
 	<!--根据id查询图书  -->
 	<select id="bookFindById" parameterType="int" resultMap="BookBean">
-		select a.*,b.category_name from book a,category b where a.category_id = b.category_id and a.book_id=#{book_id}
+		select a.*,b.* from book a,category b where a.category_id = b.category_id and a.book_id=#{book_id}
 	</select>
 	<!--查询总条数  -->
 	<select id="findCount" parameterType="QueryVo" resultType="int">

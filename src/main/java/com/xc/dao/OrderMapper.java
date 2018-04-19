@@ -22,4 +22,6 @@ public interface OrderMapper {
 	public Integer findCountByIsreturn();
 	public List<Order> orderFindByIdcard(String user_idcard);
 	public void deleteUser(String user_idcard);
+	public List<Order> orderFindByIdcard2(QueryVo<Order> vo);
+	public Integer findCountByIdCard(QueryVo<Order> vo);
 }

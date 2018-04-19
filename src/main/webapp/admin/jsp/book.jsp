@@ -261,6 +261,7 @@
 														</th>
 														<th class="center">名 称</th>
 														<th class="center">类 型</th>
+														<th class="center">书架号</th>
 														<th class="center">ISBN码</th>
 														<th class="center">作 者</th>
 														<th class="center">出 版 社</th>
@@ -284,6 +285,7 @@
 														<td>${c.book_id }</td>
 														<td>${c.book_name }</td>
 														<td>${c.category.category_name }</td>
+														<td>${c.category.category_case }</td>
 														<td>${c.book_isbn }</td>
 														<td>${c.book_autor }</td>	
 														<td>${c.book_pubhouse }</td>	

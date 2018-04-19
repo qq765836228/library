@@ -178,4 +178,18 @@ public class BookController {
     	model.addAttribute("name", name);
     	return "quickSearch";
     }
+    @RequestMapping("/findByBookName2/{name}/{currentPage}")
+    public String findByBookName2(@PathVariable("currentPage")Integer currentPage,@PathVariable("name")String  name,Model model){
+    	QueryVo<Book> vo=new QueryVo<>();
+    	vo.setBook_name(name);
+    	vo.setCurrentPage(currentPage-1);
+    	vo.setNumber(7);
+    	vo = bookService.findByBookName(vo);
+    	
+    	model.addAttribute("BVO", vo);
+    	model.addAttribute("name", name);
+    	return "../../user/jsp/find";
+    }
+    
+    
 }

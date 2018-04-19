@@ -87,6 +87,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</select>
 	
+	<select id="orderFindByIdcard2" parameterType="QueryVo" resultMap="OBean">
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.user_idcard = ${user_idcard} limit ${currentPage*number},${number}
+		
+	</select>
 	
 	<!--查询总条数  -->
 	<select id="findCount" resultType="int">
@@ -108,6 +112,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--查询违规总条数  -->
 	<select id="findCountByIsreturn" resultType="int">
 		select count(*) from `order` where isreturn = 1
+	</select>
+	<!--查询违规总条数  -->
+	<select id="findCountByIdCard"  parameterType="QueryVo" resultType="int">
+		select count(*) from `order` where user_idcard = ${user_idcard}
 	</select>
 	<update id="updateIsreturn" parameterType="ORDER">
 		update `order` set isreturn = #{isreturn} where order_id = #{order_id}
