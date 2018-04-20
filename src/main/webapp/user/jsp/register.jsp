@@ -11,7 +11,7 @@
  <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery-1.11.1.js"></script>
 </HEAD>
 <script type="text/javascript">
-	//验证用户是否存在
+	/* //验证用户是否存在
 	function check(){
 		var username=document.getElementById("username").value;
 		if(username != null){
@@ -39,13 +39,13 @@
 		}
 		return false;
 	}
-
+ */
 </script>
  <style type="text/css">
-    .error
+    /* .error
     {
     	display: none;
-    }
+    } */
     .form-login .form-login-head,
 	.form-login .checkbox {
 		text-align:center;
@@ -61,12 +61,18 @@
 	     -moz-box-sizing: border-box;
 	          box-sizing: border-box;
 	  padding: 10px;
-	  font-size: 16px;
+	  font-size: 12px;
 	}
 	.form-login .form-control:focus {
 	  z-index: 2;
 	}
      .form-login input[type="text"] {
+		  margin-bottom: 10px;
+		  border-bottom-right-radius: 0;
+		  border-bottom-left-radius: 0;
+		}
+		 .form-login select {
+		  
 		  margin-bottom: 10px;
 		  border-bottom-right-radius: 0;
 		  border-bottom-left-radius: 0;
@@ -95,19 +101,17 @@
             <hr>
 	          <div class="col-md-4" style="text-align: center;margin: 0 auto;">
 					<input type="hidden" name="msg" id ="error">
-			     	 <form class="form-login" action="${pageContext.request.contextPath }/login/save.action" onsubmit="return check2()" method="post">
+			     	 <form class="form-login" action="${pageContext.request.contextPath }/User/save" onsubmit="return check2()" method="post">
 					        <h2 class="form-login-head">注  册</h2>
-					        <input type="text" id="username" class="form-control" name="username" onblur="check()" placeholder="用户名"required autofocus>
-					        <a id="err" class="error">用户名已存在</a>
-					        <input type="password" id="password" class="form-control" name="password"  placeholder="密码" required>
-					        <input type="text" id="name" class="form-control" name="name"  placeholder="姓名" required>
-					        <input type="text" id="phone" class="form-control" name="phone"  placeholder="证件类型" required>
-					        <input type="text" id="phone" class="form-control" name="phone"  placeholder="证件号码" required>
-					        <input type="text" id="phone" class="form-control" name="phone"  placeholder="电话号码" required>
-					        <input type="radio" name="sex" value="男" checked="checked">男
-					        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="sex" value="女">女
-					        <button type="submit" class="btn btn-lg btn-primary btn-block"  >注册</button>
+					        <input type="text" class="form-control" id="user_idcard" name="user_idcard"  placeholder="证件号码" required><a id="err" class="error">*必填</a>
+					        <select name="user_cardtype" class="form-control">
+					        	<option value="身份证" style="height:46px;">身份证</option>
+					        	<option value="学生证">学生证</option>
+					        </select>
+					        <input type="password" class="form-control" name="user_password"  placeholder="密码" required>
+					        <input type="text" class="form-control" name="user_name"  placeholder="姓名" required>
+					        <input type="text"  class="form-control" name="user_telphone"  placeholder="电话号码" required>
+					         <button type="submit" id="add" class="btn btn-lg btn-primary btn-block"  >注册</button>
 					   </form>
 			     	 <p class="mt-5 mb-3 text-muted"><a href="index.jsp">返回首页</a></p>
       				 <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
@@ -117,6 +121,34 @@
 
 	 
 </BODY>
-
-
+<script type="text/javascript">
+<script type="text/javascript">
+	$("#user_idcard").blur(function(){			
+		var user_idcard=$("#user_idcard").val();
+		if(user_idcard != null && user_idcard != ""){
+			$.ajax({
+				url:"${pageContext.request.contextPath }/User/findByIdcard2",
+				data:"user_idcard="+user_idcard,
+				type:"post",
+				dataType:"json",
+				success:function(data){	
+					if(data=="0"){
+						$(".error").html("");
+						$(".error").html("<font>*必填</font>");
+						$("#add").removeAttr("disabled");
+						
+					}
+					if(data=="1"){
+						$(".error").html("");
+						$(".error").html("<font color='red'>此ISBN已经存在！</font>");
+						$("#add").attr("disabled","true");
+					}
+					return false;
+				}
+			})
+		}
+		$(".error").html("");
+		$(".error").html("<font>*必填</font>");
+	})
+</script>
 </HTML>
