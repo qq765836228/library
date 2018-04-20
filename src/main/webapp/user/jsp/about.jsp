@@ -38,12 +38,7 @@
     <div class="navbar navbar-inverse set-radius-zero">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="${pageContext.request.contextPath }/user/jsp/index.jsp">
 
                     <img src="${pageContext.request.contextPath }/assets/img/logo.png" />
                 </a>
@@ -98,14 +93,14 @@
                             <li><a href="${pageContext.request.contextPath }/user/jsp/index.jsp">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;首页 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             <li><a href="${pageContext.request.contextPath }/user/jsp/find.jsp">&nbsp;&nbsp;&nbsp;&nbsp; 图书查询 &nbsp;&nbsp; &nbsp;&nbsp;</a></li>
                             <c:if test="${USER != null }">
-                            	<li><a href="${pageContext.request.contextPath }/User/findOrder/${USER.user_idcard }"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
-                            	<li><a href="user.jsp">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            	<li><a href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/1"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
+                            	<li><a href="${pageContext.request.contextPath }/user/jsp/user.jsp">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             </c:if>
                             <c:if test="${USER == null }">
 	                            <li><a href="${pageContext.request.contextPath }/user/jsp/login.jsp" onClick="return confirm('请先登录');"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
 	                            <li><a href="${pageContext.request.contextPath }/user/jsp/login.jsp" onClick="return confirm('请先登录');">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             </c:if>
-                             <li><a class="menu-top-active"  href="about.jsp">&nbsp;&nbsp;&nbsp;&nbsp;概况&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                             <li><a class="menu-top-active"  href="">&nbsp;&nbsp;&nbsp;&nbsp;概况&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                            
                         </ul>
                     </div>
@@ -141,42 +136,36 @@
 	          </div>
               <div class="col-md-6">
                   <div class="alert alert-info">
-                  	亲 爱 的 读 者 朋 友 ，如 果 你 有 好 多 建 议 ， 可 以 留 在 下 面 哟      
+                  	从 删 库 到 跑 路 ， 我 就 是 大 佬     
                   </div>
                    <hr />
                    <div class="Compose-Message">               
                			 <div class="panel panel-success">
-                  			  <div class="panel-heading">
-                      			  Compose New Message 
-                   			  </div>
-                   	 	<div class="panel-body">
-                        
-                        <label>Enter Recipient Name : </label>
-                        <input type="text" class="form-control" />
-                        <label>Enter Subject :  </label>
-                        <input type="text" class="form-control" />
-                        <label>Enter Message : </label>
-                        <textarea rows="9" class="form-control"></textarea>
-                        <hr />
-                        <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Send Message </a>&nbsp;
-                      <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-tags"></span>  Save To Drafts </a>
-                    </div>
-                    <div class="panel-footer text-muted">
-                        <strong>Note : </strong>Please note that we track all messages so don't send any spams.
-                    </div>
-                </div>
-                     </div>
+	                  			  <div class="panel-heading">
+	                      			  开 发 者 
+	                   			  </div>
+	                   	 	<div class="panel-body">
+		                        <img alt="" src="${pageContext.request.contextPath }/assets/img/22.jpg">
+	                        	<h3 style="display:inline;">姓名：<strong>熊 超</strong></h3>
+	                        	<h4>所属分院：电子信息工程</h4>
+	                        	<h4>专业：计算机科学与技术</h4>
+		                    </div>
+		                    <div class="panel-footer text-muted">
+		                        <strong>爱 我 你 就 亲 亲 我</strong>
+		                    </div>
+                		</div>
+                   </div>
                 </div>
 
             </div>
         </div>
     </div>
     <!-- CONTENT-WRAPPER SECTION END-->
-    <footer>
+     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2015 YourCompany | By : <a href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a>
+                    &copy; 华东交通大学理工学院 | By 计算机科学与技术1班 <a href="https://baike.baidu.com/item/%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87/12343674?fr=aladdin" target="_blank" title="熊超">熊超</a> - Collect from <a href="https://baike.baidu.com/item/%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87/12343674?fr=aladdin"  target="_blank">chao.xiong</a>
                 </div>
 
             </div>

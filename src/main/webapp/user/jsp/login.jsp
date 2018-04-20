@@ -73,14 +73,7 @@
       <label for="username" class="sr-only">username</label>
       <input type="text" id="user_idcard" class="form-control" name="username" placeholder="用户名" required autofocus>
       <label for="password" class="sr-only">Password</label>
-      <input type="password" id="user_password" class="form-control" name="password" placeholder="密码" required>
-      <div class="checkbox mb-3">
-        <label>
-          <input type="radio" name="radio" value="1" checked="checked"> 普通用户 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="radio" name="radio" value="2"> 管理员
-        </label>
-      </div>
+      <input type="password" id="user_password" class="form-control" name="password" placeholder="密码" required>    
       <input type="button" class="btn btn-lg btn-primary btn-block" id="tj" value="登陆"> 
       <p class="mt-5 mb-3 text-muted"><a href="index.jsp">返回首页</a></p>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
@@ -93,12 +86,16 @@
             var user_password = document.getElementById("user_password").value;
             $.ajax({
                 url: "${pageContext.request.contextPath }/User/checks",
-                dataType: "json",
+                
                 data: {"user_idcard":user_idcard,"user_password":user_password},
                 type: "POST",
+                dataType: "text",
+                async: false,
                 success: function(data){
                 	if(data == "0"){
                 		alert("用户名或者密码输入有误，请重新输入！");
+                	}else if(data == "s2"){
+                		alert("该用户违规次数过多，已被封停，请联系管理员解封");
                 	}else{
                 		window.location.href='${pageContext.request.contextPath }/User/indexUI/'+data;
                 	}

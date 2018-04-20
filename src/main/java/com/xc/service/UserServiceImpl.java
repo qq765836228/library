@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		for(User s:list){
 			if(s.getUser_error()>10){
 				s.setUser_state(0);
-				userMapper.updateUser_error(s);
+				userMapper.updateUser(s);
 			}
 		}
 		if(vo.getNumber()!=null){

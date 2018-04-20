@@ -249,14 +249,14 @@
 													 		<a class="btn btn-info" onclick="next()">下一页</a>
 														</c:if>
 														<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
-															<a class="btn btn-info" onclick="first()">上一页</a>
+															<a class="btn btn-info" onclick="before()">上一页</a>
 													 		<a class="btn btn-info" >下一页</a>
 														</c:if>
 														<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
-															<a class="btn btn-info" onclick="first()">上一页</a>
+															<a class="btn btn-info" onclick="before()">上一页</a>
 													 		<a class="btn btn-info" onclick="next()">下一页</a>
 														</c:if>
-														<a class="btn btn-info" onclick="first()">尾页</a>	
+														<a class="btn btn-info" onclick="last()">尾页</a>	
 														
 													</c:if>
 											</div>	

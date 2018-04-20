@@ -41,12 +41,7 @@
     <div class="navbar navbar-inverse set-radius-zero">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="${pageContext.request.contextPath }/user/jsp/index.jsp">
 
                     <img src="${pageContext.request.contextPath }/assets/img/logo.png" />
                 </a>
@@ -101,14 +96,14 @@
                             <li><a href="${pageContext.request.contextPath }/user/jsp/index.jsp">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;首页 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             <li><a href="${pageContext.request.contextPath }/user/jsp/find.jsp">&nbsp;&nbsp;&nbsp;&nbsp; 图书查询 &nbsp;&nbsp; &nbsp;&nbsp;</a></li>
                             <c:if test="${USER != null }">
-                            	<li><a  class="menu-top-active"  href="${pageContext.request.contextPath }/User/findOrder/${USER.user_idcard }"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
-                            	<li><a href="user.jsp">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                            	<li><a  class="menu-top-active"  href=""> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
+                            	<li><a href="${pageContext.request.contextPath }/user/jsp/user.jsp">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             </c:if>
                             <c:if test="${USER == null }">
 	                            <li><a href="${pageContext.request.contextPath }/user/jsp/login.jsp" onClick="return confirm('请先登录');"> &nbsp;&nbsp;&nbsp;&nbsp; 订单查询 &nbsp;&nbsp;&nbsp;&nbsp; </a></li>
 	                            <li><a href="${pageContext.request.contextPath }/user/jsp/login.jsp" onClick="return confirm('请先登录');">&nbsp;&nbsp;&nbsp;&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                             </c:if>
-                             <li><a href="about.jsp">&nbsp;&nbsp;&nbsp;&nbsp;概况&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                             <li><a href="${pageContext.request.contextPath }/user/jsp/about.jsp">&nbsp;&nbsp;&nbsp;&nbsp;概况&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                            
                         </ul>
                     </div>
@@ -129,7 +124,7 @@
              <div class="row">
                 <div class="col-md-12">
                   <!--   Kitchen Sink -->
-                    <div class="panel panel-default">
+                    <!-- <div class="panel panel-default">
                         <div class="panel-heading">
                             	<div class="row">   
 							  <div class="col-xs-3 " style="left: 20px">
@@ -148,7 +143,7 @@
 							  <div class="col-xs-2" align="right">
 							  	 <a href="#" class="button button-glow button-border button-rounded button-primary" style="margin-top: 30px;">搜索</a>
 							 </div> 
-                        </div>
+                        </div> -->
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
@@ -196,7 +191,30 @@
 													</tr>
 													</c:forEach>
                                     </tbody>
+                                    
                                 </table>
+                                <div class="col-md-3">
+												总页数：${OrderVO.totalPage }\当前页：${OrderVO.currentPage+1 }
+											</div>
+											<div  style="float: right;">
+													<c:if test="${OrderVO.totalPage != 1 }">
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/1">首页</a>
+														<c:if test="${OrderVO.currentPage == 0 }">
+															<a class="btn btn-info">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" >下一页</a>
+														</c:if>
+														<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.totalPage}">尾页</a>	
+														
+													</c:if>
+											</div>	
                             </div>
                         </div>
                     </div>
@@ -212,7 +230,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2015 YourCompany | By : <a href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a>
+                    &copy; 华东交通大学理工学院 | By 计算机科学与技术1班 <a href="https://baike.baidu.com/item/%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87/12343674?fr=aladdin" target="_blank" title="熊超">熊超</a> - Collect from <a href="https://baike.baidu.com/item/%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87/12343674?fr=aladdin"  target="_blank">chao.xiong</a>
                 </div>
 
             </div>

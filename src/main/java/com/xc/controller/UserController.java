@@ -45,15 +45,15 @@ public class UserController {
 	@RequestMapping("/checks")
 	@ResponseBody
 		public  String loginCheck(User user)throws IOException{
-		 	/*String username=request.getParameter("user_name");
-		 	String password=request.getParameter("user_password");	
-		 	User user=new User();
-		   user.setUser_idcard(username);
-		   user.setUser_password(password);*/
 			User uu= userService.loginCheck(user);			    
 			if(uu!=null){ 
-				String str = uu.getUser_id().toString();
-			   return str;
+				if(uu.getUser_state()==1){
+					String str = uu.getUser_id().toString();
+					   return str;
+				}
+				if(uu.getUser_state()==0){
+					return "s2";
+				}
 			} 
 			return "0"; 
 		}
@@ -146,6 +146,7 @@ public class UserController {
 	@RequestMapping("/loginOut")
 	public String logout(HttpSession session){
 		session.removeAttribute("USER");
+		session.removeAttribute("OrderVO");
 		return "../../user/jsp/index";
 	}
 	/**
@@ -158,6 +159,20 @@ public class UserController {
     public String findByIdcard(String user_idcard){
     	User user=userService.findByIdcard(user_idcard);
         if(user != null && user.getUser_state()==1){
+        	return "1";
+        }
+    	return "0";
+    }
+    /**
+     * 判断用户
+     * @param model
+     * @return
+     */
+    @RequestMapping("/findByIdcard2")
+    @ResponseBody
+    public String findByIdcard2(String user_idcard){
+    	User user=userService.findByIdcard(user_idcard);
+        if(user != null){
         	return "1";
         }
     	return "0";
@@ -206,6 +221,21 @@ public class UserController {
     	return ""+page;
     }
     /**
+     * 修改读者
+     * @param category
+     * @return
+     */
+    @RequestMapping("/updateUser")
+    public String updateUser(User user,HttpSession session ){  	
+    	User user1=userService.findByIdcard(user.getUser_idcard());
+    	user1.setUser_name(user.getUser_name());
+    	user1.setUser_telphone(user.getUser_telphone());
+    	user1.setUser_sex(user.getUser_sex()); 	
+    	userService.updateUser(user1);
+    	session.setAttribute("USER", user1);
+    	return "../../user/jsp/user";
+    }
+    /**
      * 停用读者
      * @param category
      * @return
@@ -226,6 +256,9 @@ public class UserController {
     public String start(@PathVariable("id")Integer user_id,@PathVariable("page")Integer page){  	
     	User user=userService.findUserById(user_id);
     	user.setUser_state(1);
+    	if(user.getUser_error()>10){
+    		user.setUser_error(0);
+    	}
     	userService.updateUser(user);
     	return "redirect:/User/findAll/"+page;
     }
@@ -239,6 +272,20 @@ public class UserController {
     	User user=userService.findUserById(user_id);
     	userService.deleteUser(user);
     	return "redirect:/User/findAll/"+page;
+    }
+    /**
+     * 删除读者
+     * @param category
+     * @return
+     */
+    @RequestMapping("/save")
+    public String save(User user,HttpSession session){ 
+    	user.setUser_inDate(new Date());
+    	user.setUser_error(0);
+    	user.setUser_state(1);
+    	userService.insertUser(user);
+    	session.setAttribute("USER", user);
+    	return "../../user/jsp/index";
     }
 }
 	

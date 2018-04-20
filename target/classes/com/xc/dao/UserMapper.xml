@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!--更新用户信息  -->
 	<update id="updateUser" parameterType="USER" >
-		update user set user_idcard=#{user_idcard},user_cardtype=#{user_cardtype},user_sex=#{user_sex},user_telphone=#{user_telphone},user_name=#{user_name},user_state=#{user_state} where user_id=#{user_id}		
+		update user set user_idcard=#{user_idcard},user_cardtype=#{user_cardtype},user_sex=#{user_sex},user_telphone=#{user_telphone},user_name=#{user_name},user_error=#{user_error},user_state=#{user_state} where user_id=#{user_id}		
 	</update>
 	<!--删除用户  -->
 	<insert id="deleteUser" parameterType="int" >
