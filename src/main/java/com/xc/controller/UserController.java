@@ -45,15 +45,15 @@ public class UserController {
 	@RequestMapping("/checks")
 	@ResponseBody
 		public  String loginCheck(User user)throws IOException{
-		 	/*String username=request.getParameter("user_name");
-		 	String password=request.getParameter("user_password");	
-		 	User user=new User();
-		   user.setUser_idcard(username);
-		   user.setUser_password(password);*/
 			User uu= userService.loginCheck(user);			    
 			if(uu!=null){ 
-				String str = uu.getUser_id().toString();
-			   return str;
+				if(uu.getUser_state()==1){
+					String str = uu.getUser_id().toString();
+					   return str;
+				}
+				if(uu.getUser_state()==0){
+					return "s2";
+				}
 			} 
 			return "0"; 
 		}

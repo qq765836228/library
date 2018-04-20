@@ -170,7 +170,7 @@ public class OrderController {
        public String findOrder(@PathVariable("id")String id_card,HttpSession session,@PathVariable("currentPage")Integer currentPage){
     	   QueryVo<Order> vo=new QueryVo<>();
 	       	vo.setCurrentPage(currentPage-1);
-	       	vo.setNumber(10);
+	       	vo.setNumber(7);
 	       	vo.setUser_idcard(id_card);
     	   QueryVo<Order> order = orderService.orderFindByIdCard2(vo);
 	       	session.setAttribute("OrderVO", order);

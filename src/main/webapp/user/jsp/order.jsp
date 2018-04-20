@@ -129,7 +129,7 @@
              <div class="row">
                 <div class="col-md-12">
                   <!--   Kitchen Sink -->
-                    <div class="panel panel-default">
+                    <!-- <div class="panel panel-default">
                         <div class="panel-heading">
                             	<div class="row">   
 							  <div class="col-xs-3 " style="left: 20px">
@@ -148,7 +148,7 @@
 							  <div class="col-xs-2" align="right">
 							  	 <a href="#" class="button button-glow button-border button-rounded button-primary" style="margin-top: 30px;">搜索</a>
 							 </div> 
-                        </div>
+                        </div> -->
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
@@ -196,7 +196,30 @@
 													</tr>
 													</c:forEach>
                                     </tbody>
+                                    
                                 </table>
+                                <div class="col-md-3">
+												总页数：${OrderVO.totalPage }\当前页：${OrderVO.currentPage+1 }
+											</div>
+											<div  style="float: right;">
+													<c:if test="${OrderVO.totalPage != 1 }">
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/1">首页</a>
+														<c:if test="${OrderVO.currentPage == 0 }">
+															<a class="btn btn-info">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<c:if test="${OrderVO.currentPage+1 == OrderVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" >下一页</a>
+														</c:if>
+														<c:if test="${1 < OrderVO.currentPage+1 && OrderVO.currentPage+1 < OrderVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Order/findOrder/${USER.user_idcard }/${OrderVO.totalPage}">尾页</a>	
+														
+													</c:if>
+											</div>	
                             </div>
                         </div>
                     </div>
