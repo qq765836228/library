@@ -76,6 +76,8 @@
 			var user_name=$("#user_name").val();
 			var user_sex=$("#user_sex").val();
 			var user_telphone=$("#user_telphone").val();
+			var regUsercard1=/^\d{14}$/;
+			var regPhone=/^\d{11}$/;
 			if(user_idcard==null || user_idcard== ""){
 				err("账号不能为空");
 				return false;
@@ -86,6 +88,12 @@
 			}
 			else if(user_telphone==null || user_telphone== ""){
 				err("联系方式不能为空");
+				return false;
+			}else if(!regUsercard1.test(user_idcard)){
+				err("学生证号必须由14位数字组成");
+				return false;
+			}else if(!regPhone.test(user_telphone)){
+				err("电话号码必须是11位数字组成");
 				return false;
 			}
 			else{

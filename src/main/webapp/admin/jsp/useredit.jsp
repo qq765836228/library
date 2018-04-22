@@ -290,7 +290,7 @@
 										<label class="col-sm-3 control-label no-padding-right">账号类型 </label>
 
 										<div class="col-sm-9">
-											<select id="user_cardtype"  class="col-xs-4 col-sm-2"  >
+											<select id="user_cardtype"  class="col-xs-4 col-sm-2" disabled="disabled" >
 												<c:if test="${user.user_cardtype=='身份证' }">
 													<option value="身份证">身份证</option>
 													<option value="学生证">学生证</option>
@@ -300,6 +300,11 @@
 													<option value="身份证">身份证</option>
 												</c:if>
 											</select>
+											<span class="help-inline col-xs-12 col-sm-7">
+												<label class="middle">
+													<span class="error">*不可修改</span>
+												</label>
+											</span>
 										</div>
 									</div>
 

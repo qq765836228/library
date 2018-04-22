@@ -28,4 +28,6 @@ public interface BookMapper{
 	public List<Book> findByBookName(QueryVo<Book> vo);
 	//查询总条数
 	public Integer findCount2(QueryVo<Book> vo);
+	public List<Book> findByCid(Integer category_id);
+	public List<Book> findAllCid();
 }

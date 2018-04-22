@@ -195,10 +195,11 @@
 																<a class="green" href="${pageContext.request.contextPath }/Category/editUI/${c.category_id }/${CVO.currentPage+1 }">
 																	<i class="icon-pencil bigger-130"></i>
 																</a>
-
+																<c:if test="${c.category_state == 0}">
 																<a class="red" href="${pageContext.request.contextPath }/Category/delete/${c.category_id }/${CVO.totalNumber }/${CVO.currentPage+1 }" onClick="return confirm('确定删除?');">
 																	<i class="icon-trash bigger-130"></i>
 																</a>
+																</c:if>
 															</div>														
 														</td>
 													</tr>

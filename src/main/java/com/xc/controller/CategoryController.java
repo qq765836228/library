@@ -1,5 +1,7 @@
 package com.xc.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xc.domain.Book;
 import com.xc.domain.Category;
+import com.xc.service.BookService;
 import com.xc.service.CategoryService;
 import com.xc.vo.QueryVo;
 
@@ -22,7 +26,8 @@ public class CategoryController {
 	public void setCategoryService(CategoryService categoryService) {
 		this.categoryService = categoryService;
 	}
-	
+    @Autowired
+    private BookService bookService;
     /**
      * 添加分类
      * @param category
@@ -51,13 +56,13 @@ public class CategoryController {
 	 * @return
 	 */
     @RequestMapping("/findAll/{currentPage}")
-	public String findCategoryAll(@PathVariable("currentPage")Integer currentPage,HttpSession session){
+	public String findCategoryAll(@PathVariable("currentPage")Integer currentPage,Model model){
 		
     	QueryVo<Category> vo=new QueryVo<>();
     	vo.setCurrentPage(currentPage-1);
     	vo.setNumber(10);
     	QueryVo<Category> Cvo = categoryService.findCategoryAll(vo);
-    	session.setAttribute("CVO", Cvo);
+    	model.addAttribute("CVO", Cvo);
 		return "category";
 	}
     /**
@@ -83,7 +88,11 @@ public class CategoryController {
 	 */
     @RequestMapping("/delete/{id}/{number}/{page}")
 	public String delete(@PathVariable("id")Integer id,@PathVariable("number")Integer number,@PathVariable("page")Integer page,HttpSession session){
-		categoryService.delete(id);
+    	
+    	List<Book> list=bookService.findByCid(id);
+    	if(list.size() == 0){
+    		categoryService.delete(id);
+    	}
 		if(number%10 == 1 && number > 10 ){
 			return "redirect:/Category/findAll/"+(page-1);
 		}

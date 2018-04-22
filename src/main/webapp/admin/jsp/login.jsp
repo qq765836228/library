@@ -29,7 +29,8 @@
         <h2 class="form-login-head">登陆</h2>
         <input type="text" id="username" class="form-control" name="admin_card"  placeholder="账号"required autofocus>
         <input type="password" id="password" class="form-control" name="admin_password"  placeholder="密码"required>
-        <input type="button" class="btn btn-lg btn-primary btn-block" id="tj" value="登陆"> 
+        <input type="button" class="btn btn-lg btn-primary btn-block" id="tj" value="登陆"> <br><br><br>
+        <p class="mt-5 mb-3 text-muted"><a href="${pageContext.request.contextPath }/index.html">返回</a></p>
       </form>
 
     </div> 

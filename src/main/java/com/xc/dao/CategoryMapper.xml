@@ -40,6 +40,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!--修改分类  -->
 	<update id="update" parameterType="CATEGORY">
-		update category set category_name=#{category_name},category_case=#{category_case} where category_id=#{category_id}
+		update category set category_name=#{category_name},category_state=#{category_state},category_case=#{category_case} where category_id=#{category_id}
 	</update>	
 </mapper>

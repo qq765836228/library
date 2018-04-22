@@ -28,5 +28,7 @@ public interface BookService {
 		public List<Book> FindName(String name);
 		//根据名称查询
 	    public QueryVo<Book> findByBookName(QueryVo<Book> vo);
+		public List<Book> findByCid(Integer id);
+		public List<Book> findAllCid();
 	
 }

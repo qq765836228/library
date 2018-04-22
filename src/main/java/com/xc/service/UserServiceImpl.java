@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(User user) {
 		List<Order> order=orderMapper.orderFindByIdcard(user.getUser_idcard());
-		if(order.get(0)!=null){
+		if(order.size() != 0){
 			orderMapper.deleteUser(user.getUser_idcard());
 			userMapper.deleteUser(user.getUser_id());
 		}

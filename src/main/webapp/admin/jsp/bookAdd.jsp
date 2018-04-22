@@ -79,6 +79,7 @@
 			var book_pubhouse=$("#book_pubhouse").val();
 			var book_page=$("#book_page").val();
 			var others=$("#others").val();
+			var reg = /^[0-9]+.?[0-9]*$/;
 			if(book_name==null || book_name== ""){
 				alert("图书名不能为空");
 				return false;
@@ -89,6 +90,12 @@
 			}
 			else if(book_isbn==null || book_isbn== ""){
 				alert("ISBN编号不能为空");
+				return false;
+			}else if(!reg.test(book_isbn)){
+				alert("ISBN必须由数字组成");
+				return false;
+			}else if(!reg.test(book_page)){
+				alert("图书页数必须由数字组成");
 				return false;
 			}
 			else{

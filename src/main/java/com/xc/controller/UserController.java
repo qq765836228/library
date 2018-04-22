@@ -126,6 +126,18 @@ public class UserController {
 		return "jsp/edit";
 	}
 	/**
+	 * 跳转到修改页面
+	 * @return
+	 */
+	@RequestMapping("/edit")
+	public String edit(User user,HttpSession session){
+		User user1 = userService.findByIdcard(user.getUser_idcard());
+		user1.setUser_password(user.getUser_password());
+		userService.updateUser(user1);
+		session.setAttribute("USER", user1);
+		return "../../user/jsp/index";
+	}
+	/**
 	 * 更新用户信息
 	 * @param user
 	 * @return

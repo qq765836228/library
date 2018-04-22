@@ -324,6 +324,7 @@
 				var book_isbn=$("#book_isbn").val();
 				var user_idcard=$("#user_idcard").val();
 				var borrow_day=$("#borrow_day").val();
+				var reg =/^[0-9]*[1-9][0-9]*$/;
 				if(book_isbn == null || book_isbn.trim() == ""){
 					alert("图书ISBN码不能为空");
 					return false;
@@ -334,6 +335,9 @@
 				}
 				else if(borrow_day == null || borrow_day.trim() == ""){
 					alert("借阅天数不能为空");
+					return false;
+				}else if(!reg.test(borrow_day)){
+					alert("借阅天数必须是整数");
 					return false;
 				}
 				else{

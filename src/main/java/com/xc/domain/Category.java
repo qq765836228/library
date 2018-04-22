@@ -14,6 +14,9 @@ public class Category {
 	//分类书架
 	private String category_case;
 	
+	private Integer category_state;
+	
+	
 	private List<Book> books;
 	
 	public Category(){
@@ -55,6 +58,13 @@ public class Category {
 	}
 	public void setCategory_case(String category_case) {
 		this.category_case = category_case;
+	}
+	
+	public Integer getCategory_state() {
+		return category_state;
+	}
+	public void setCategory_state(Integer category_state) {
+		this.category_state = category_state;
 	}
 	@Override
 	public String toString() {

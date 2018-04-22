@@ -71,19 +71,15 @@
             <hr>
 	          <div class="col-md-4" style="text-align: center;margin: 0 auto;">
 					<input type="hidden" name="msg" id ="error">
-			     	 <form class="form-login" action="${pageContext.request.contextPath }/User/save" onsubmit="return check2()" method="post">
-					        <h2 class="form-login-head">注  册</h2>
-					        <input type="text" class="form-control" id="user_idcard" name="user_idcard"  placeholder="证件号码" required>
-					        <select id="user_cardtype" name="user_cardtype" class="form-control">
-					        	<option value="身份证" style="height:46px;" >身份证</option>
-					        	<option value="学生证">学生证</option>
-					        </select>
-					        <input type="password" class="form-control" name="user_password"  placeholder="密码" required>
-					        <input type="text" class="form-control" name="user_name"  placeholder="姓名" required>
-					        <input type="text"  class="form-control" id="user_telphone" name="user_telphone"  placeholder="电话号码" required>
-					         <button type="submit" id="add" class="btn btn-lg btn-primary btn-block"  >注册</button>
+			     	 <form class="form-login" action="${pageContext.request.contextPath }/User/edit" onsubmit="return check2()" method="post">
+					        <h2 class="form-login-head">修 改 密 码</h2>
+					        <input type="text" class="form-control"  name="user_idcard" value="${USER.user_idcard }" readonly="readonly">				      
+					        <input type="password" class="form-control" id="Opassword"  placeholder="原始密码" required>
+					        <input type="password" class="form-control" id="Npassword1" name="user_password"  placeholder="新密码" required>
+					        <input type="password" class="form-control" id="Npassword2" placeholder="确定密码" required>
+					         <button type="submit" id="add" class="btn btn-lg btn-primary btn-block"  >修改</button>
 					   </form>
-			     	 <p class="mt-5 mb-3 text-muted"><a href="index.jsp">返回首页</a></p>
+			     	 <p class="mt-5 mb-3 text-muted"><a href="javascript:(window.history.back(-1));">返回</a></p>
       				 <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
                </div> 
 	          </div>
@@ -92,66 +88,22 @@
 	 
 </BODY>
 <script type="text/javascript">
-	$("#user_idcard").blur(function(){			
-		var user_idcard=$("#user_idcard").val();
-		if(user_idcard != null && user_idcard != ""){
-			$.ajax({
-				url:"${pageContext.request.contextPath }/User/findByIdcard2",
-				data:"user_idcard="+user_idcard,
-				type:"post",
-				dataType:"json",
-				success:function(data){	
-					if(data=="0"){
-						$("#user_idcard").css("border","1px solid green");
-						$("#add").removeAttr("disabled");
-						
-					}
-					if(data=="1"){
-						$("#user_idcard").css("border","1px solid red");
-						$("#add").attr("disabled","true");
-					}
-					return false;
-				}
-			})
-		}
-		$(".error").html("");
-		$(".error").html("<font>*必填</font>");
-	});
-	
 	function check2(){
-		/* var regUsercard=/^\d{14}|\d{18}$/; */
-		var regUsercard1=/^\d{14}$/;
-		var regUsercard2=/^\d{18}$/;
-		var regPhone=/^\d{11}$/;
-		var user_telphone=$("#user_telphone").val();
-		var user_idcard=$("#user_idcard").val();
-		var user_cardtype=$("#user_cardtype").val();
-		
-		if(user_cardtype == '身份证'){
-			if(regUsercard2.test(user_idcard)){
-				if(regPhone.test(user_telphone)){
-					return true;
-				}else{
-					err("电话号码必须是11位数字组成");
-					return false;
-				}
-			}else{
-				err("身份证号必须由18位数字组成");
-				return false;
-			}
-		}
-		if(user_cardtype == '学生证'){
-			if(regUsercard1.test(user_idcard)){
-				if(regPhone.test(user_telphone)){
-					return true;
-				}else{
-					err("电话号码必须是11位数字组成");
-					return false;
-				}
-			}else{
-				err("学生证号必须由14位数字组成");
-				return false;
-			}
+		var Opassword1="${USER.user_password}";
+		var Opassword2=$("#Opassword").val();
+		var Npassword1=$("#Npassword1").val();
+		var Npassword2=$("#Npassword2").val();
+		if(Opassword2 != Opassword1){
+			err("原始密码输入错误");
+			return false;
+		}else if(Npassword1 != Npassword2){
+			err("两次输入的新密码不一致");
+			return false;
+		}else if(Opassword1 == Npassword1){
+			err("新密码与旧密码一致");
+			return false;
+		}else{
+			return true;
 		}
 		
 	}

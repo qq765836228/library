@@ -73,8 +73,10 @@
                                 <h5><strong>违规次数 : </strong>${USER.user_error }</h5>
                                 <h5><strong>注册日期 : </strong><fmt:formatDate value="${USER.user_inDate }" pattern="yyyy-MM-dd"></fmt:formatDate></h5>
                                 <hr />
-                                <a href="${pageContext.request.contextPath }/User/loginOut" class="btn btn-danger btn-sm">注销</a>
-
+                                <c:if test="${USER != null }">
+	                                 <a href="${pageContext.request.contextPath }/User/loginOut" class="btn btn-danger btn-sm">注销</a>
+	 								<a href="${pageContext.request.contextPath }/user/jsp/editPassword.jsp" class="btn btn-info btn-sm">修改密码</a>
+                                </c:if>
                             </div>
                         </li>
                         <li style="font-size: 20px;color:black;"> &nbsp;&nbsp;&nbsp;&nbsp;${USER.user_name }</li>
@@ -146,6 +148,10 @@
                         </div> -->
                         <div class="panel-body">
                             <div class="table-responsive">
+                            	<c:if test="${OrderVO.list.size()==0 }">
+                            			你 还 没 有 借 过 书 ， 快 去 借 书 吧！
+                            	</c:if>
+                            	<c:if test="${OrderVO.list.size()>0 }">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -193,7 +199,7 @@
                                     </tbody>
                                     
                                 </table>
-                                <div class="col-md-3">
+                               				 <div class="col-md-3">
 												总页数：${OrderVO.totalPage }\当前页：${OrderVO.currentPage+1 }
 											</div>
 											<div  style="float: right;">
@@ -215,7 +221,9 @@
 														
 													</c:if>
 											</div>	
+								 </c:if>
                             </div>
+                           
                         </div>
                     </div>
                      <!-- End  Kitchen Sink -->

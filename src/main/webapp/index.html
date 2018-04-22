@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="assets/css/button.css" rel="stylesheet" />
+   <script src="assets/js/jquery-2.0.3.min.js"></script>
+   <style type="text/css">
+   .content {
+            color: #ffffff;
+            font-size: 40px;
+        }
+        .bg {
+            background: url('assets/img/aaa.jpg');
+            height:940px;
+        }
+        .bg-blur {
+            float: left;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+            -ms-filter: blur(3px);
+            filter: blur(3px);
+        }
+        .content-front {
+          position:absolute;
+          left: 10px;
+          right: 10px;
+          height:600px;
+          text-align: center;
+        }
+        
+   </style>
+</head>
+<body>
+<div class="bg bg-blur"></div>
+<div class="content content-front" style="margin-top: 150px;font-family: STXingkai" align="center">
+	<strong style="font-size: 140px;color:#1B9AF7">交 大 理 工 图 书 馆</strong><br><br><br><br><br><br><br>
+   <a href="http://localhost:8080/library/user/jsp/index.jsp" class="button button-glow button-border button-rounded button-primary" style="margin-top: 30px;width: 200px">读者</a>
+   <a href="http://localhost:8080/library/admin/jsp/login.jsp" class="button button-glow button-border button-rounded button-primary" style="margin-left: 130px;width: 200px">管理员</a>
+</div>
+</body>
+</html>
