@@ -102,7 +102,8 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User findByIdcard(String user_idcard) {
-		return userMapper.findByIdcard(user_idcard);
+		User user = userMapper.findByIdcard(user_idcard);		
+		return user;
 	}
 	
 }

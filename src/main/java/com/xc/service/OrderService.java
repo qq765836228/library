@@ -26,4 +26,6 @@ public interface OrderService {
 
 	public QueryVo<Order> orderFindByIdCard2(QueryVo<Order> vo);
 
+	public Integer checkNum(QueryVo<Order> vo);
+
 }

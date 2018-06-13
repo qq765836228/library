@@ -34,6 +34,13 @@ public class OrderController {
     @RequestMapping("/insertOrder")
     @ResponseBody
     public String insertOrder(String user_idcard,String book_isbn,Integer borrow_day){
+    	QueryVo<Order> vo=new QueryVo<Order>();
+    	vo.setUser_idcard(user_idcard);
+    	int a=orderService.checkNum(vo);
+    	if(a>4){
+    		return "1";
+    	}
+    	
     	Order order =new Order();
     	order.setBook_isbn(book_isbn);
     	order.setUser_idcard(user_idcard);

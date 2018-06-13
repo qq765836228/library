@@ -50,11 +50,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 	<select id="orderFindAll" parameterType="QueryVo" resultMap="OBean">
-		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn 
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn order by a.borrow_time DESC
 		
 		<include refid="ORDER_Where"></include>
 		
-		limit ${currentPage*number},${number}
+		limit ${currentPage*number},${number} 
 		
 	</select>
 	
@@ -74,21 +74,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="orderfindAllByIsreturn" parameterType="QueryVo" resultMap="OBean">
-		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.isreturn = ${isreturn} limit ${currentPage*number},${number}
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.isreturn = ${isreturn} order by a.borrow_time DESC limit ${currentPage*number},${number}
 		
 	</select>
 	
 	<select id="orderFindById" parameterType="int" resultMap="OBean">
-		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.order_id = #{order_id}
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.order_id = #{order_id} order by a.borrow_time DESC
 		
 	</select>
 	<select id="orderFindByIdcard" parameterType="String" resultMap="OBean">
-		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.user_idcard = #{user_idcard}
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.user_idcard = #{user_idcard} order by a.borrow_time DESC
 		
 	</select>
 	
 	<select id="orderFindByIdcard2" parameterType="QueryVo" resultMap="OBean">
-		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.user_idcard = ${user_idcard} limit ${currentPage*number},${number}
+		select a.*,b.*,c.*,d.* from `order` a,book b,user c,category d where b.category_id=d.category_id and a.user_idcard = c.user_idcard and a.book_isbn=b.book_isbn and a.user_idcard = ${user_idcard} order by a.borrow_time DESC limit ${currentPage*number},${number}
 		
 	</select>
 	
@@ -127,4 +127,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteUser" parameterType="String">
 			DELETE  from `order` where user_idcard=#{user_idcard}
 	</delete>
+	<delete id="deleteBook" parameterType="String">
+			DELETE  from `order` where book_isbn=#{book_isbn}
+	</delete>
+	<select id="checkNum"  parameterType="QueryVo" resultType="int">
+	select count(*) from `order` where user_idcard = ${user_idcard} and isreturn != '2' 
+	</select>
 </mapper>

@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<selectKey keyProperty="category_id" order="AFTER" resultType="java.lang.Integer">
 			select LAST_INSERT_ID()
 		</selectKey>
-		insert into category(category_name,category_case) values(#{category_name},#{category_case})	
+		insert into category(category_name,category_case,category_state) values(#{category_name},#{category_case},#{category_state})	
 	</insert>
 	
 	<!--分页查询所有  -->

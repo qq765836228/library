@@ -45,8 +45,12 @@ public class UserController {
 	@RequestMapping("/checks")
 	@ResponseBody
 		public  String loginCheck(User user)throws IOException{
-			User uu= userService.loginCheck(user);			    
+			User uu= userService.loginCheck(user);					
 			if(uu!=null){ 
+				if(uu.getUser_error()>10 && uu.getUser_state()==1){
+					uu.setUser_state(0);
+					userService.updateUser(uu);
+				}
 				if(uu.getUser_state()==1){
 					String str = uu.getUser_id().toString();
 					   return str;
@@ -105,11 +109,13 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/findAll/{currentPage}")
-	public String findAll(Model model,@PathVariable("currentPage")Integer currentPage){
+	public String findAll(Model model,User user,@PathVariable("currentPage")Integer currentPage){
 		QueryVo<User> vo=new QueryVo<>();
+		vo.setUser(user);
     	vo.setCurrentPage(currentPage-1);
     	vo.setNumber(10);
 		 vo=userService.findAll(vo);
+		 model.addAttribute("boo", user);
 		model.addAttribute("UVO", vo);
 		return "user";
 	}

@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!--登陆验证用户是否存在  -->
 	<select id="loginCheck" parameterType="USER" resultType="USER">
-		select * from user where user_idcard=#{user_idcard} and user_password=#{user_password}
+		select * from user where binary user_idcard=#{user_idcard} and binary user_password=#{user_password}
 	</select>
 	<!--根据id查询数据  -->
 	<select id="findUserById" parameterType="int" resultType="USER">
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--根据用户名username查询数据  -->
 	<select id="findUserByUserName" parameterType="string" resultType="USER">
-		select * from user where username=#{username}
+		select * from user where username=#{username} order by user_inDate DESC		
 	</select>
 	
 	
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--根据用户名username查询数据  -->
 	<select id="findByIdcard" parameterType="string" resultType="USER">
-		select * from user where user_idcard=#{user_idcard}
+		select * from user where user_idcard=#{user_idcard} order by user_inDate DESC
 	</select>
 	<!--添加新用户  -->
 	<insert id="insertUser" parameterType="USER" >
@@ -43,9 +43,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from user 
 	</select>
 	<!--查找所有  -->
-	<select id="findAll"  resultType="USER">
-		select * from user limit ${currentPage*number},${number}
+	<select id="findAll"  parameterType="QueryVo"  resultType="USER">
+		select * from user 
+		<include refid="USER_Where"></include>
+		order by user_inDate DESC 
+		 limit ${currentPage*number},${number}
 	</select>
+	
+	<sql id="USER_Where">						
+		<!-- where标签作用:
+				会自动向sql语句中添加where关键字
+				会去掉第一个条件的and关键字
+			 -->
+			 <where>
+			<if test="user.user_name != null and user.user_name != ''">
+				and user_name like '%${user.user_name}%'
+			</if>
+			<if test="user.user_telphone != null and user.user_telphone != ''">
+				and user_telphone like '%${user.user_telphone}%'
+			</if>
+			<if test="user.user_idcard != null and user.user_idcard != ''">
+				and user_idcard like '%${user.user_idcard}%'
+			</if>
+			<if test="user.user_cardtype != null and user.user_cardtype != ''">
+				and user_cardtype = '${user.user_cardtype}' 
+			</if>
+			</where>
+	</sql>
 	<!--更新用户信息  -->
 	<update id="updateUser" parameterType="USER" >
 		update user set user_idcard=#{user_idcard},user_password=#{user_password},user_cardtype=#{user_cardtype},user_sex=#{user_sex},user_telphone=#{user_telphone},user_name=#{user_name},user_error=#{user_error},user_state=#{user_state} where user_id=#{user_id}		

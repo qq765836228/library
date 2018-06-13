@@ -156,4 +156,10 @@ public class OrderServiceImpl implements OrderService {
 		return vo;
 	}
 
+
+	@Override
+	public Integer checkNum(QueryVo<Order> vo) {
+		return orderMapper.checkNum(vo);
+	}
+
 }

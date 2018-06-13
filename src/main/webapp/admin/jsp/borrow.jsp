@@ -348,7 +348,40 @@
 						dataType:"json",
 						success:function(data){	
 							if(data=="0"){
+								var oDiv = document.createElement('div');
+								oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
+													'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
+														'<form style="border:1px solid red;width:400px;height:200px">'+
+															'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
+																'<h4 style="line-height:100px;"> 保存成功</h4>'+
+															'</div>'+
+															'<div class="sure" style="width:400px;height:96px">'+
+																'<div align="center">'+
+																	'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/borrow.jsp" style="color: white;text-decoration:none;">继续添加</a></div>'+
+																	'<div  class="btn btn-primary "  ><a href="${pageContext.request.contextPath }/Order/findAll/1" style="color: white;text-decoration:none;">显示所有</a></div>'+
+																'</div>'+
+															'</div>'+
+														'</form>'+
+													'</div>'+
+												'</div>';
 								document.body.appendChild(oDiv); 
+							}if(data=="1"){
+								var oDiv = document.createElement('div');
+								oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
+													'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 400px;height: 200px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
+														'<form style="border:1px solid red;width:400px;height:200px">'+
+															'<div class="fitting-header" style="width:400px;height:100px;" align="center" >'+
+																'<h4 style="line-height:100px;"> 该用户已借书超过5本，暂无借书权限 </h4>'+
+															'</div>'+
+															'<div class="sure" style="width:400px;height:96px">'+
+																'<div align="center">'+
+																	'<div  class="btn btn-primary " style="right:20px;"><a href="${pageContext.request.contextPath }/admin/jsp/borrow.jsp" style="color: white;text-decoration:none;">确认</a></div>'+												
+																'</div>'+
+															'</div>'+
+														'</form>'+
+													'</div>'+
+												'</div>';
+								document.body.appendChild(oDiv);
 							}
 						}
 					})

@@ -159,7 +159,7 @@
 								<div class="col-xs-12">
 									
 										<h3 class="header smaller lighter blue">借还书处理</h3>
-										<c:if	test="${OrderVO.totalPage > 0 }">
+										<c:if	test="${OrderVO.list.size() > 0 }">
 											<div class="table-header">
 												借 书 订 单 基 本 信 息
 											</div>
@@ -259,8 +259,8 @@
 											</div>
 										
 										</c:if>
-										<c:if test="${OrderVO.totalPage==0 }">
-										<h1>暂无超时借书订单</h1>
+										<c:if test="${OrderVO.list.size()==0 }">
+										<h1>暂无订单</h1>
 										</c:if>
 									</div>
 								</div>					

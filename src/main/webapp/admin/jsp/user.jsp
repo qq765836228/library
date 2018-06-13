@@ -188,6 +188,38 @@
 										</div>
 
 										<div class="table-responsive">
+										<form id="form11" action="${pageContext.request.contextPath }/User/findAll/1" method="post">
+										<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+													  
+														<th>
+															姓名：<input type="text" name="user_name" value="${boo.user_name}"/>
+														</th>
+														<th>
+															类 型:<select name="user_cardtype">
+																	<c:choose>
+																		<c:when test="${boo.user_cardtype !=null &&boo.user_cardtype !='' }">
+																			<option value="${boo.user_cardtype}">-${boo.user_cardtype}-</option>
+																			<option value="">-请选择-</option>
+																			<option value="身份证">-身份证-</option>
+																			<option value="学生证">-学生证-</option>
+																		</c:when>
+																		<c:otherwise>
+																		     <option value="">-请选择-</option>
+																		     <option value="身份证">-身份证-</option>
+																			<option value="学生证">-学生证-</option>
+																		</c:otherwise>
+																	</c:choose>		
+																</select>
+														</th>
+														<th>账号：<input name="user_idcard" type="text" value="${boo.user_idcard}"/></th>
+														<th>联系方式：<input name="user_telphone" type="text" value="${boo.user_telphone}"/></th>
+														
+														<th><input type="submit" value="搜索" ></th>
+													</tr>
+												</thead>
+											</table>
 											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
@@ -279,6 +311,7 @@
 													
 											</div>	
 											</c:if>
+											</form>
 										</div>
 									</div>
 								</div>

@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" isELIgnored="false"
     pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>交理图书馆后台管理系统</title>
-		<meta name="keywords" content="交理图书馆后台管理系统" />
-		<meta name="description" content="交理图书馆后台管理系统" />
+		<title>用户信息管理</title>
+		<meta name="keywords" content="用户信息管理" />
+		<meta name="description" content="用户信息管理" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- basic styles -->
 		<link href="${pageContext.request.contextPath }/admin/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -22,8 +22,37 @@
 		<!-- ace settings handler -->
 
 		<script src="${pageContext.request.contextPath }/admin/assets/js/ace-extra.min.js"></script>
+		<script src="${pageContext.request.contextPath }/admin/assets/js/jquery-2.0.3.min.js"></script>
 	</head>
-
+<script type="text/javascript">
+	
+		function findother(){
+		var others=$("#others").val();
+		var oDiv = document.createElement('div');
+		oDiv.innerHTML = '<div id="loading"  style="opacity:1;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);z-index: 15000;">'+
+							'<div class="fitting-mask3 " style="position: absolute;top: 35%;left: 40%;width: 500px;height: 300px;background-color:white;margin-top: -15px;margin-left: -15px;opacity:1;" id="choose">'+
+								'<form style="border:1px solid #AEEEEE;width:500px;height:300px">'+
+									'<div class="fitting-header" style="width:500px;height:30px;">'+
+										'<h4> 图书描述</h4>'+
+									'</div>'+
+									'<hr/>'+
+									'<div class="fitting-header" style="width:500px;height:120px;" >'+
+										'<h4> '+others+
+										'</h4>'+
+									'</div>'+
+									'<hr/>'+
+									'<div class="sure" style="width:500px;height:96px">'+
+										'<div align="center">'+
+											'<div  class="btn btn-primary "  ><a href="javascript:void(0)" onclick="location.reload()" style="color: white;text-decoration:none;">返回</a></div>'+
+										'</div>'+
+									'</div>'+
+								'</form>'+
+							'</div>'+
+						'</div>';
+		document.body.appendChild(oDiv); 
+	}
+	
+	</script>
 	<body>
 		<!--头部  -->
 		<div class="navbar navbar-default" id="navbar">
@@ -63,7 +92,7 @@
 				<!--导航栏  -->
 				<div class="sidebar" id="sidebar">
 					<ul class="nav nav-list">
-						<li class="active">
+						<li>
 							<a href="${pageContext.request.contextPath }/admin/jsp/index.jsp">
 								<i class="icon-dashboard"></i>
 								<span class="menu-text"> 首  页 </span>
@@ -107,13 +136,13 @@
 							</ul>
 						</li>
 						<!--用 户 信 息 管 理  -->
-						<li>
+						<li  class="active">
 							<a href="#" class="dropdown-toggle">
 								<i class="icon-user"></i><span class="menu-text">用 户 信 息 管 理 </span><b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
 								<li><a href="${pageContext.request.contextPath }/admin/jsp/userAdd.jsp">用 户 信 息 添 加</a></li>
-								<li><a href="${pageContext.request.contextPath }/User/findAll/1">显 示 所 有 用 户</a></li>		
+								<li  class="active"><a href="${pageContext.request.contextPath }/User/findAll/1">显 示 所 有 用 户</a></li>		
 							</ul>
 						</li>
 						<!--图 书 分 类 管 理   -->
@@ -141,79 +170,119 @@
 				</div>
 				<!--主内容  -->
 				<div class="main-content">
-					<div class="breadcrumbs" id="breadcrumbs">
-						<script type="text/javascript">
-							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-						</script>
-
+					<div class="breadcrumbs" id="breadcrumbs" >						
 						<ul class="breadcrumb" style="line-height:41px;">
 							<li>
 								<i class="icon-home home-icon"></i>
-								<a href="${pageContext.request.contextPath }/admin/jsp/index.jsp">首页</a>
+								<a href="#">首 页</a>
 							</li>
+							<li class="active">用户信息管理</li>
 						</ul><!-- .breadcrumb -->
 					</div>
 					<div class="page-content">
-				 		<div class="row">       			 	 
-				        	<div class="col-md-3">
-				               <div class="panel panel-primary">
-				                    <div class="panel-heading">
-				                       		 <h4><img alt="服务中心" src="${pageContext.request.contextPath }/assets/img/服务中心.png">&nbsp;&nbsp;&nbsp;服 务 时 间</h4>
-				                    </div>
-				                    <div class="panel-body" style="font-size: 15px;">
-				                    	${Notice.notice_text }
-				                    </div>
-				              </div>
-				             	<div class="panel panel-primary">
-				                 <div class="panel-heading">
-				                       		 <h4>服 务 推 介</h4>
-				                    </div>
-				                    <div class="panel-body">
-					                    
-					                    <p style="font-size: 15px;"> 
-					                    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					                    	实行“全面开放、免证进馆、分层管理、
-					                     	 一卡通行”方式，全面推行自助服务。 
-					                     	 “图书馆之城”统一服务、自助图书馆
-					                     	 网提供了便利的服务，“深圳文献港”
-					                     	 及其移动门户打造了数字资源共享平台。
-					                     </p>
-				                     	
-				                     </div>
-				              </div>
-				        	</div>
-				        	<div class="col-md-5">
-					        	<div class="panel panel-success">
-	                        	<div class="panel-heading">
-	                          		<h4><img alt="简介" src="${pageContext.request.contextPath }/assets/img/资源中心.png">&nbsp;&nbsp;&nbsp;简介</h4>
-	                       		</div>
-	                        	<div class="panel-body">
-	                            	<p style="font-size: 17px;">
-	                            	华东交通大学理工学院( Institute of Technology,East China Jiaotong University )位于“物华天宝，人杰地灵” 之美誉的江南历史文化名城——江西省南昌市，地处南昌经济技术开发区，坐落在风景秀丽的黄家湖畔，由华东交通大学举办，经江西省教育厅、江西省发展计划委员会首批批准成立，并经国家教育部确认的一所以普通本科学历教育为主的独立学院。
-理工学院下设土木建筑分院、机电工程分院、电气与信息工程分院、经济管理分院、人文法学分院、艺术与体育分院等6个教学院（系）和基础学科部，开设有33个本科专业，在籍学生13000余人。
-<br>
-	                       		 </div>
-	                        <div class="panel-footer">
-	                            @ 交 大 理 工
-	                        </div>
-                   			</div>
-				        </div>
-				        	<div  class="col-md-4">
-					        	<div class="alert alert-danger">
-						         	<h2><img alt="通知" src="${pageContext.request.contextPath }/assets/img/通知.png">&nbsp;&nbsp;&nbsp;通 知 公 告</h2>
-						         	<hr>
-						         	<c:forEach items="${List }" var="c">
-						         		<a style="font-size: 16px;text-decoration: none;">${c.notice_text }</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						         		<a class="red" href="${pageContext.request.contextPath }/Admin/deleteNotice/${c.notice_id }" onClick="return confirm('确定删除?');">
-												<i class="icon-trash bigger-130"></i>
-										</a><br>
-										<a style="font-size: 15px;text-decoration: none;color: blue"><fmt:formatDate value="${c.notice_date }" pattern="yyyy-MM-dd"></fmt:formatDate></a><br>
-										
-						         	</c:forEach>			
-								</div><br>
-			                </div>
-	       				</div>
-					</div><!-- PAGE CONTENT ENDS -->
+						<div class="row">
+								<div class="col-xs-12">
+										<h3 class="header smaller lighter blue">用户</h3>
+										<div class="table-header">
+											用户 基 本 信 息
+										</div>
+
+										<div class="table-responsive">
+											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+													   <th></th>
+														<th class="center">
+															<!-- <label>
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label> -->
+															读者id
+														</th>
+														<th>读者姓名</th>
+														<th>账号类型</th>
+														<th>账号</th>
+														<th>注册日期</th>
+														<th>性别</th>
+														<th>联系方式</th>
+														<th>违规次数</th>
+														<th>状态</th>
+
+														<th>操作</th>
+													</tr>
+												</thead>
+
+												<tbody>
+												<c:forEach items="${UVO.list }" var="c"  varStatus="status">											
+													<tr>
+														<td>${status.count+(UVO.currentPage*10) }</td>
+
+														<td>${c.user_id }</td>
+														<td>${c.user_name }</td>
+														<td>${c.user_cardtype }</td>
+														<td>${c.user_idcard }</td>
+														<td><fmt:formatDate value="${c.user_inDate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>	
+														<td>${c.user_sex }</td>	
+														<td>${c.user_telphone }</td>	
+														<td style="color:blue">${c.user_error }</td>	
+														<td>
+															<c:if test="${c.user_state==1 }">
+																<font color="green">正常</font>
+															</c:if>
+															<c:if test="${c.user_state==0 }">
+																<font color="red">停用</font>
+															</c:if>
+														</td>	
+														<td>
+															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+
+																<a class="green" href="${pageContext.request.contextPath }/User/editUI/${c.user_id }/${UVO.currentPage+1 }">
+																	修改
+																</a>
+
+																<a class="red" href="${pageContext.request.contextPath }/User/stop/${c.user_id }/${UVO.currentPage+1 }" onClick="return confirm('确定停用?');">
+																	停用
+																</a>
+																<a class="blue" href="${pageContext.request.contextPath }/User/start/${c.user_id }/${UVO.currentPage+1 }" onClick="return confirm('确定恢复?');">
+																	恢复
+																</a>
+																<c:if test="${ADMIN.admin_card=='admin' && ADMIN.admin_password=='admin' }">
+																	<a class="red" href="${pageContext.request.contextPath }/User/delete/${c.user_id }/${UVO.currentPage+1 } " onClick="return confirm('确定删除?');">
+																	       删除
+																	</a>
+																</c:if>
+															</div>
+														</td>
+													</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+											<div class="col-md-3">
+												总页数：${UVO.totalPage }\当前页：${UVO.currentPage+1 }
+											</div>
+											<c:if test="${UVO.totalPage !=1  }">
+											<div  style="float: right;">
+												<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/1">首页</a>
+														<c:if test="${UVO.currentPage == 0 }">
+															<a class="btn btn-info">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<c:if test="${UVO.currentPage+1 == UVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" >下一页</a>
+														</c:if>
+														<c:if test="${1 < UVO.currentPage+1 && UVO.currentPage+1 < UVO.totalPage }">
+															<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage }">上一页</a>
+													 		<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.currentPage+2 }">下一页</a>
+														</c:if>
+														<a class="btn btn-info" href="${pageContext.request.contextPath }/Book/findAll/${UVO.totalPage}">尾页</a>
+													
+											</div>	
+											</c:if>
+										</div>
+									</div>
+								</div>
+					</div>
 				</div><!-- /.main-content -->
 				
 			</div><!-- /.main-container-inner -->

@@ -312,10 +312,12 @@
 																<a class="green" href="${pageContext.request.contextPath }/Book/editUI/${c.book_id }/${BVO.currentPage+1 }">
 																	<i class="icon-pencil bigger-130"></i>
 																</a>
-
-																<a class="red" href="${pageContext.request.contextPath }/Book/delete/${c.book_id }/${BVO.totalNumber }/${BVO.currentPage+1 }" onClick="return confirm('确定删除?');">
-																	<i class="icon-trash bigger-130"></i>
-																</a>
+																<c:if test="${c.book_state!=1 }">
+																	<a class="red" href="${pageContext.request.contextPath }/Book/delete/${c.book_id }/${BVO.totalNumber }/${BVO.currentPage+1 }" onClick="return confirm('确定删除?');">
+																	  <i class="icon-trash bigger-130"></i>
+																	</a>
+																</c:if>
+																
 																<a class="blue" href="${pageContext.request.contextPath }/Book/addTwo/${c.book_id }">
 																	复制
 																</a>

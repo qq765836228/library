@@ -124,7 +124,7 @@
 							  <div class="form-group">
 							    <div class="input-group" style="width: 500px ">
 							      <input type="text" class="form-control" id="book_name" name="book_name"  value="${name }"/>
-						  		 <div class="input-group-addon" onclick="sou()">
+						  		 <div class="input-group-addon" onclick="sou()" style="cursor: pointer;">
 									<a style="text-decoration: none;">Go</a>
 								</div>
 							    </div>
@@ -310,6 +310,7 @@
 	}
    	
    </script>
+  
 </body>
 </html>
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xc.domain.Book;
 import com.xc.domain.Order;
+import com.xc.domain.User;
 
 public class QueryVo<T> {
 	
@@ -16,6 +17,7 @@ public class QueryVo<T> {
 	private String user_idcard;
 	
 	private Book book;
+	private User user;
 	private Order order;
 	
 	private List<T> list;
@@ -24,6 +26,14 @@ public class QueryVo<T> {
 	
 	
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String getUser_idcard() {
 		return user_idcard;
 	}

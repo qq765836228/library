@@ -23,11 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--根据图书名book_name查询数据  -->
 	<select id="FindName" parameterType="string" resultType="BOOK">
-		select DISTINCT book_name from book where book_name like "%"#{name}"%"
+		select DISTINCT book_name from book where book_name like "%"#{name}"%" order by book_inDate DESC
 	</select>
 	<!--根据ISBN查询数据  -->
 	<select id="findByISBN" parameterType="string" resultType="BOOK">
-		select * from book where book_isbn=#{book_isbn}
+		select * from book where book_isbn=#{book_isbn} order by book_inDate DESC
 	</select>	
 	<!--分类查找所有  -->
 	<resultMap type="com.xc.domain.Book" id="BookBean">
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 	<select id="bookFindAll" parameterType="QueryVo" resultMap="BookBean">
-		select a.*,b.* from book a,category b where a.category_id = b.category_id 
+		select a.*,b.* from book a,category b where a.category_id = b.category_id  order by a.book_inDate DESC
 		
 		<include refid="Book_Where"></include>
 		
@@ -83,21 +83,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--根据图书名book_name查询数据  -->
 	<select id="findByBookName" parameterType="QueryVo" resultMap="BookBean">
-		select a.*,b.* from book a,category b where a.category_id = b.category_id and book_name like "%"#{book_name}"%" limit ${currentPage*number},${number}
+		select a.*,b.* from book a,category b where a.category_id = b.category_id and book_name like "%"#{book_name}"%" order by a.book_inDate DESC limit ${currentPage*number},${number}
 	</select> 
 	<select id="findByCid" parameterType="int" resultType="BOOK">
-		select * from book where category_id = #{category_id}
+		select * from book where category_id = #{category_id} order by book_inDate DESC
 	</select> 
 	<select id="findAllCid" resultType="BOOK">
 		select category_id from book
 	</select> 
 	<!--根据图书名book_name查询数据  -->
 	<select id="bookFindByName" parameterType="string" resultType="BOOK">
-		select * from book where book_name like "%"#{name}"%"
+		select * from book where book_name like "%"#{name}"%" order by book_inDate DESC
 	</select> 
 	<!--根据id查询图书  -->
 	<select id="bookFindById" parameterType="int" resultMap="BookBean">
-		select a.*,b.* from book a,category b where a.category_id = b.category_id and a.book_id=#{book_id}
+		select a.*,b.* from book a,category b where a.category_id = b.category_id and a.book_id=#{book_id} order by a.book_inDate DESC
 	</select>
 	<!--查询总条数  -->
 	<select id="findCount" parameterType="QueryVo" resultType="int">

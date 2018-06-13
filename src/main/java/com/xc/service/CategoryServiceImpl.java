@@ -24,6 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 */
 	@Override
 	public void addCategory(Category category) {
+		category.setCategory_state(0);
 		categoryMapper.addCategory(category);
 	}
 

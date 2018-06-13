@@ -24,4 +24,6 @@ public interface OrderMapper {
 	public void deleteUser(String user_idcard);
 	public List<Order> orderFindByIdcard2(QueryVo<Order> vo);
 	public Integer findCountByIdCard(QueryVo<Order> vo);
+	public void deleteBook(String book_isbn);
+	public Integer checkNum(QueryVo<Order> vo);
 }

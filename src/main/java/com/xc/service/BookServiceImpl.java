@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.xc.dao.BookMapper;
 import com.xc.dao.CategoryMapper;
+import com.xc.dao.OrderMapper;
 import com.xc.domain.Book;
 import com.xc.domain.Category;
 import com.xc.vo.QueryVo;
@@ -22,7 +23,8 @@ public class BookServiceImpl implements BookService{
 	}
 	@Autowired
 	private CategoryMapper categoryMapper;
-	
+	@Autowired
+	private OrderMapper orderMapper;
 
 	@Override
 	public void bookInsert(Book book) {
@@ -39,6 +41,8 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public void bookDelete(Integer book_id) {
 		Book book=bookMapper.bookFindById(book_id);	
+		String book_isbn = book.getBook_isbn();
+		orderMapper.deleteBook(book_isbn);
 		bookMapper.bookDelete(book_id);
 		List<Book> list = bookMapper.findByCid(book.getCategory_id());	
 		if(list.size() == 0){
@@ -46,6 +50,7 @@ public class BookServiceImpl implements BookService{
 			c.setCategory_state(0);
 			categoryMapper.update(c);
 		}
+		
 	}
 
 	@Override
